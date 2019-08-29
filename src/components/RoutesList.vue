@@ -1,6 +1,7 @@
 <template>
   <v-col lg="3" class="test pl-8 pt-8">
-    <div v-for="(user, index) in allUsers" :key="index">{{ `${user.firstName} // ${user.lastName}` }}</div>
+    <div v-for="(user, index) in allUsers" :key="'user-'+index">{{ `${user.firstName} // ${user.lastName}` }}</div>
+    <div v-for="(plan, index) in allPlans" :key="'plan-'+index">{{ `${plan.title}` }}</div>
     <v-text-field :hide-details="true" label="Outlined" placeholder="Placeholder" outlined></v-text-field>
     <v-list flat>
       <v-list-item-group color="indigo">
@@ -23,7 +24,7 @@ export default {
     // model: 1 to #list-item-group > dont't know what it have to do
   }),
   computed: {
-    ...mapGetters(["allUsers"])
+    ...mapGetters(["allUsers", "allPlans"])
   }
 };
 </script>
