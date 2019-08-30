@@ -122,17 +122,14 @@ export default {
     mapCurrentPlaces() {
       if (this.mapCurrentPlaces.length == 1) {
         this.markersList = this.mapCurrentPlaces;
-        this.center = { lat: 0, lng: 0 };
         this.center = this.mapCurrentPlaces[0].position;
         if (this.renderer != null) {
           this.renderer.setMap(null);
         }
-        this.service = null;
-        
-        // this.zoom = 0;
-        // setTimeout(() => {
-        //   this.zoom = 15;
-        // }, 0);
+        this.zoom = 0;
+        this.$nextTick(() => {
+          this.zoom = 15;
+        })
       }
       else if (this.mapCurrentPlaces.length > 1) {
         this.center = { lat: 0, lng: 0 };
