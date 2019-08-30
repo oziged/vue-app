@@ -1,7 +1,9 @@
 <template>
   <v-col lg="9" class="testt">
     || {{ zoom }} ||{{ mapCurrentPlaces }} // {{ center }} // {{ mapCurrentPlaces.length }}
-    <button @click="test(true)">create routes</button>
+    <button
+      @click="test(true)"
+    >create routes</button>
     <button @click="test(false)">remove routes</button>
     <GmapMap
       ref="gmap"
@@ -41,7 +43,8 @@ export default {
       infoContent: "",
       markersList: [],
       center: {
-        lat: 12, lng: 12
+        lat: 12,
+        lng: 12
       },
       zoom: 15,
       infoWindowPos: {
@@ -67,7 +70,6 @@ export default {
       if (m == false) {
         this.renderer.setMap(null);
       } else {
-   
       }
     },
     toggleInfoWindow: function(marker, idx) {
@@ -106,10 +108,13 @@ export default {
       </div>`;
     },
     generateWaypoints(places) {
-      return places.slice(1,-1).map(place => {
+      return places.slice(1, -1).map(place => {
         return {
-          location: new google.maps.LatLng(place.position.lat, place.position.lng)
-        }
+          location: new google.maps.LatLng(
+            place.position.lat,
+            place.position.lng
+          )
+        };
       });
     }
   },
@@ -117,20 +122,21 @@ export default {
     mapCurrentPlaces() {
       if (this.mapCurrentPlaces.length == 1) {
         this.markersList = this.mapCurrentPlaces;
-
+        this.center = { lat: 0, lng: 0 };
+        this.center = this.mapCurrentPlaces[0].position;
         if (this.renderer != null) {
           this.renderer.setMap(null);
-          this.renderer.setOptions({
-            // preserveViewport: false
-          })
         }
-        this.center = {lat: 0, lng: 0}
-        this.center = this.mapCurrentPlaces[0].position;
         this.service = null;
-        this.zoom = 15; 
+        
+        // this.zoom = 0;
+        // setTimeout(() => {
+        //   this.zoom = 15;
+        // }, 0);
       }
-      if (this.mapCurrentPlaces.length > 1 ) {
-        this.markersList = []
+      else if (this.mapCurrentPlaces.length > 1) {
+        this.center = { lat: 0, lng: 0 };
+        this.markersList = [];
         let _self = this;
         if (this.service == null) {
           this.service = new google.maps.DirectionsService();
@@ -140,23 +146,28 @@ export default {
         }
         this.renderer.setOptions({
           map: this.$refs.gmap.$mapObject,
-            // preserveViewport: false
-          }),
-        this.service.route(
-          {
-            origin: new google.maps.LatLng(this.mapCurrentPlaces[0].position.lat, this.mapCurrentPlaces[0].position.lng),
-            waypoints: this.generateWaypoints(this.mapCurrentPlaces),
-            destination: new google.maps.LatLng(this.mapCurrentPlaces.slice(-1)[0].position.lat, this.mapCurrentPlaces.slice(-1)[0].position.lng),
-            travelMode: "DRIVING"
-          },
-          function(response, status) {
-            if (status === "OK") {
-              _self.renderer.setDirections(response);
-            } else {
-              window.alert("Directions request failed due to " + status);
+        }),
+          this.service.route(
+            {
+              origin: new google.maps.LatLng(
+                this.mapCurrentPlaces[0].position.lat,
+                this.mapCurrentPlaces[0].position.lng
+              ),
+              waypoints: this.generateWaypoints(this.mapCurrentPlaces),
+              destination: new google.maps.LatLng(
+                this.mapCurrentPlaces.slice(-1)[0].position.lat,
+                this.mapCurrentPlaces.slice(-1)[0].position.lng
+              ),
+              travelMode: "DRIVING"
+            },
+            function(response, status) {
+              if (status === "OK") {
+                _self.renderer.setDirections(response);
+              } else {
+                window.alert("Directions request failed due to " + status);
+              }
             }
-          }
-        );
+          );
       }
     }
   },
