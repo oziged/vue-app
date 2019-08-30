@@ -1,22 +1,22 @@
 <template>
   <v-col lg="9" class="testt">
+    || {{ zoom }} ||{{ mapCurrentPlaces }} // {{ center }} // {{ mapCurrentPlaces.length }}
     <button @click="test(true)">create routes</button>
     <button @click="test(false)">remove routes</button>
     <GmapMap
       ref="gmap"
-      :center="{lat:10, lng:20}"
-      :zoom="8"
+      :center="center"
+      :zoom="zoom"
       map-type-id="terrain"
       style="width: 100%; height: 100%"
     >
       <GmapMarker
         :key="index"
-        v-for="(m, index) in allPlaces"
+        v-for="(m, index) in markersList"
         :position="m.position"
         :clickable="true"
         :draggable="false"
         @click="toggleInfoWindow(m.position,index)"
-
       />
       <GmapInfoWindow
         :options="infoOptions"
@@ -31,14 +31,19 @@
 </template>
 
 <script>
-import { gmapApi } from "vue2-google-maps";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
     return {
       renderer: null,
+      service: null,
       infoContent: "",
+      markersList: [],
+      center: {
+        lat: 12, lng: 12
+      },
+      zoom: 15,
       infoWindowPos: {
         lat: 0,
         lng: 0
@@ -54,31 +59,94 @@ export default {
       }
     };
   },
+
   methods: {
-    
     test(m) {
       let _self = this;
       console.log(google);
       if (m == false) {
         this.renderer.setMap(null);
       } else {
-        var directionsService = new google.maps.DirectionsService();
+   
+      }
+    },
+    toggleInfoWindow: function(marker, idx) {
+      this.infoWindowPos = marker;
+      this.infoContent = this.getInfoWindowContent(marker);
+
+      //check if its the same marker that was selected if yes toggle
+      if (this.currentMidx == idx) {
+        this.infoWinOpen = !this.infoWinOpen;
+      }
+      //if different marker set infowindow to open and reset current marker index
+      else {
+        this.infoWinOpen = true;
+        this.currentMidx = idx;
+      }
+    },
+    getInfoWindowContent: function(marker) {
+      return `<div class="card">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4">${marker}</p>
+            </div>
+          </div>
+          <div class="content">
+            ${marker}
+            <br>
+            <time datetime="2016-1-1">${marker}</time>
+          </div>
+        </div>
+      </div>`;
+    },
+    generateWaypoints(places) {
+      return places.slice(1,-1).map(place => {
+        return {
+          location: new google.maps.LatLng(place.position.lat, place.position.lng)
+        }
+      });
+    }
+  },
+  watch: {
+    mapCurrentPlaces() {
+      if (this.mapCurrentPlaces.length == 1) {
+        this.markersList = this.mapCurrentPlaces;
+
+        if (this.renderer != null) {
+          this.renderer.setMap(null);
+          this.renderer.setOptions({
+            // preserveViewport: false
+          })
+        }
+        this.center = {lat: 0, lng: 0}
+        this.center = this.mapCurrentPlaces[0].position;
+        this.service = null;
+        this.zoom = 15; 
+      }
+      if (this.mapCurrentPlaces.length > 1 ) {
+        this.markersList = []
+        let _self = this;
+        if (this.service == null) {
+          this.service = new google.maps.DirectionsService();
+        }
         if (this.renderer == null) {
           this.renderer = new google.maps.DirectionsRenderer();
         }
-        this.renderer.setMap(this.$refs.gmap.$mapObject);
-        directionsService.route(
+        this.renderer.setOptions({
+          map: this.$refs.gmap.$mapObject,
+            // preserveViewport: false
+          }),
+        this.service.route(
           {
-            origin: "chicago, il",
-            waypoints: [
-              {
-                location: "st louis, mo"
-              },
-              {
-                location: "amarillo, tx"
-              }
-            ],
-            destination: "kingman, az",
+            origin: new google.maps.LatLng(this.mapCurrentPlaces[0].position.lat, this.mapCurrentPlaces[0].position.lng),
+            waypoints: this.generateWaypoints(this.mapCurrentPlaces),
+            destination: new google.maps.LatLng(this.mapCurrentPlaces.slice(-1)[0].position.lat, this.mapCurrentPlaces.slice(-1)[0].position.lng),
             travelMode: "DRIVING"
           },
           function(response, status) {
@@ -90,46 +158,11 @@ export default {
           }
         );
       }
-    },
-    toggleInfoWindow: function (marker, idx) {
-        this.infoWindowPos = marker;
-        this.infoContent = this.getInfoWindowContent(marker);
-        
-
-        //check if its the same marker that was selected if yes toggle
-        if (this.currentMidx == idx) {
-          this.infoWinOpen = !this.infoWinOpen;
-        }
-        //if different marker set infowindow to open and reset current marker index
-        else {
-          this.infoWinOpen = true;
-          this.currentMidx = idx;
-        }
-      },
-      getInfoWindowContent: function (marker) {
-        return (`<div class="card">
-  <div class="card-image">
-    <figure class="image is-4by3">
-      <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-    </figure>
-  </div>
-  <div class="card-content">
-    <div class="media">
-      <div class="media-content">
-        <p class="title is-4">${marker}</p>
-      </div>
-    </div>
-    <div class="content">
-      ${marker}
-      <br>
-      <time datetime="2016-1-1">${marker}</time>
-    </div>
-  </div>
-</div>`);
-      },
+    }
   },
+  mounted() {},
   computed: {
-    ...mapGetters(["allPlaces"]),
+    ...mapGetters(["allPlaces", "mapCurrentPlaces"]),
     markersPositions() {
       return this.items.map(item => ({
         lat: item.lat,
