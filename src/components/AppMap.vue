@@ -3,20 +3,19 @@
     <button @click="test(true)">create routes</button>
     <button @click="test(false)">remove routes</button>
     <GmapMap
-      class="gmap"
       ref="gmap"
-      :center="{lat, lng}"
+      :center="{lat:10, lng:20}"
       :zoom="8"
       map-type-id="terrain"
       style="width: 100%; height: 100%"
     >
       <GmapMarker
         :key="index"
-        v-for="(m, index) in markersPositions"
-        :position="m"
+        v-for="(m, index) in allPlaces"
+        :position="m.position"
         :clickable="true"
         :draggable="false"
-        @click="toggleInfoWindow(m,index)"
+        @click="toggleInfoWindow(m.position,index)"
 
       />
       <GmapInfoWindow
@@ -33,9 +32,9 @@
 
 <script>
 import { gmapApi } from "vue2-google-maps";
+import { mapGetters } from "vuex";
 
 export default {
-  props: ["lat", "lng", "items"],
   data() {
     return {
       renderer: null,
@@ -56,6 +55,7 @@ export default {
     };
   },
   methods: {
+    
     test(m) {
       let _self = this;
       console.log(google);
@@ -129,6 +129,7 @@ export default {
       },
   },
   computed: {
+    ...mapGetters(["allPlaces"]),
     markersPositions() {
       return this.items.map(item => ({
         lat: item.lat,
