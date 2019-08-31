@@ -16,6 +16,7 @@
         :key="index"
         v-for="(m, index) in markersList"
         :position="m.position"
+        :label="123"
         :clickable="true"
         :draggable="false"
         @click="toggleInfoWindow(m.position,index)"
@@ -122,12 +123,13 @@ export default {
     mapCurrentPlaces() {
       if (this.mapCurrentPlaces.length == 1) {
         this.markersList = this.mapCurrentPlaces;
-        this.center = this.mapCurrentPlaces[0].position;
+        this.center = {lat: 0, lng: 0};
         if (this.renderer != null) {
           this.renderer.setMap(null);
         }
         this.zoom = 0;
         this.$nextTick(() => {
+          this.center = this.mapCurrentPlaces[0].position;
           this.zoom = 15;
         })
       }
