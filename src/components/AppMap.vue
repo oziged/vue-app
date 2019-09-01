@@ -16,7 +16,6 @@
         :key="index"
         v-for="(m, index) in markersList"
         :position="m.position"
-        :label="123"
         :clickable="true"
         :draggable="false"
         @click="toggleInfoWindow(m.position,index)"
@@ -35,6 +34,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import {gmapApi} from 'vue2-google-maps'
 
 export default {
   data() {

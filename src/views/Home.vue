@@ -1,18 +1,13 @@
 <template>
-  <v-row>
-    <checkpoints-list/>
-    <app-map/>
-  </v-row>
+    <home-map/>
 </template>
 
 <script>
-import CheckpointsList from '../components/CheckpointsList';
-import AppMap from '../components/AppMap';
+import HomeMap from '../components/HomeMap';
 
 export default {
   components: {
-    CheckpointsList,
-    AppMap
+    HomeMap
   },
 };
 </script>

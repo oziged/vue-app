@@ -1,8 +1,9 @@
 <template>
-  <v-row>
+  <div>
     <checkpoints-list/>
     <app-map/>
-  </v-row>
+  </div>
+
 </template>
 
 <script>

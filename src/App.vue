@@ -1,11 +1,9 @@
 <template>
   <v-app>
-    <v-row>
+      <div>
       <app-header/>
       <router-view></router-view>
-      <!-- <routes-list :changeLatLng="changeLatLng" :items="items"/> -->
-      <!-- <app-map/> -->
-    </v-row>
+    </div>
   </v-app>
 </template>
 
@@ -19,3 +17,13 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+  #app {
+    background-color: white;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+</style>
