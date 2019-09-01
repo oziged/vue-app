@@ -21,7 +21,7 @@ export default {
           title: 'City2',
           description: 'desc',
           position: {
-            lat: 20,
+            lat: 12,
             lng: 10
           }
         },
@@ -31,7 +31,7 @@ export default {
           title: 'City1 Place',
           description: 'desc',
           position: {
-            lat: 48,
+            lat: 10.1,
             lng: 10
           }
         },
@@ -41,7 +41,7 @@ export default {
           title: 'City1 Place2',
           description: 'desc',
           position: {
-            lat: 47.9,
+            lat: 10.2,
             lng: 10
           }
         },
@@ -50,6 +50,26 @@ export default {
           user_id: 1,
           title: 'City1 Place3',
           description: 'desc',
+          position: {
+            lat: 10.3,
+            lng: 10
+          }
+        },
+        {
+          id: 6,
+          user_id: 1,
+          title: 'usa place city1',
+          description: 'usa place desc',
+          position: {
+            lat: 44.9,
+            lng: 10
+          }
+        },
+        {
+          id: 7,
+          user_id: 1,
+          title: 'usa place city2',
+          description: 'usa place desc',
           position: {
             lat: 46.9,
             lng: 10

@@ -1,5 +1,5 @@
 <template>
-  <v-col lg="9" class="testt">
+  <div>
     <GmapMap
       ref="gmap"
       :center="center"
@@ -24,7 +24,7 @@
         <div v-html="infoContent"></div>
       </GmapInfoWindow>
     </GmapMap>
-  </v-col>
+  </div>
 </template>
 
 <script>
@@ -158,12 +158,6 @@ export default {
   mounted() {},
   computed: {
     ...mapGetters(["allPlaces", "mapCurrentPlaces"]),
-    markersPositions() {
-      return this.items.map(item => ({
-        lat: item.lat,
-        lng: item.lng
-      }));
-    }
   }
 };
 </script>

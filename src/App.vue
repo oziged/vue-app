@@ -2,7 +2,7 @@
   <v-app>
       <div>
       <app-header/>
-      <router-view></router-view>
+      <router-view :key="$route.fullPath"></router-view>
     </div>
   </v-app>
 </template>
@@ -20,7 +20,7 @@ export default {
 
 <style lang="scss">
   #app {
-    background-color: white;
+    background-color: rgb(250, 250, 250);
   }
 
   * {

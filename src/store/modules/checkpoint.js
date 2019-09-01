@@ -7,7 +7,6 @@ export default {
         checkpoints: [
             {
                 id: 1,
-                plan_id: 1,
                 place_id: 1,
                 title: 'City1',
                 description: 'Description1',
@@ -16,16 +15,14 @@ export default {
             },
             {
                 id: 2,
-                plan_id: 1,
                 place_id: 2,
                 title: 'City2',
                 description: 'Description2',
                 checkable_type: 'Plan',
-                checkable_id: 2
+                checkable_id: 1
             },
             {
                 id: 3,
-                plan_id: 1,
                 place_id: 3,
                 title: 'City1 - place',
                 description: 'Description city1 - place',
@@ -34,7 +31,6 @@ export default {
             },
             {
                 id: 4,
-                plan_id: 1,
                 place_id: 4,
                 title: 'City1 - place2',
                 description: 'Description city1 - place2',
@@ -43,17 +39,32 @@ export default {
             },
             {
                 id: 5,
-                plan_id: 1,
                 place_id: 5,
                 title: 'City1 - place3',
                 description: 'Description city1 -place2',
                 checkable_type: 'Checkpoint',
                 checkable_id: 1
+            },
+            {
+                id: 6,
+                place_id: 6,
+                title: 'USA City1',
+                description: 'Description city1',
+                checkable_type: 'Plan',
+                checkable_id: 2
+            },
+            {
+                id: 7,
+                place_id: 7,
+                title: 'USA City2',
+                description: 'Description city2',
+                checkable_type: 'Plan',
+                checkable_id: 2
             }
         ]
     },
     getters: {
-        allCheckPoints(state) {
+        allCheckpoints(state) {
             return state.checkpoints
         },
         getCheckpoint(state) {
@@ -63,12 +74,12 @@ export default {
                 })
             }
         },
-        getSubCheckpoints(state) {
-            return id => {
+        getSubCheckpoints(state, getters) {
+            return (id, type) => {
                 let sub = state.checkpoints.filter(checkpoint => {
-                    return checkpoint.checkable_id == id && checkpoint.checkable_type == 'Checkpoint'
+                    return checkpoint.checkable_id == id && checkpoint.checkable_type == type
                 })
-                return sub.length ? sub : false
+                return sub.length ? sub : getters.getCheckpoint(id)
             }
         }
 

@@ -9,7 +9,15 @@ export default {
                 id: 1,
                 user_id: 1,
                 title: 'Bus Europe Tour',
-                description: 'Best choice for ur family to spend time & money)) ',
+                description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. A dignissimos ipsa harum blanditiis iure in aut ut, quam quas atque?',
+                type: 'public',
+                price: ''
+            },
+            {
+                id: 2,
+                user_id: 1,
+                title: 'Bus USA Tour',
+                description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. A dignissimos ipsa harum blanditiis iure in aut ut, quam quas atque?',
                 type: 'public',
                 price: ''
             }
@@ -18,6 +26,13 @@ export default {
     getters: {
         allPlans(state) {
             return state.plans
+        },
+        getPlan(state) {
+            return id => {
+                return state.plans.find(plan => {
+                    return plan.id == id;
+                })
+            }
         }
     }
 }
