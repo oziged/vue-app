@@ -1,10 +1,5 @@
 <template>
   <v-col lg="9" class="testt">
-    || {{ zoom }} ||{{ mapCurrentPlaces }} // {{ center }} // {{ mapCurrentPlaces.length }}
-    <button
-      @click="test(true)"
-    >create routes</button>
-    <button @click="test(false)">remove routes</button>
     <GmapMap
       ref="gmap"
       :center="center"
@@ -18,7 +13,7 @@
         :position="m.position"
         :clickable="true"
         :draggable="false"
-        @click="toggleInfoWindow(m.position,index)"
+        @click="toggleInfoWindow(m,index)"
       />
       <GmapInfoWindow
         :options="infoOptions"
@@ -65,16 +60,8 @@ export default {
   },
 
   methods: {
-    test(m) {
-      let _self = this;
-      console.log(google);
-      if (m == false) {
-        this.renderer.setMap(null);
-      } else {
-      }
-    },
     toggleInfoWindow: function(marker, idx) {
-      this.infoWindowPos = marker;
+      this.infoWindowPos = marker.position;
       this.infoContent = this.getInfoWindowContent(marker);
 
       //check if its the same marker that was selected if yes toggle
@@ -97,13 +84,11 @@ export default {
         <div class="card-content">
           <div class="media">
             <div class="media-content">
-              <p class="title is-4">${marker}</p>
+              <p class="title is-4">${marker.title}</p>
             </div>
           </div>
           <div class="content">
-            ${marker}
-            <br>
-            <time datetime="2016-1-1">${marker}</time>
+            ${marker.description}
           </div>
         </div>
       </div>`;

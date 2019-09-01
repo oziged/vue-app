@@ -54,9 +54,9 @@ mounted() {
   // this.$gmapApiPromiseLazy().then(()=>{
     setTimeout(() => {
       let a = setInterval(() => {
-      if (this.markersOpacity == 1) clearInterval(a)
-      this.markersOpacity+=.1
-    }, 100);
+        if (this.markersOpacity == 1) clearInterval(a)
+        this.markersOpacity += .1
+      }, 100);
     }, 1000);
 
   // })
