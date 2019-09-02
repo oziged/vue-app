@@ -1,5 +1,16 @@
 <template>
   <div>
+    <badger-accordion>
+    <badger-accordion-item>
+        <template slot="header">First Accordion Header</template>    
+        <template slot="content">First Accordion Content</template>  
+    </badger-accordion-item>
+ 
+    <badger-accordion-item>
+        <template slot="header">Second Accordion Header</template>    
+        <template slot="content">Second Accordion Content</template>  
+    </badger-accordion-item>
+</badger-accordion>
     <div class="plan">
       <div class="plan_info">
         <h1 class="plan_title">{{ title }}</h1>
@@ -9,31 +20,26 @@
             @click="openCheckpoint(checkpoint.id, 'Checkpoint')" 
             v-for="(checkpoint, index) in getSubCheckpoints(id, 'Plan')" 
             :key="index">
+
           </div>
         </div>
       </div>
       <app-map class="plan_map"/>
     </div>
-          <v-expansion-panels :accordion="true">
-          <v-expansion-panel
-            >
-        <v-expansion-panel-header>Item</v-expansion-panel-header>
-        <v-expansion-panel-content>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        </v-expansion-panel-content>
-      </v-expansion-panel> 
-        </v-expansion-panels>
   </div>
 </template>
 
 <script>
+import {BadgerAccordion, BadgerAccordionItem} from 'vue-badger-accordion'
 import { mapGetters, mapActions } from "vuex";
 import AppMap from './AppMap'
 
 export default {
   props: ['id'],
   components: {
-    AppMap
+    AppMap,
+    BadgerAccordion,
+    BadgerAccordionItem,
   },
   data: () => ({
     title: '',
