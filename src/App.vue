@@ -26,4 +26,20 @@ export default {
 * {
   box-sizing: border-box;
 }
+
+/* VUETIFY STYLES FIX */
+.checkpoints_list {
+  .v-expansion-panel {
+    .v-expansion-panel-content__wrap {
+      padding: 0;
+      .v-expansion-panel-header {
+      }
+    }
+  }
+
+  .v-expansion-panel:before {
+    box-shadow: none;
+  }
+}
+
 </style>

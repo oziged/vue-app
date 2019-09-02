@@ -1,7 +1,15 @@
 export default {
     actions: {
+        setCurrentCheckpoint( { commit, rootGetters }, id) {
+            let checkpoint = rootGetters.getCheckpoint(id);
+            console.log(checkpoint);
+            commit('setCurrentCheckpoint', checkpoint)
+        }
     },
     mutations: {
+        setCurrentCheckpoint(state, checkpoint) {
+
+        }
     },
     state: {
         checkpoints: [
@@ -61,7 +69,8 @@ export default {
                 checkable_type: 'Plan',
                 checkable_id: 2
             }
-        ]
+        ],
+        current_checkpoint: null
     },
     getters: {
         allCheckpoints(state) {
@@ -81,6 +90,9 @@ export default {
                 })
                 return sub.length ? sub : getters.getCheckpoint(id)
             }
+        },
+        getCurrentCheckpoint(state) {
+            return state.current_checkpoint
         }
 
     }

@@ -4,15 +4,17 @@
       <div class="plan_info">
         <h1 class="plan_title" @click="showMainCheckpoints">{{ title }}</h1>
         <p class="plan_description">{{ description }}</p>
-        <div class="checkpoints_list">
-          <v-expansion-panels accordion>
-            <checkpoint
-              v-for="(checkpoint,i) in getSubCheckpoints(id, 'Plan')"
-              :key="i"
-              @click.native="openCheckpoint(checkpoint.id)"
-              :checkpoint="checkpoint"
-            />
-          </v-expansion-panels>
+        <div class="checkpoint_list_wrapper">
+          <div class="checkpoints_list">
+            <v-expansion-panels accordion>
+              <checkpoint
+                v-for="(checkpoint,i) in getSubCheckpoints(id, 'Plan')"
+                :key="i"
+                @click.native="openCheckpoint(checkpoint.id)"
+                :checkpoint="checkpoint"
+              />
+            </v-expansion-panels>
+          </div>
         </div>
       </div>
       <app-map class="plan_map" />
@@ -39,13 +41,14 @@ export default {
     description: ""
   }),
   methods: {
-    ...mapActions(["updateMapPlaces"]),
+    ...mapActions(["updateMapPlaces", "setCurrentCheckpoint"]),
     openCheckpoint(id) {
       let checkpoint = this.getCheckpoint(id);
       let subCheckpoints = this.getSubCheckpoints(id, "Checkpoint");
       if (subCheckpoints) {
         this.updateMapPlaces(subCheckpoints);
       } else this.updateMapPlaces(checkpoint);
+      this.setCurrentCheckpoint(id)
     },
     showMainCheckpoints() {
       let subCheckpoints = this.getSubCheckpoints(this.id, "Plan");
