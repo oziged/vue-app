@@ -29,7 +29,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import {gmapApi} from 'vue2-google-maps'
+import { gmapApi } from "vue2-google-maps";
 
 export default {
   data() {
@@ -108,7 +108,7 @@ export default {
     mapCurrentPlaces() {
       if (this.mapCurrentPlaces.length == 1) {
         this.markersList = this.mapCurrentPlaces;
-        this.center = {lat: 0, lng: 0};
+        this.center = { lat: 0, lng: 0 };
         if (this.renderer != null) {
           this.renderer.setMap(null);
         }
@@ -116,9 +116,8 @@ export default {
         this.$nextTick(() => {
           this.center = this.mapCurrentPlaces[0].position;
           this.zoom = 15;
-        })
-      }
-      else if (this.mapCurrentPlaces.length > 1) {
+        });
+      } else if (this.mapCurrentPlaces.length > 1) {
         this.center = { lat: 0, lng: 0 };
         this.markersList = [];
         let _self = this;
@@ -129,7 +128,7 @@ export default {
           this.renderer = new google.maps.DirectionsRenderer();
         }
         this.renderer.setOptions({
-          map: this.$refs.gmap.$mapObject,
+          map: this.$refs.gmap.$mapObject
         }),
           this.service.route(
             {
@@ -157,7 +156,7 @@ export default {
   },
   mounted() {},
   computed: {
-    ...mapGetters(["allPlaces", "mapCurrentPlaces"]),
+    ...mapGetters(["allPlaces", "mapCurrentPlaces"])
   }
 };
 </script>

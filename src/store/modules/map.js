@@ -3,6 +3,8 @@ export default {
     updateMapPlaces({ commit, rootGetters }, checkpoints) {
       if (!(checkpoints instanceof Array))
       checkpoints = [checkpoints]
+      console.log(`CHE = `)
+      console.log(checkpoints)
 
       let places = [];
       if (checkpoints.length == 1) places = [rootGetters.getPlace(checkpoints[0].place_id)];

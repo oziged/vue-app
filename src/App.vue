@@ -1,17 +1,17 @@
 <template>
   <v-app>
-      <div>
-      <app-header/>
+    <div>
+      <app-header />
       <router-view :key="$route.fullPath"></router-view>
     </div>
   </v-app>
 </template>
 
 <script>
-import AppHeader from './components/AppHeader'
+import AppHeader from "./components/AppHeader";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     AppHeader
   }
@@ -19,11 +19,11 @@ export default {
 </script>
 
 <style lang="scss">
-  #app {
-    background-color: rgb(250, 250, 250);
-  }
+#app {
+  background-color: rgb(250, 250, 250);
+}
 
-  * {
-    box-sizing: border-box;
-  }
+* {
+  box-sizing: border-box;
+}
 </style>

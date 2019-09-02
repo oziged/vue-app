@@ -8,8 +8,6 @@ import vuetify from './plugins/vuetify';
 import VueCollapse from 'vue2-collapse'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
-
-
 Vue.use(Vuetify);
 Vue.use(VueCollapse);
 Vue.use(VueGoogleMaps, {
@@ -28,4 +26,4 @@ new Vue({
 }).$mount('#app')
 
 
- 
+
