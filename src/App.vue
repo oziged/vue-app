@@ -37,8 +37,20 @@ export default {
     }
   }
 
+  .v-expansion-panel--active .v-expansion-panel-header {
+    min-height: 40px;
+  }
+
+  .v-expansion-panel--active .v-item--active {
+    margin-bottom: 10px;
+  }
+
   .v-expansion-panel:before {
     box-shadow: none;
+  }
+  .v-expansion-panel-header {
+    padding-bottom: 0;
+    padding-top: 0;
   }
 }
 

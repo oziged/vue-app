@@ -1,6 +1,6 @@
 <template>
   <v-expansion-panel>
-    <v-expansion-panel-header>
+    <v-expansion-panel-header class="testtt">
       <div
         class="checkpoint_title"
         :class="{ 'subcheckpoint': checkpoint.checkable_type == 'Checkpoint', 'plan_checkpoint' : checkpoint.checkable_type == 'Plan' }"
@@ -9,7 +9,7 @@
     <v-expansion-panel-content
       :class="{ 'checkpoint_content' : checkpoint.checkable_type == 'Plan'}"
     >
-      <div class="checkpoint_description">{{ checkpoint.description }}</div>
+      <div class="checkpoint_description" :class="{ 'margin10':getSubCheckpoints(checkpoint.id, 'Checkpoint')['id']==checkpoint.id && checkpoint.checkable_type=='Plan' }">{{ checkpoint.description }}</div>
       <v-expansion-panels
         v-if="getSubCheckpoints(checkpoint.id, 'Checkpoint')['id']!=checkpoint.id"
         accordion
@@ -55,19 +55,19 @@ export default {
 .checkpoint_title {
   font-size: 16px;
   position: relative;
+  padding-left: 10px;
 }
-.checkpoint_content {
+.checkpoint_description {
   position: relative;
 }
-.checkpoint_content:before {
+.checkpoint_description:before {
   content: "";
   position: absolute;
-  top: -10px;
-  left: -30px;
+  top: 0px;
+  left: -20px;
 
   width: 60px;
-  z-index: 2;
-  height: calc(100% + 10px);
+  height: calc(100%);
 
   background: radial-gradient(circle, #000 2px, transparent 2px) top / 8px 8px
     repeat-y;
@@ -76,7 +76,7 @@ export default {
 .plan_checkpoint::before {
   content: "";
   position: absolute;
-  left: -35px;
+  left: -25px;
   top: 50%;
   transform: translateY(-50%);
 
@@ -88,27 +88,29 @@ export default {
 }
 
 .subcheckpoint {
-    z-index: 222;
   position: relative;
 }
 
 .subcheckpoint::before {
   content: "";
   position: absolute;
-  left: -35px;
+  left: -25px;
   top: 50%;
   transform: translateY(-50%);
 
   width: 22px;
   height: 22px;
-  background: radial-gradient(circle, red 7px, transparent 5px) center / 20px
+  background: radial-gradient(circle, black 5px, transparent 5px) center / 20px
     no-repeat;
 }
 
 .checkpoint_description {
   padding-left: 24px;
   padding-right: 24px;
-  padding-bottom: 15px;
   // border-bottom: 1px solid rgba(0, 0, 0, .2)
+}
+
+.margin10 {
+  margin-bottom: 10px;  
 }
 </style>
