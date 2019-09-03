@@ -1,6 +1,6 @@
 <template>
-  <v-expansion-panel>
-    <v-expansion-panel-header class="testtt">
+  <v-expansion-panel class="checkpoint_full">
+    <v-expansion-panel-header>
       <div
         class="checkpoint_title"
         :class="{ 'subcheckpoint': checkpoint.checkable_type == 'Checkpoint', 'plan_checkpoint' : checkpoint.checkable_type == 'Plan' }"
@@ -109,6 +109,11 @@ export default {
   padding-right: 24px;
   // border-bottom: 1px solid rgba(0, 0, 0, .2)
 }
+
+// .checkpoint_full {
+//   box-shadow: -5px 0px 0px 0px black;
+//   border-radius: 0;
+// }
 
 .margin10 {
   margin-bottom: 10px;  
