@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import PlanPage from './views/PlanPage.vue'
-import PlansPage from './views/PlanPage.vue'
+import PlanShow from './views/PlanShow.vue'
+import PlanIndex from './views/PlanIndex.vue'
 
 Vue.use(Router)
 
@@ -15,11 +15,11 @@ export default new Router({
     },
     { 
       path: '/plan/:id', 
-      component: PlanPage
+      component: PlanShow
     },
     {
       path: '/plans',
-      component: PlansPage
+      component: PlanIndex
     },
   ]
 })

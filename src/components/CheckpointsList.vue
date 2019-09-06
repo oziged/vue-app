@@ -1,5 +1,6 @@
 <template>
   <v-col lg="3" class="test pl-8 pt-8">
+    {{ allCheckpoints }}
     <v-text-field :hide-details="true" label="Outlined" placeholder="Placeholder" outlined></v-text-field>
     <v-list flat>
       <v-list-item-group color="indigo">
@@ -30,8 +31,6 @@ export default {
   computed: {
     ...mapGetters(["allUsers", "allPlans", "allPlaces", "allCheckpoints", "getPlace", "getCheckpoint", "getSubCheckpoints"])
   },
-  mounted() {
-  }
 };
 </script>
 

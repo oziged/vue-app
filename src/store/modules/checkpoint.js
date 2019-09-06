@@ -49,7 +49,7 @@ export default {
                 id: 5,
                 place_id: 5,
                 title: 'City1 - place3',
-                description: 'Description city1 -place2',
+                description: 'Description city1 -place3',
                 checkable_type: 'Checkpoint',
                 checkable_id: 1
             },
@@ -68,6 +68,22 @@ export default {
                 description: 'Description city2',
                 checkable_type: 'Plan',
                 checkable_id: 2
+            },
+            {
+                id: 8,
+                place_id: 8,
+                title: 'City 1 Place 3 subPlace 1',
+                description: 'City 1 Place 3 subPlace 1',
+                checkable_type: 'Checkpoint',
+                checkable_id: 5
+            },
+            {
+                id: 9,
+                place_id: 9,
+                title: 'City 1 Place 3 subPlace 2',
+                description: 'City 1 Place 3 subPlace 2',
+                checkable_type: 'Checkpoint',
+                checkable_id: 5
             }
         ],
         current_checkpoint: null
@@ -88,7 +104,8 @@ export default {
                 let sub = state.checkpoints.filter(checkpoint => {
                     return checkpoint.checkable_id == id && checkpoint.checkable_type == type
                 })
-                return sub.length ? sub : getters.getCheckpoint(id)
+                if (sub.length) return sub;
+                if (type == 'Checkpoint') return getters.getCheckpoint(id);
             }
         },
         getCurrentCheckpoint(state) {

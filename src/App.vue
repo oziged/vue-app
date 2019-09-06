@@ -8,19 +8,21 @@
 </template>
 
 <script>
+import axios from "axios";
 import AppHeader from "./components/AppHeader";
 
 export default {
   name: "App",
   components: {
     AppHeader
-  }
+  },
+  mounted() {}
 };
 </script>
 
 <style lang="scss">
 #app {
-  background-color: rgb(250, 250, 250);
+  // background-color: rgb(250, 250, 250);
 }
 
 * {
@@ -53,5 +55,4 @@ export default {
     padding-top: 0;
   }
 }
-
 </style>

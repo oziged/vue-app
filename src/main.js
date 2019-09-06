@@ -7,7 +7,11 @@ import 'vuetify/dist/vuetify.min.css'
 import vuetify from './plugins/vuetify';
 import VueCollapse from 'vue2-collapse'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import {VueMasonryPlugin} from 'vue-masonry';
+import MagicGrid from 'vue-magic-grid'
 
+Vue.use(MagicGrid)
+Vue.use(VueMasonryPlugin)
 Vue.use(Vuetify);
 Vue.use(VueCollapse);
 Vue.use(VueGoogleMaps, {

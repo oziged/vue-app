@@ -59,6 +59,8 @@ export default {
   },
   mounted() {
     let plan = this.getPlan(this.id);
+    console.log(plan);
+    console.log('1233');
     this.title = plan.title;
     this.description = plan.description;
 
