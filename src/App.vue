@@ -2,7 +2,7 @@
   <v-app>
     <div>
       <app-header />
-      <router-view :key="$route.fullPath"></router-view>
+      <router-view class="content" :key="$route.fullPath"></router-view>
     </div>
   </v-app>
 </template>
@@ -22,7 +22,13 @@ export default {
 
 <style lang="scss">
 #app {
-  // background-color: rgb(250, 250, 250);
+  // background-color: rgb(218, 208, 208);
+}
+
+.content {
+  min-height: calc(100vh - 80px);
+  background-color: white;
+  // background-color: rgba(169, 255, 212, .2);
 }
 
 * {
@@ -30,6 +36,10 @@ export default {
 }
 
 /* VUETIFY STYLES FIX */
+.v-application--wrap {
+  // background-color: rgb(180, 255, 183);
+}
+
 .checkpoints_list {
   .v-expansion-panel {
     .v-expansion-panel-content__wrap {

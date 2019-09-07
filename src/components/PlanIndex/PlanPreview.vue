@@ -1,7 +1,17 @@
 <template>
   <div class="plan_preview">
     <h3>{{ plan.title }}</h3>
-    <truncate class="plan_description" clamp="..." :length="90" less="..." :text="plan.description"></truncate>
+    <p
+      v-if="fullDescription"
+      @click="fullDescription = !fullDescription"
+      class="plan_description"
+    >{{ plan.description }}</p>
+    <p
+      v-else
+      class="plan_description"
+      @click="fullDescription = !fullDescription"
+    >{{ plan.description | truncate }}</p>
+    <!-- <truncate class="plan_description" clamp="..." :length="90" less="..." :text="plan.description"></truncate> -->
     <div class="plan_routes_list">
       <div class="plan_route" v-for="(item, index) in subCheckpoints" :key="index">
         <img class="circle" src="@/assets/PlanIndex/PlanPreview/circle.svg" alt />
@@ -14,7 +24,7 @@
         <v-rating v-model="plan.rating" readonly background-color="green lighten-3" color="green"></v-rating>
       </div>
       <div class="right_block">
-        {{ subCheckpoints.length }}
+        <!-- {{ subCheckpoints.length }} -->
         <img
           class="circle"
           style="margin: 0 5px;"
@@ -28,17 +38,25 @@
 </template>
 
 <script>
-import truncate from "vue-truncate-collapsed";
+import {TweenMax, CSSPlugin, ScrollToPlugin, Draggable, Elastic} from "gsap/all";
+
+// import truncate from "vue-truncate-collapsed";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   props: ["plan"],
   components: {
-    truncate
+    // truncate
+  },
+  filters: {
+    truncate(value) {
+      return `${value.slice(0, 90)}...`;
+    }
   },
   data() {
     return {
-      subCheckpoints: []
+      subCheckpoints: [],
+      fullDescription: false
     };
   },
   computed: {
@@ -55,10 +73,15 @@ export default {
     };
 
     document.querySelectorAll(".plan_description").forEach(item => {
-      item.addEventListener("click", () => {
+      item.addEventListener("click", e => {});
+    });
+  },
+  watch: {
+    fullDescription() {
+      this.$nextTick(() => {
         window.dispatchEvent(new Event("resize"));
       });
-    });
+    }
   }
 };
 </script>
@@ -119,7 +142,7 @@ export default {
 
 @media (max-width: 895px) {
   .plan_preview {
-    width: calc((100% - 20px) / 2)
+    width: calc((100% - 20px) / 2);
   }
 }
 
