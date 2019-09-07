@@ -2,7 +2,9 @@
   <v-app>
     <div>
       <app-header />
-      <router-view class="content" :key="$route.fullPath"></router-view>
+      <transition name="router-anim" mode="out-in">
+        <router-view class="content" :key="$route.fullPath"></router-view>
+      </transition>
     </div>
   </v-app>
 </template>
@@ -21,25 +23,40 @@ export default {
 </script>
 
 <style lang="scss">
+.router-anim-enter-active,
+.router-anim-leave-active {
+  transition: all 0.3s;
+}
+
+.router-anim-enter,
+.router-anim-leave-to {
+  opacity: 0;
+}
+
 #app {
-  // background-color: rgb(218, 208, 208);
+  background-color: white;
 }
 
 .content {
   min-height: calc(100vh - 80px);
   background-color: white;
-  // background-color: rgba(169, 255, 212, .2);
 }
 
 * {
   box-sizing: border-box;
 }
 
-/* VUETIFY STYLES FIX */
-.v-application--wrap {
-  // background-color: rgb(180, 255, 183);
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
+/* VUETIFY STYLES FIX */
+
+  // .range_selector input {
+    // text-align: center;
+  // }
 .checkpoints_list {
   .v-expansion-panel {
     .v-expansion-panel-content__wrap {
@@ -64,5 +81,6 @@ export default {
     padding-bottom: 0;
     padding-top: 0;
   }
+
 }
 </style>

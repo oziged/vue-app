@@ -1,6 +1,6 @@
 <template>
   <div>
-    <plan :id="$route.params.id"/>
+      <plan :id="$route.params.id"/>
   </div>
 </template>
 

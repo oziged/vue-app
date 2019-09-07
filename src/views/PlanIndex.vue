@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="transition-delay: .1s">
     <filter-sort-header />
     <div class="plans_list">
     <magic-grid :gap="10" :maxColWidth="9999">
@@ -29,6 +29,7 @@ export default {
 
 <style lang="scss" scoped>
   .plans_list {
-    padding: 0 50px;
+    position: relative;
+    margin: 30px 50px 0 50px;
   }
 </style>

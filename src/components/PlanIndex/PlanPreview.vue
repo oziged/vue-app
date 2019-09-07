@@ -38,7 +38,13 @@
 </template>
 
 <script>
-import {TweenMax, CSSPlugin, ScrollToPlugin, Draggable, Elastic} from "gsap/all";
+import {
+  TweenMax,
+  CSSPlugin,
+  ScrollToPlugin,
+  Draggable,
+  Elastic
+} from "gsap/all";
 
 // import truncate from "vue-truncate-collapsed";
 import { mapGetters, mapActions } from "vuex";
@@ -92,8 +98,10 @@ export default {
   min-width: 250px;
   padding: 10px;
   background-color: white;
+  box-shadow: 0 0 5px 0px rgba(67, 175, 152, 0.226);
+  // transition: .5s!important;
   &:hover {
-    box-shadow: 0 0 5px 0px rgba(67, 175, 152, 0.226);
+    background-color: #f9f9f9;
     cursor: pointer;
   }
 }
