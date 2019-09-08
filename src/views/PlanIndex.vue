@@ -1,11 +1,11 @@
 <template>
   <div style="transition-delay: .1s">
-    <filter-sort-header />
-    <div class="plans_list">
-    <magic-grid :gap="10" :maxColWidth="9999">
+    <filter-sort-header class="filter_sort_header"/>
+    <!-- <div class="plans_list"> -->
+    <magic-grid class="plans_list" :gap="10" :maxColWidth="9999">
       <plan-preview v-for="(item, index) in allPlans" :key="index" :plan="item" />
     </magic-grid>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 <script>
@@ -22,7 +22,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["allPlans"])
+    ...mapGetters(["allPlans", "currentPlans"])
   }
 };
 </script>
@@ -30,6 +30,10 @@ export default {
 <style lang="scss" scoped>
   .plans_list {
     position: relative;
-    margin: 30px 50px 0 50px;
+    margin: 0 50px;
+  }
+
+  .filter_sort_header {
+    margin: 30px 50px;
   }
 </style>

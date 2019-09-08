@@ -4,7 +4,9 @@
       <div
         class="checkpoint_title"
         :class="{ 'subcheckpoint': checkpoint.checkable_type == 'Checkpoint', 'plan_checkpoint' : checkpoint.checkable_type == 'Plan' }"
-      >{{ checkpoint.title }}</div>
+      >
+      <div class="click" @click.stop="test(checkpoint.id)"></div>
+      {{ checkpoint.title }}</div>
     </v-expansion-panel-header>
     <v-expansion-panel-content
       :class="{ 'checkpoint_content' : checkpoint.checkable_type == 'Plan'}"
@@ -36,7 +38,10 @@ export default {
     Checkpoint
   },
   methods: {
-    ...mapActions(["updateMapPlaces"]),
+    test(id) {
+      this.setCurrentCheckpoint(id);
+    },
+    ...mapActions(["updateMapPlaces", 'setCurrentCheckpoint']),
     openCheckpoint(id) {
       let checkpoint = this.getCheckpoint(id);
       let subCheckpoints = this.getSubCheckpoints(id, "Checkpoint");
@@ -56,6 +61,14 @@ export default {
   font-size: 16px;
   position: relative;
   padding-left: 10px;
+  .click {
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 }
 .checkpoint_description {
   position: relative;

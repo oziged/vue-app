@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <div>
+      <checkpoint-modal-show v-model="modal"/>
       <app-header />
       <transition name="router-anim" mode="out-in">
         <router-view class="content" :key="$route.fullPath"></router-view>
@@ -12,13 +13,28 @@
 <script>
 import axios from "axios";
 import AppHeader from "./components/AppHeader";
+import CheckpointModalShow from './components/CheckpointModalShow';
 
 export default {
   name: "App",
   components: {
-    AppHeader
+    AppHeader,
+    CheckpointModalShow
   },
-  mounted() {}
+  data() {
+    return {
+      modal: false
+    }
+  },
+  mounted() {
+    window.modal = () => {
+      return this.modal;
+    }
+    window.on = () => {
+      this.modal = true;
+      return this.modal;
+    }
+  }
 };
 </script>
 
@@ -54,9 +70,9 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* VUETIFY STYLES FIX */
 
-  // .range_selector input {
-    // text-align: center;
-  // }
+// .range_selector input {
+// text-align: center;
+// }
 .checkpoints_list {
   .v-expansion-panel {
     .v-expansion-panel-content__wrap {
@@ -81,6 +97,6 @@ input[type="number"]::-webkit-outer-spin-button {
     padding-bottom: 0;
     padding-top: 0;
   }
-
 }
+
 </style>

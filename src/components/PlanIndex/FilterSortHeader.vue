@@ -8,7 +8,11 @@
         alt
       />
       <transition name="filter">
-        <div v-if="displayFilterSortModal" class="filter_sort_modal">
+        <div
+          v-if="displayFilterSortModal"
+          class="filter_sort_modal"
+          v-click-outside="hideFilterSortModal"
+        >
           <h4 class="modal_header">Sort/Filter Settings</h4>
           <v-select
             v-model="selectedFilter"
@@ -18,40 +22,9 @@
             background-color="white"
             color="green"
             label="Sort settings:"
+            style="margin-bottom: 5px;"
           ></v-select>
-          <span>Distance</span>
-          <div class="range_selectors" style="display: flex">
-            <v-text-field
-              v-model="distanceRange[0]"
-              :hide-details="true"
-              single-line
-              solo
-              type="number"
-              color="green"
-              style="width: 40px; align=center"
-              class="range_selector"
-            ></v-text-field>
-            <v-text-field
-              v-model="distanceRange[1]"
-              :hide-details="true"
-              single-line
-              solo
-              type="number"
-              color="green"
-              style="width: 40px; align=center"
-              class="range_selector"
-            ></v-text-field>
-          </div>
-
-          <v-range-slider
-            v-model="distanceRange"
-            :max="distanceMax"
-            :min="distanceMin"
-            :hide-details="true"
-            track-color="green"
-            color="green"
-            class="align-center"
-          ></v-range-slider>
+          <filter-div v-for="(item, index) in filters" v-model="filters[index]" :key="index" />
         </div>
       </transition>
     </div>
@@ -64,6 +37,7 @@
       />
       <transition name="search">
         <v-text-field
+          v-click-outside="hideSearchInput"
           v-if="displaySearchInput"
           autofocus
           class="search_input"
@@ -77,9 +51,14 @@
 </template>
 
 <script>
+import vClickOutside from "v-click-outside";
 import { mapGetters, mapActions } from "vuex";
+import FilterDiv from "./FilterDiv";
 
 export default {
+  components: {
+    FilterDiv
+  },
   data() {
     return {
       items: [
@@ -90,21 +69,58 @@ export default {
         "From min distance",
         "From max distance"
       ],
+      filters: [
+        {
+          title: "Distance",
+          min: 0,
+          max: 4000,
+          range: [0, 4000]
+        },
+        {
+          title: "Price",
+          min: 0,
+          max: 100,
+          range: [0, 100]
+        },
+        {
+          title: "Rating",
+          min: 50,
+          max: 2000,
+          range: [50, 2000]
+        }
+      ],
       distanceMin: 0,
       distanceMax: 5000,
-      distanceRange: [0,5000],
+      distanceRange: [0, 5000],
       displaySearchInput: false,
       displayFilterSortModal: false,
       selectedFilter: null
     };
   },
-  computed: {
+  watch: {
+    filters: {
+      handler: function (val, oldVal) {
+      	console.log('changed');
+      },
+      deep: true
+    }
   },
-  methods: {},
+  computed: {},
+  methods: {
+    hideFilterSortModal(event) {
+      this.displayFilterSortModal = false;
+    },
+    hideSearchInput(event) {
+      this.displaySearchInput = false;
+    }
+  },
   mounted() {
     window.test = () => {
-      return this.selectedFilter;
-    };
+      return this.filters[0].range
+    }
+  },
+  directives: {
+    clickOutside: vClickOutside.directive
   }
 };
 </script>
@@ -122,7 +138,7 @@ export default {
     width: 40%;
     position: relative;
     .filter_sort_modal {
-      width: 70%;
+      width: 300px;
       height: 500px;
       position: absolute;
       top: 90px;
@@ -130,7 +146,6 @@ export default {
       z-index: 100;
       background-color: #fff;
       border: 1px solid #e5e5e5;
-      border-top: 5px solid #e5e5e5;
       box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15),
         rgba(0, 0, 0, 0.1) 0px 0px 0px 1px;
       border-radius: 8px;

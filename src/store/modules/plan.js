@@ -69,7 +69,18 @@ export default {
         rating: 4,
         length: 420
       }
-    ]
+    ],
+    currentPlans: [      {
+      id: 3,
+      user_id: 1,
+      title: "Test Tour",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. A dignissimos ipsa harum blanditiis iure in aut ut, quam quas atque?",
+      type: "public",
+      price: "",
+      rating: 4,
+      length: 420
+    }]
   },
   getters: {
     allPlans(state) {
@@ -81,6 +92,9 @@ export default {
           return plan.id == id;
         });
       };
+    },
+    currentPlans(state) {
+      return state.currentPlans;
     }
   }
 };

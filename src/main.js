@@ -9,7 +9,9 @@ import VueCollapse from 'vue2-collapse'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import {VueMasonryPlugin} from 'vue-masonry';
 import MagicGrid from 'vue-magic-grid'
+import vClickOutside from 'v-click-outside'
 
+Vue.use(vClickOutside)
 Vue.use(MagicGrid)
 Vue.use(VueMasonryPlugin)
 Vue.use(Vuetify);

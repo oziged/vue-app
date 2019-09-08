@@ -8,7 +8,7 @@ export default {
     },
     mutations: {
         setCurrentCheckpoint(state, checkpoint) {
-
+            state.current_checkpoint = checkpoint;
         }
     },
     state: {
@@ -108,7 +108,7 @@ export default {
                 if (type == 'Checkpoint') return getters.getCheckpoint(id);
             }
         },
-        getCurrentCheckpoint(state) {
+        currentCheckpoint(state) {
             return state.current_checkpoint
         }
 

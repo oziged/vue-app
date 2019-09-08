@@ -1,6 +1,9 @@
 <template>
   <div class="plan_preview">
-    <h3>{{ plan.title }}</h3>
+    <router-link :to="`plan/${plan.id}`" style="display: block; width: fit-content">
+      <h3 style="display: block; width: fit-content">{{ plan.title }}</h3>
+    </router-link>
+
     <p
       v-if="fullDescription"
       @click="fullDescription = !fullDescription"
@@ -11,7 +14,6 @@
       class="plan_description"
       @click="fullDescription = !fullDescription"
     >{{ plan.description | truncate }}</p>
-    <!-- <truncate class="plan_description" clamp="..." :length="90" less="..." :text="plan.description"></truncate> -->
     <div class="plan_routes_list">
       <div class="plan_route" v-for="(item, index) in subCheckpoints" :key="index">
         <img class="circle" src="@/assets/PlanIndex/PlanPreview/circle.svg" alt />
@@ -21,10 +23,12 @@
     </div>
     <div class="plan_route_bottom_info">
       <div class="left_block">
-        <v-rating v-model="plan.rating" readonly background-color="green lighten-3" color="green"></v-rating>
+        <v-rating v-model="fav" full-icon="mdi-heart" empty-icon="mdi-heart-outline" clearable length="1" background-color="green lighten-3" color="green"></v-rating>
+        <hr style="opacity: .2; margin: 10px 10px; height: 20px;">
+        <v-rating :value="plan.rating" readonly background-color="green lighten-3" color="green"></v-rating>
       </div>
       <div class="right_block">
-        <!-- {{ subCheckpoints.length }} -->
+        <span v-if="subCheckpoints">{{ subCheckpoints.length }}</span>
         <img
           class="circle"
           style="margin: 0 5px;"
@@ -46,13 +50,11 @@ import {
   Elastic
 } from "gsap/all";
 
-// import truncate from "vue-truncate-collapsed";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   props: ["plan"],
   components: {
-    // truncate
   },
   filters: {
     truncate(value) {
@@ -61,26 +63,22 @@ export default {
   },
   data() {
     return {
-      subCheckpoints: [],
-      fullDescription: false
+      // subCheckpoints: [],
+      fullDescription: false,
+      fav: 0
     };
   },
   computed: {
-    ...mapGetters(["getSubCheckpoints"])
+    ...mapGetters(["getSubCheckpoints"]),
+    subCheckpoints() {
+      return this.getSubCheckpoints(this.plan.id, 'Plan')
+    }
   },
   methods: {},
   mounted() {
-    this.subCheckpoints = this.getSubCheckpoints(this.plan.id, "Plan");
-    window.h = () => {
-      window.resizeTo(
-        window.screen.availWidth / 2,
-        window.screen.availHeight / 2
-      );
+    window.fav = () => {
+      return this.fav
     };
-
-    document.querySelectorAll(".plan_description").forEach(item => {
-      item.addEventListener("click", e => {});
-    });
   },
   watch: {
     fullDescription() {
@@ -99,7 +97,6 @@ export default {
   padding: 10px;
   background-color: white;
   box-shadow: 0 0 5px 0px rgba(67, 175, 152, 0.226);
-  // transition: .5s!important;
   &:hover {
     background-color: #f9f9f9;
     cursor: pointer;
@@ -127,6 +124,10 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .left_block {
+      display: flex;
+      align-items: center;
+    }
     .right_block {
       display: flex;
       align-items: center;
@@ -167,5 +168,8 @@ export default {
   .v-icon {
     padding: 0;
   }
+}
+.v-application .plan_preview a {
+  color: black;
 }
 </style>
