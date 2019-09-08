@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <app-map class="plan_map" />
+      <app-map class="plan_map" :current_places="current_places" />
     </div>
   </div>
 </template>
@@ -38,7 +38,8 @@ export default {
   },
   data: () => ({
     title: "",
-    description: ""
+    description: "",
+    current_places: []
   }),
   methods: {
     ...mapActions(["updateMapPlaces", "setCurrentCheckpoint"]),
@@ -48,7 +49,7 @@ export default {
       if (subCheckpoints) {
         this.updateMapPlaces(subCheckpoints);
       } else this.updateMapPlaces(checkpoint);
-      this.setCurrentCheckpoint(id)
+      // this.setCurrentCheckpoint(id)
     },
     showMainCheckpoints() {
       let subCheckpoints = this.getSubCheckpoints(this.id, "Plan");
@@ -59,8 +60,6 @@ export default {
   },
   mounted() {
     let plan = this.getPlan(this.id);
-    console.log(plan);
-    console.log('1233');
     this.title = plan.title;
     this.description = plan.description;
 

@@ -5,13 +5,17 @@
         class="checkpoint_title"
         :class="{ 'subcheckpoint': checkpoint.checkable_type == 'Checkpoint', 'plan_checkpoint' : checkpoint.checkable_type == 'Plan' }"
       >
-      <div class="click" @click.stop="test(checkpoint.id)"></div>
-      {{ checkpoint.title }}</div>
+        <div class="click" @click.stop="test(checkpoint.id)"></div>
+        {{ checkpoint.title }}
+      </div>
     </v-expansion-panel-header>
     <v-expansion-panel-content
       :class="{ 'checkpoint_content' : checkpoint.checkable_type == 'Plan'}"
     >
-      <div class="checkpoint_description" :class="{ 'margin10':getSubCheckpoints(checkpoint.id, 'Checkpoint')['id']==checkpoint.id && checkpoint.checkable_type=='Plan' }">{{ checkpoint.description }}</div>
+      <div
+        class="checkpoint_description"
+        :class="{ 'margin10':getSubCheckpoints(checkpoint.id, 'Checkpoint')['id']==checkpoint.id && checkpoint.checkable_type=='Plan' }"
+      >{{ checkpoint.description }}</div>
       <v-expansion-panels
         v-if="getSubCheckpoints(checkpoint.id, 'Checkpoint')['id']!=checkpoint.id"
         accordion
@@ -41,7 +45,7 @@ export default {
     test(id) {
       this.setCurrentCheckpoint(id);
     },
-    ...mapActions(["updateMapPlaces", 'setCurrentCheckpoint']),
+    ...mapActions(["updateMapPlaces", "setCurrentCheckpoint"]),
     openCheckpoint(id) {
       let checkpoint = this.getCheckpoint(id);
       let subCheckpoints = this.getSubCheckpoints(id, "Checkpoint");
@@ -129,6 +133,6 @@ export default {
 // }
 
 .margin10 {
-  margin-bottom: 10px;  
+  margin-bottom: 10px;
 }
 </style>
