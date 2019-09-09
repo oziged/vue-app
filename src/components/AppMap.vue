@@ -32,6 +32,7 @@ import { mapGetters, mapActions } from "vuex";
 import { gmapApi } from "vue2-google-maps";
 
 export default {
+  props: ["checkpointId"],
   data() {
     return {
       renderer: null,
@@ -65,8 +66,7 @@ export default {
 
       if (this.currentMidx == idx) {
         this.infoWinOpen = !this.infoWinOpen;
-      }
-      else {
+      } else {
         this.infoWinOpen = true;
         this.currentMidx = idx;
       }
@@ -94,7 +94,7 @@ export default {
       return places.slice(1, -1).map(place => {
         return {
           location: new google.maps.LatLng(
-              place.position.lat,
+            place.position.lat,
             place.position.lng
           )
         };
@@ -102,8 +102,60 @@ export default {
     }
   },
   watch: {
+    checkpointId() {
+      let checkpoints = this.getSubCheckpoints(this.checkpointId, "Checkpoint");
+      let places = checkpoints.map(item => this.getPlace(item.place_id));
+      console.log(places);
+
+      if (places.length == 1) {
+        // display 1 marker on the map for checkpoint
+        this.markersList = places;
+        this.zoom = 0;
+        if (this.renderer != null) {
+          this.renderer.setMap(null);
+        }
+        this.$nextTick(() => {
+          this.$refs.gmap.$mapObject.panTo(places[0].position);
+          this.zoom = 15;
+        });
+      } else if (places.length > 1) {
+        // display route for few subcheckpoints
+        this.markersList = [];
+        let _self = this;
+        this.service == null
+          ? (this.service = new google.maps.DirectionsService())
+          : "";
+        this.renderer == null
+          ? (this.renderer = new google.maps.DirectionsRenderer())
+          : "";
+
+        this.renderer.setOptions({ map: this.$refs.gmap.$mapObject });
+        this.service.route(
+          {
+            origin: new google.maps.LatLng(
+              places[0].position.lat,
+              places[0].position.lng
+            ),
+            waypoints: this.generateWaypoints(places),
+            destination: new google.maps.LatLng(
+              places.slice(-1)[0].position.lat,
+              places.slice(-1)[0].position.lng
+            ),
+            travelMode: "DRIVING"
+          },
+          function(response, status) {
+            if (status === "OK") {
+              _self.renderer.setDirections(response);
+            } else {
+              window.alert("Directions request failed due to " + status);
+            }
+          }
+        );
+      }
+    },
     mapCurrentPlaces() {
-      if (this.mapCurrentPlaces.length == 1) { // display 1 marker on the map for checkpoint
+      if (this.mapCurrentPlaces.length == 1) {
+        // display 1 marker on the map for checkpoint
         this.markersList = this.mapCurrentPlaces;
         this.zoom = 0;
         if (this.renderer != null) {
@@ -113,14 +165,18 @@ export default {
           this.$refs.gmap.$mapObject.panTo(this.mapCurrentPlaces[0].position);
           this.zoom = 15;
         });
-      } 
-      else if (this.mapCurrentPlaces.length > 1) { // display route for few subcheckpoints
+      } else if (this.mapCurrentPlaces.length > 1) {
+        // display route for few subcheckpoints
         this.markersList = [];
         let _self = this;
-        this.service == null ? this.service = new google.maps.DirectionsService() : ''
-        this.renderer == null ? this.renderer = new google.maps.DirectionsRenderer() : ''
+        this.service == null
+          ? (this.service = new google.maps.DirectionsService())
+          : "";
+        this.renderer == null
+          ? (this.renderer = new google.maps.DirectionsRenderer())
+          : "";
 
-        this.renderer.setOptions({ map: this.$refs.gmap.$mapObject })
+        this.renderer.setOptions({ map: this.$refs.gmap.$mapObject });
         this.service.route(
           {
             origin: new google.maps.LatLng(
@@ -145,13 +201,19 @@ export default {
       }
     }
   },
-  mounted() {},
+  mounted() {
+    console.log(this.checkpointId);
+  },
   computed: {
-    ...mapGetters(["allPlaces", "mapCurrentPlaces"])
+    ...mapGetters([
+      "allPlaces",
+      "getPlace",
+      "mapCurrentPlaces",
+      "getSubCheckpoints"
+    ])
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
 </style>

@@ -10,14 +10,13 @@
               <checkpoint
                 v-for="(checkpoint,i) in getSubCheckpoints(id, 'Plan')"
                 :key="i"
-                @click.native="openCheckpoint(checkpoint.id)"
                 :checkpoint="checkpoint"
               />
             </v-expansion-panels>
           </div>
         </div>
       </div>
-      <app-map class="plan_map" :current_places="current_places" />
+      <app-map class="plan_map" :checkpointId="getPlanMainCheckpointId" />
     </div>
   </div>
 </template>
@@ -42,13 +41,17 @@ export default {
     current_places: []
   }),
   methods: {
-    ...mapActions(["updateMapPlaces", "setCurrentCheckpoint"]),
+    ...mapActions([
+      "updateMapPlaces",
+      "setCurrentCheckpoint",
+      "setPlanCheckpointId"
+    ]),
     openCheckpoint(id) {
-      let checkpoint = this.getCheckpoint(id);
-      let subCheckpoints = this.getSubCheckpoints(id, "Checkpoint");
-      if (subCheckpoints) {
-        this.updateMapPlaces(subCheckpoints);
-      } else this.updateMapPlaces(checkpoint);
+      // let checkpoint = this.getCheckpoint(id);
+      // let subCheckpoints = this.getSubCheckpoints(id, "Checkpoint");
+      // if (subCheckpoints) {
+      //   this.updateMapPlaces(subCheckpoints);
+      // } else this.updateMapPlaces(checkpoint);
       // this.setCurrentCheckpoint(id)
     },
     showMainCheckpoints() {
@@ -58,7 +61,13 @@ export default {
       }
     }
   },
+  provide() {
+    return {
+      setPlanCheckpointId: this.setPlanCheckpointId
+    };
+  },
   mounted() {
+    this.setPlanCheckpointId({ type: "planMain", id: 2 });
     let plan = this.getPlan(this.id);
     this.title = plan.title;
     this.description = plan.description;
@@ -76,7 +85,8 @@ export default {
       "getPlace",
       "getCheckpoint",
       "getSubCheckpoints",
-      "getPlan"
+      "getPlan",
+      "getPlanMainCheckpointId"
     ])
   }
 };

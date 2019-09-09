@@ -1,11 +1,13 @@
 <template>
   <v-expansion-panel class="checkpoint_full">
-    <v-expansion-panel-header>
+    <v-expansion-panel-header 
+      @click="setPlanCheckpointId({type:'planMain', id: checkpoint.id})" 
+    >
       <div
         class="checkpoint_title"
         :class="{ 'subcheckpoint': checkpoint.checkable_type == 'Checkpoint', 'plan_checkpoint' : checkpoint.checkable_type == 'Plan' }"
       >
-        <div class="click" @click.stop="test(checkpoint.id)"></div>
+        <div class="click" @click="test(checkpoint.id)"></div>
         {{ checkpoint.title }}
       </div>
     </v-expansion-panel-header>
@@ -17,13 +19,12 @@
         :class="{ 'margin10':getSubCheckpoints(checkpoint.id, 'Checkpoint')['id']==checkpoint.id && checkpoint.checkable_type=='Plan' }"
       >{{ checkpoint.description }}</div>
       <v-expansion-panels
-        v-if="getSubCheckpoints(checkpoint.id, 'Checkpoint')['id']!=checkpoint.id"
+        v-if="getSubCheckpoints(checkpoint.id, 'Checkpoint')[0]['id']!=checkpoint.id"
         accordion
       >
         <checkpoint
           v-for="(item,i) in getSubCheckpoints(checkpoint.id, 'Checkpoint')"
           :key="i"
-          @click.native.stop="openCheckpoint(item.id)"
           :checkpoint="item"
         />
       </v-expansion-panels>
@@ -38,6 +39,7 @@ import Checkpoint from "./Checkpoint";
 export default {
   name: "Checkpoint",
   props: ["checkpoint"],
+  inject: ['setPlanCheckpointId'],
   components: {
     Checkpoint
   },

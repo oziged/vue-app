@@ -1,12 +1,25 @@
 export default {
     actions: {
-        setCurrentCheckpoint( { commit, rootGetters }, id) {
+        setCurrentCheckpoint( { commit }, id) {
             let checkpoint = rootGetters.getCheckpoint(id);
             console.log(checkpoint);
             commit('setCurrentCheckpoint', checkpoint)
+        },
+        setPlanCheckpointId( { commit }, payload ) {
+            console.log('hohohoh');
+            console.log(payload.type, payload.id);
+            console.log('hohohoh');
+            if (payload.type == 'planMain') commit('setPlanMainCheckpointId', payload.id);
+            if (payload.type == 'planModal') commit('setPlanModalCheckpointId', payload.id);
         }
     },
     mutations: {
+        setPlanMainCheckpointId(state, id) {
+            state.plan_main_checkpoint_id = id 
+        },
+        setPlanModalCheckpointId(state, id) {
+            state.plan_modal_checkpoint_id = id 
+        },
         setCurrentCheckpoint(state, checkpoint) {
             state.current_checkpoint = checkpoint;
         }
@@ -86,7 +99,9 @@ export default {
                 checkable_id: 5
             }
         ],
-        current_checkpoint: null
+        current_checkpoint: null,
+        plan_main_checkpoint_id: null,
+        plan_modal_checkpoint_id: null
     },
     getters: {
         allCheckpoints(state) {
@@ -105,8 +120,15 @@ export default {
                     return checkpoint.checkable_id == id && checkpoint.checkable_type == type
                 })
                 if (sub.length) return sub;
-                if (type == 'Checkpoint') return getters.getCheckpoint(id);
+                console.log(sub.length);
+                if (type == 'Checkpoint') return [getters.getCheckpoint(id)];
             }
+        },
+        getPlanMainCheckpointId(state) {
+            return state.plan_main_checkpoint_id
+        },
+        getPlanModalCheckpointId(state) {
+            return state.plan_modal_checkpoint_id
         },
         currentCheckpoint(state) {
             return state.current_checkpoint
