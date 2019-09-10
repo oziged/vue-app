@@ -1,13 +1,11 @@
 <template>
   <v-expansion-panel class="checkpoint_full">
-    <v-expansion-panel-header 
-      @click="setPlanCheckpointId({type:'planMain', id: checkpoint.id})" 
-    >
+    <v-expansion-panel-header @click="setCheckpointId(checkpoint.id)">
       <div
         class="checkpoint_title"
         :class="{ 'subcheckpoint': checkpoint.checkable_type == 'Checkpoint', 'plan_checkpoint' : checkpoint.checkable_type == 'Plan' }"
       >
-        <div class="click" @click="test(checkpoint.id)"></div>
+        <div class="click" @click="setAndOpenModal(checkpoint.id)"></div>
         {{ checkpoint.title }}
       </div>
     </v-expansion-panel-header>
@@ -39,25 +37,31 @@ import Checkpoint from "./Checkpoint";
 export default {
   name: "Checkpoint",
   props: ["checkpoint"],
-  inject: ['setPlanCheckpointId'],
+  inject: ["setCheckpointId"],
   components: {
     Checkpoint
   },
   methods: {
-    test(id) {
-      this.setCurrentCheckpoint(id);
+    setAndOpenModal(id) {
+      this.setPlanModalCheckpointId(id);
+      this.toggleCheckpointModal();
+      this.planCheckpointModalDisplay == false
+        ? this.toggleCheckpointModal()
+        : "";
     },
-    ...mapActions(["updateMapPlaces", "setCurrentCheckpoint"]),
-    openCheckpoint(id) {
-      let checkpoint = this.getCheckpoint(id);
-      let subCheckpoints = this.getSubCheckpoints(id, "Checkpoint");
-      if (subCheckpoints) {
-        this.updateMapPlaces(subCheckpoints);
-      } else this.updateMapPlaces(checkpoint);
-    }
+    ...mapActions([
+      "updateMapPlaces",
+      "setCurrentCheckpoint",
+      "setPlanModalCheckpointId",
+      "toggleCheckpointModal"
+    ])
   },
   computed: {
-    ...mapGetters(["getSubCheckpoints", "getCheckpoint"])
+    ...mapGetters([
+      "getSubCheckpoints",
+      "getCheckpoint",
+      "planCheckpointModalDisplay"
+    ])
   }
 };
 </script>

@@ -103,9 +103,9 @@ export default {
   },
   watch: {
     checkpointId() {
+      console.log('hello, checkpoint in modal changed');
       let checkpoints = this.getSubCheckpoints(this.checkpointId, "Checkpoint");
       let places = checkpoints.map(item => this.getPlace(item.place_id));
-      console.log(places);
 
       if (places.length == 1) {
         // display 1 marker on the map for checkpoint
@@ -153,7 +153,7 @@ export default {
         );
       }
     },
-    mapCurrentPlaces() {
+       mapCurrentPlaces() {
       if (this.mapCurrentPlaces.length == 1) {
         // display 1 marker on the map for checkpoint
         this.markersList = this.mapCurrentPlaces;
@@ -175,7 +175,6 @@ export default {
         this.renderer == null
           ? (this.renderer = new google.maps.DirectionsRenderer())
           : "";
-
         this.renderer.setOptions({ map: this.$refs.gmap.$mapObject });
         this.service.route(
           {
@@ -202,7 +201,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.checkpointId);
+    console.log(this.checkpointId + '  qweqwe ');
   },
   computed: {
     ...mapGetters([

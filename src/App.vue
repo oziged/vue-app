@@ -1,19 +1,20 @@
 <template>
   <v-app>
     <div>
-      <checkpoint-modal-show v-model="modal"/>
       <app-header />
       <transition name="router-anim" mode="out-in">
         <router-view class="content" :key="$route.fullPath"></router-view>
       </transition>
     </div>
+    <checkpoint-modal-show :value="planCheckpointModalDisplay" @input="toggleCheckpointModal" />
   </v-app>
 </template>
 
 <script>
 import axios from "axios";
 import AppHeader from "./components/AppHeader";
-import CheckpointModalShow from './components/CheckpointModalShow';
+import CheckpointModalShow from "./components/CheckpointModalShow";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "App",
@@ -21,19 +22,20 @@ export default {
     AppHeader,
     CheckpointModalShow
   },
-  data() {
-    return {
-      modal: false
-    }
+  methods: {
+    ...mapActions(["toggleCheckpointModal"])
   },
   mounted() {
     window.modal = () => {
       return this.modal;
-    }
+    };
     window.on = () => {
-      this.modal = true;
-      return this.modal;
-    }
+      this.toggleCheckpointModal();
+      return this.planCheckpointModalDisplay;
+    };
+  },
+  computed: {
+    ...mapGetters(["planCheckpointModalDisplay"])
   }
 };
 </script>
@@ -98,5 +100,4 @@ input[type="number"]::-webkit-outer-spin-button {
     padding-top: 0;
   }
 }
-
 </style>

@@ -16,7 +16,7 @@
           </div>
         </div>
       </div>
-      <app-map class="plan_map" :checkpointId="getPlanMainCheckpointId" />
+      <app-map class="plan_map" :checkpointId="checkpointId" />
     </div>
   </div>
 </template>
@@ -38,36 +38,26 @@ export default {
   data: () => ({
     title: "",
     description: "",
-    current_places: []
+    checkpointId: null
   }),
   methods: {
-    ...mapActions([
-      "updateMapPlaces",
-      "setCurrentCheckpoint",
-      "setPlanCheckpointId"
-    ]),
-    openCheckpoint(id) {
-      // let checkpoint = this.getCheckpoint(id);
-      // let subCheckpoints = this.getSubCheckpoints(id, "Checkpoint");
-      // if (subCheckpoints) {
-      //   this.updateMapPlaces(subCheckpoints);
-      // } else this.updateMapPlaces(checkpoint);
-      // this.setCurrentCheckpoint(id)
-    },
+    ...mapActions(["updateMapPlaces", "setCurrentCheckpoint"]),
     showMainCheckpoints() {
       let subCheckpoints = this.getSubCheckpoints(this.id, "Plan");
       if (subCheckpoints) {
         this.updateMapPlaces(subCheckpoints);
       }
+    },
+    setCheckpointId(id) {
+      this.checkpointId = id;
     }
   },
   provide() {
     return {
-      setPlanCheckpointId: this.setPlanCheckpointId
+      setCheckpointId: this.setCheckpointId
     };
   },
   mounted() {
-    this.setPlanCheckpointId({ type: "planMain", id: 2 });
     let plan = this.getPlan(this.id);
     this.title = plan.title;
     this.description = plan.description;
