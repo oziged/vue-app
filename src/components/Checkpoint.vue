@@ -1,5 +1,10 @@
 <template>
-  <v-expansion-panel class="checkpoint_full">
+  <v-expansion-panel style="position: relative" class="checkpoint_full">
+    <transition name="test">
+    <div
+      :style="{position: 'absolute', width: '2px', height: '100%', top: '0', left: '-'+Math.random()*100+'px', backgroundColor: 'black'}"
+    ></div>
+    </transition>
     <v-expansion-panel-header @click="setCheckpointId(checkpoint.id)">
       <div
         class="checkpoint_title"
@@ -67,6 +72,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.test-enter-active,
+.test-leave-active {
+  transition: all 0.3s;
+  position: absolute;
+}
+
+
+.test-enter,
+.test-leave-to {
+  opacity: 0;
+}
+
 .checkpoint_title {
   font-size: 16px;
   position: relative;
