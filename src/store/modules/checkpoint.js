@@ -33,7 +33,8 @@ export default {
         title: "City1",
         description: "Description1",
         checkable_type: "Plan",
-        checkable_id: 1
+        checkable_id: 1,
+        border_color: '#013d03'
       },
       {
         id: 2,
@@ -41,7 +42,8 @@ export default {
         title: "City2",
         description: "Description2",
         checkable_type: "Plan",
-        checkable_id: 1
+        checkable_id: 1,
+        border_color: 'red'
       },
       {
         id: 3,
@@ -49,7 +51,8 @@ export default {
         title: "City1 - place",
         description: "Description city1 - place",
         checkable_type: "Checkpoint",
-        checkable_id: 1
+        checkable_id: 1,
+        border_color: '#00b306'
       },
       {
         id: 4,
@@ -57,7 +60,8 @@ export default {
         title: "City1 - place2",
         description: "Description city1 - place2",
         checkable_type: "Checkpoint",
-        checkable_id: 1
+        checkable_id: 1,
+        border_color: '#00b306'
       },
       {
         id: 5,
@@ -65,7 +69,8 @@ export default {
         title: "City1 - place3",
         description: "Description city1 -place3",
         checkable_type: "Checkpoint",
-        checkable_id: 1
+        checkable_id: 1,
+        border_color: '#00b306'
       },
       {
         id: 6,
@@ -73,7 +78,8 @@ export default {
         title: "USA City1",
         description: "Description city1",
         checkable_type: "Plan",
-        checkable_id: 2
+        checkable_id: 2,
+        border_color: 'red'
       },
       {
         id: 7,
@@ -81,7 +87,8 @@ export default {
         title: "USA City2",
         description: "Description city2",
         checkable_type: "Plan",
-        checkable_id: 2
+        checkable_id: 2,
+        border_color: 'red'
       },
       {
         id: 8,
@@ -89,7 +96,8 @@ export default {
         title: "City 1 Place 3 subPlace 1",
         description: "City 1 Place 3 subPlace 1",
         checkable_type: "Checkpoint",
-        checkable_id: 5
+        checkable_id: 5,
+        border_color: '#00ff09'
       },
       {
         id: 9,
@@ -97,7 +105,8 @@ export default {
         title: "City 1 Place 3 subPlace 2",
         description: "City 1 Place 3 subPlace 2",
         checkable_type: "Checkpoint",
-        checkable_id: 5
+        checkable_id: 5,
+        border_color: '#00ff09'
       }
     ],
     current_checkpoint: null,

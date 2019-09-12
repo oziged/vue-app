@@ -89,7 +89,8 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 
   .v-expansion-panel--active .v-item--active {
-    margin-bottom: 10px;
+    // margin-bottom: 10px;
+    // padding-bottom: 2px;
   }
 
   .v-expansion-panel:before {

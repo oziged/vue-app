@@ -5,11 +5,15 @@
         <h1 class="plan_title" @click="showMainCheckpoints">{{ title }}</h1>
         <p class="plan_description">{{ description }}</p>
         <div class="checkpoint_list_wrapper">
-          <div class="checkpoints_list">
+          <div class="checkpoints_list" 
+                style="margin-left: 20px;"
+          >
             <v-expansion-panels accordion>
               <checkpoint
+              style="margin-left: 0px;"
                 v-for="(checkpoint,i) in getSubCheckpoints(id, 'Plan')"
                 :key="i"
+                :nestedLvl="1"
                 :checkpoint="checkpoint"
               />
             </v-expansion-panels>

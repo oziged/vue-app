@@ -13,6 +13,7 @@
                 <checkpoint
                   v-for="(item,i) in getSubCheckpoints(currentCheckpoint.id, 'Checkpoint')"
                   :key="i"
+                  :nestedLvl="1"
                   :checkpoint="item"
                 />
               </v-expansion-panels>

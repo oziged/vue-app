@@ -1,12 +1,12 @@
 <template>
-  <v-expansion-panel style="position: relative" class="checkpoint_full">
-    <transition name="test">
-    <div
-      :style="{position: 'absolute', width: '2px', height: '100%', top: '0', left: '-'+Math.random()*100+'px', backgroundColor: 'black'}"
-    ></div>
-    </transition>
-    <v-expansion-panel-header @click="setCheckpointId(checkpoint.id)">
+  <v-expansion-panel style="margin-left: 31px;" class="checkpoint_full" >
+    <!-- {{ checkpoint.border_color }} -->
+    <v-expansion-panel-header style="position: relative" @click="setCheckpointId(checkpoint.id)">
       <div
+        :style="{position: 'absolute', width: '4px', height: '100%', top: '0', left: nestedLvl==1&&checkpoint.checkable_type=='Plan' ? '-15px' : -10+nestedLvl*1+'px', backgroundColor: checkpoint.border_color}"
+      ></div>
+      <div
+        style="height: 100%"
         class="checkpoint_title"
         :class="{ 'subcheckpoint': checkpoint.checkable_type == 'Checkpoint', 'plan_checkpoint' : checkpoint.checkable_type == 'Plan' }"
       >
@@ -15,19 +15,25 @@
       </div>
     </v-expansion-panel-header>
     <v-expansion-panel-content
+      style="padding-left: 20px; margin-left: -20px;"
       :class="{ 'checkpoint_content' : checkpoint.checkable_type == 'Plan'}"
     >
+      <div
+        :style="{position: 'absolute', width: '4px', height: '100%', top: '0', left: nestedLvl==1&&checkpoint.checkable_type=='Plan' ? '-15px' : -10+nestedLvl*1+'px', backgroundColor: checkpoint.border_color}"
+      ></div>
       <div
         class="checkpoint_description"
         :class="{ 'margin10':getSubCheckpoints(checkpoint.id, 'Checkpoint')['id']==checkpoint.id && checkpoint.checkable_type=='Plan' }"
       >{{ checkpoint.description }}</div>
       <v-expansion-panels
+        style="width: calc(100% - 15px)"
         v-if="getSubCheckpoints(checkpoint.id, 'Checkpoint')[0]['id']!=checkpoint.id"
         accordion
       >
         <checkpoint
           v-for="(item,i) in getSubCheckpoints(checkpoint.id, 'Checkpoint')"
           :key="i"
+          :nestedLvl="nestedLvl+1"
           :checkpoint="item"
         />
       </v-expansion-panels>
@@ -41,7 +47,7 @@ import Checkpoint from "./Checkpoint";
 
 export default {
   name: "Checkpoint",
-  props: ["checkpoint"],
+  props: ["checkpoint", 'nestedLvl'],
   inject: ["setCheckpointId"],
   components: {
     Checkpoint
@@ -78,7 +84,6 @@ export default {
   position: absolute;
 }
 
-
 .test-enter,
 .test-leave-to {
   opacity: 0;
@@ -99,6 +104,8 @@ export default {
 }
 .checkpoint_description {
   position: relative;
+  margin-bottom: 10px;
+  // padding-bottom: 10px;
 }
 .checkpoint_description:before {
   content: "";
@@ -156,6 +163,6 @@ export default {
 // }
 
 .margin10 {
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
 }
 </style>
