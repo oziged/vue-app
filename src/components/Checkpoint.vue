@@ -1,7 +1,15 @@
 <template>
-  <v-expansion-panel style="margin-left: 31px;" class="checkpoint_full" >
+  <v-expansion-panel
+    @mouseenter.native="displayMoreButton=true"
+    @mouseleave.native="displayMoreButton=false"
+    style="margin-left: 31.5px;"
+    class="checkpoint_full"
+  >
     <!-- {{ checkpoint.border_color }} -->
     <v-expansion-panel-header style="position: relative" @click="setCheckpointId(checkpoint.id)">
+      <template v-slot:actions>
+        <v-icon color="error"></v-icon>
+      </template>
       <div
         :style="{position: 'absolute', width: '4px', height: '100%', top: '0', left: nestedLvl==1&&checkpoint.checkable_type=='Plan' ? '-15px' : -10+nestedLvl*1+'px', backgroundColor: checkpoint.border_color}"
       ></div>
@@ -10,7 +18,9 @@
         class="checkpoint_title"
         :class="{ 'subcheckpoint': checkpoint.checkable_type == 'Checkpoint', 'plan_checkpoint' : checkpoint.checkable_type == 'Plan' }"
       >
-        <div class="click" @click="setAndOpenModal(checkpoint.id)"></div>
+        <transition name="click">
+          <div v-if="displayMoreButton" class="click" @click="setAndOpenModal(checkpoint.id)"></div>
+        </transition>
         {{ checkpoint.title }}
       </div>
     </v-expansion-panel-header>
@@ -26,7 +36,7 @@
         :class="{ 'margin10':getSubCheckpoints(checkpoint.id, 'Checkpoint')['id']==checkpoint.id && checkpoint.checkable_type=='Plan' }"
       >{{ checkpoint.description }}</div>
       <v-expansion-panels
-        style="width: calc(100% - 15px)"
+        style="width: calc(100% - 15px); margin-bottom: 10px;"
         v-if="getSubCheckpoints(checkpoint.id, 'Checkpoint')[0]['id']!=checkpoint.id"
         accordion
       >
@@ -47,8 +57,13 @@ import Checkpoint from "./Checkpoint";
 
 export default {
   name: "Checkpoint",
-  props: ["checkpoint", 'nestedLvl'],
+  props: ["checkpoint", "nestedLvl"],
   inject: ["setCheckpointId"],
+  data() {
+    return {
+      displayMoreButton: false
+    };
+  },
   components: {
     Checkpoint
   },
@@ -73,19 +88,19 @@ export default {
       "getCheckpoint",
       "planCheckpointModalDisplay"
     ])
-  }
+  },
+  mounted() {}
 };
 </script>
 
 <style lang="scss" scoped>
-.test-enter-active,
-.test-leave-active {
+.click-enter-active,
+.click-leave-active {
   transition: all 0.3s;
-  position: absolute;
 }
 
-.test-enter,
-.test-leave-to {
+.click-enter,
+.click-leave-to {
   opacity: 0;
 }
 
@@ -94,14 +109,17 @@ export default {
   position: relative;
   padding-left: 10px;
   .click {
-    width: 10px;
-    height: 10px;
-    background-color: black;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url("../assets/Checkpoint/more.png") no-repeat center center;
+    background-size: cover;
     position: absolute;
     right: 0;
     top: 0;
   }
 }
+
 .checkpoint_description {
   position: relative;
   margin-bottom: 10px;
@@ -161,8 +179,4 @@ export default {
 //   box-shadow: -5px 0px 0px 0px black;
 //   border-radius: 0;
 // }
-
-.margin10 {
-  // margin-bottom: 10px;
-}
 </style>

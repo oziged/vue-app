@@ -46,23 +46,23 @@
           <slick class="sub_slider" ref="slick" :options="slickOptions2">
             <div
               class="slide"
-              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center;"
+              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
             >1</div>
             <div
               class="slide"
-              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center;"
+              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
             >2</div>
             <div
               class="slide"
-              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center;"
+              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
             >3</div>
             <div
               class="slide"
-              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center;"
+              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
             >4</div>
             <div
               class="slide"
-              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center;"
+              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
             >5</div>
           </slick>
           <!-- <app-map style="width: 500px; height: 500px" :checkpointId="checkpointId" /> -->
@@ -96,14 +96,29 @@ export default {
         arrows: false,
         fade: true,
         draggable: false,
+        waitForAnimate: false,
         asNavFor: ".sub_slider"
       },
       slickOptions2: {
-        slidesToShow: 6,
+        slidesToShow: 5,
         slidesToScroll: 1,
         asNavFor: ".main_slider",
         arrows: false,
-        focusOnSelect: true
+        focusOnSelect: true,
+        waitForAnimate: false,
+        responsive: [
+          {
+            breakpoint: 1500,
+            settings: {
+              slidesToShow: 8,
+              slidesToScroll: 1,
+              asNavFor: ".main_slider",
+              arrows: false,
+              focusOnSelect: true,
+              waitForAnimate: false
+            }
+          }
+        ]
       }
     };
   },
