@@ -4,6 +4,7 @@
       <div class="checkpoint_modal">
         <div class="left_block">
           {{ currentCheckpoint.title }}
+          {{ currentCheckpoint.description }}
           <div class="checkpoint_list_wrapper">
             <div class="checkpoints_list">
               <v-expansion-panels
@@ -29,43 +30,52 @@
             <div
               class="slide"
               style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center;"
-            >2</div>
+            ></div>
             <div
               class="slide"
               style="background: url('https://miro.medium.com/max/2660/1*_6EdJgpcWyeWne36eFH7eA@2x.jpeg') no-repeat center center;background-size: cover;"
-            >3</div>
+            ></div>
             <div
               class="slide"
               style="background: url('http://rhinobooksnashville.com/wp-content/uploads/2019/06/30459708568_7b45f32c1c_o.jpg') no-repeat center center;background-size: cover;"
-            >4</div>
+            ></div>
             <div
               class="slide"
               style="background: url('https://www.rd.com/wp-content/uploads/2017/12/00_Top-Travel-Trends-for-2018_209155915_06photo_FT.jpg') no-repeat center center;background-size: cover;"
-            >5</div>
+            ></div>
           </slick>
           <slick class="sub_slider" ref="slick" :options="slickOptions2">
-            <div
-              class="slide"
-              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
-            >1</div>
-            <div
-              class="slide"
-              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
-            >2</div>
-            <div
-              class="slide"
-              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
-            >3</div>
-            <div
-              class="slide"
-              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
-            >4</div>
-            <div
-              class="slide"
-              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
-            >5</div>
+            <div class="sub_slide_wrapper">
+              <div
+                class="sub_slide"
+                style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
+              >1</div>
+            </div>
+            <div class="sub_slide_wrapper">
+              <div
+                class="sub_slide"
+                style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
+              >2</div>
+            </div>
+            <div class="sub_slide_wrapper">
+              <div
+                class="sub_slide"
+                style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
+              >3</div>
+            </div>
+            <div class="sub_slide_wrapper">
+              <div
+                class="sub_slide"
+                style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
+              >4</div>
+            </div>
+            <div class="sub_slide_wrapper">
+              <div
+                class="sub_slide"
+                style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
+              >5</div>
+            </div>
           </slick>
-          <!-- <app-map style="width: 500px; height: 500px" :checkpointId="checkpointId" /> -->
         </div>
       </div>
     </v-card>
@@ -100,7 +110,7 @@ export default {
         asNavFor: ".sub_slider"
       },
       slickOptions2: {
-        slidesToShow: 5,
+        slidesToShow: 6,
         slidesToScroll: 1,
         asNavFor: ".main_slider",
         arrows: false,
@@ -110,12 +120,19 @@ export default {
           {
             breakpoint: 1500,
             settings: {
-              slidesToShow: 8,
-              slidesToScroll: 1,
-              asNavFor: ".main_slider",
-              arrows: false,
-              focusOnSelect: true,
-              waitForAnimate: false
+              slidesToShow: 5
+            }
+          },
+          {
+            breakpoint: 1200,
+            settings: {
+              slidesToShow: 4
+            }
+          },
+          {
+            breakpoint: 900,
+            settings: {
+              slidesToShow: 3
             }
           }
         ]
@@ -177,10 +194,34 @@ export default {
   overflow: hidden;
   .left_block {
     width: 30%;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
+
+  .left_block::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.left_block::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+.left_block::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+}
   .right_block {
     width: 70%;
     padding: 50px;
+    display: flex;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-direction: column;
+    justify-content: space-between;
   }
   .test {
     height: 100%;
@@ -201,25 +242,34 @@ export default {
     box-shadow: 0 0 4px 0px rgba((0), 0, 0, 0.1);
   }
 
+  .slick_active {
+  }
+
   .sub_slider {
-    height: 15%;
-    margin-top: 2.5%;
+    height: 100px;
     overflow: hidden;
-    .slick-slide {
-      div {
-        border: 5px solid rgb(221, 237, 214);
-      }
+    .sub_slide {
+      transition: 1s;
+      border: 5px solid rgb(221, 237, 214);
     }
-    .slick-current {
-      div {
-        border: 5px solid rgb(138, 210, 116);
-      }
+    .slick-current .sub_slide {
+      transition: 1s;
+      border: 5px solid rgb(138, 210, 116);
     }
   }
 
   .slide {
     width: 100%;
     height: 100%;
+  }
+
+  .sub_slide_wrapper {
+    width: 100%;
+    height: 100px;
+    .sub_slide {
+      width: calc(100% - 5px);
+      height: 100%;
+    }
   }
 }
 </style>
@@ -232,10 +282,10 @@ export default {
 
 /* the slides */
 .slick-slide {
-  margin: 0 10px;
+  margin: 0 15px;
 }
 /* the parent */
 .slick-list {
-  margin: 0 -10px;
+  margin: 0 -15px;
 }
 </style>
