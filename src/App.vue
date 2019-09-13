@@ -84,6 +84,10 @@ input[type="number"]::-webkit-outer-spin-button {
     }
   }
 
+  .v-dialog .v-dialog--active {
+    overflow: hidden;
+  }
+
   .v-expansion-panel--active .v-expansion-panel-header {
     min-height: 40px;
   }

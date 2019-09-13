@@ -96,6 +96,9 @@ export default {
       margin-bottom: 10px;
       background-color: #fff;
     }
+    .checkpoint_list_wrapper { 
+      margin-left: 23px;
+    }
   }
   .plan_map {
     width: 50%;

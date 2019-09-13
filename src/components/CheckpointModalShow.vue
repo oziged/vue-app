@@ -1,10 +1,27 @@
 <template>
-  <v-dialog :value="value" @input="input">
+  <v-dialog :value="value" @input="input" width="80vw">
     <v-card>
       <div class="checkpoint_modal">
+        <div class="prev_next_checkpoint_small">
+          <v-btn text icon color="black">
+            <v-icon>mdi-arrow-left-thick</v-icon>
+          </v-btn>
+          <img src="@/assets/CheckpointModalShow/gps_place.png" alt />
+          <v-btn text icon color="black">
+            <v-icon>mdi-arrow-right-thick</v-icon>
+          </v-btn>
+        </div>
+        <div class="prev_next_checkpoint_big">
+          <div class="left_block">
+            
+          </div>
+          <div class="right_block">
+            
+          </div>
+        </div>
         <div class="left_block">
-          {{ currentCheckpoint.title }}
-          {{ currentCheckpoint.description }}
+          <div class="current_checkpoint_title">{{ currentCheckpoint.title }}</div>
+          <div class="current_checkpoint_description">{{ currentCheckpoint.description }}</div>
           <div class="checkpoint_list_wrapper">
             <div class="checkpoints_list">
               <v-expansion-panels
@@ -21,7 +38,6 @@
             </div>
           </div>
         </div>
-        <div class="divider"></div>
         <div class="right_block">
           <slick class="main_slider" ref="slick" :options="slickOptions">
             <div class="slide">
@@ -110,7 +126,7 @@ export default {
         asNavFor: ".sub_slider"
       },
       slickOptions2: {
-        slidesToShow: 6,
+        slidesToShow: 8,
         slidesToScroll: 1,
         asNavFor: ".main_slider",
         arrows: false,
@@ -162,7 +178,11 @@ export default {
   },
   mounted() {},
   watch: {
+    value() {
+      console.log(this.value);
+    },
     getPlanModalCheckpointId() {
+      console.log('getplanche');
       this.checkpointId = null;
       this.$nextTick(() => {
         document.querySelectorAll(".slide").forEach(item => {
@@ -187,56 +207,98 @@ export default {
 };
 </script>
   
-<style lang="scss">
+<style lang="scss" scoped>
 .checkpoint_modal {
   display: flex;
   height: 90vh;
   overflow: hidden;
   .left_block {
     width: 30%;
-    overflow-y: auto;
+    padding: 20px 20px 0 20px;
+    margin-bottom: 60px;
+    position: relative;
+    overflow-y: scroll;
+    box-shadow: -3px 3px 6px 0px #0000000d;
     overflow-x: hidden;
+    .checkpoint_list_wrapper {
+      margin-left: 10px;
+      width: calc(100% - 10px);
+    }
+    .current_checkpoint_title {
+      margin-bottom: 20px;
+      padding-left: 30px;
+      background: url("https://image.flaticon.com/icons/svg/25/25615.svg");
+      background-position: center left;
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+    }
+    .current_checkpoint_description {
+      margin-bottom: 20px;
+    }
   }
 
-  .left_block::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
-}
+  .prev_next_checkpoint_small {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border-right: 4px solid rgba(145, 145, 145, 0.2);
+    z-index: 99;
+    width: 30%;
+    height: 60px;
+    // background-color: red;
+    bottom: 0;
+    left: 0;
+    img {
+      width: 30px;
+      height: 30px;
+      animation: rotation 10s infinite
+    }
+  }
 
-.left_block::-webkit-scrollbar
-{
-	width: 6px;
-	background-color: #F5F5F5;
-}
+  .prev_next_checkpoint_big {
+    .left_block, .right_block {
+      overflow: hidden;
+      width: 7%;
+      height: 100vh;
+      position: fixed;
+      background-color: rgba(0, 0, 0, 0.377);
+      top: 0;
+    }
+    .left_block {
+      left: 0;
+    }
+    .right_block {
+      right: 0;
+    }
+  }
 
-.left_block::-webkit-scrollbar-thumb
-{
-	background-color: #000000;
-}
+  .left_block::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 4px rgba(145, 145, 145, 0.3);
+    background-color: #f5f5f5;
+  }
+
+  .left_block::-webkit-scrollbar {
+    width: 4px;
+    background-color: #f5f5f5;
+  }
+
+  .left_block::-webkit-scrollbar-thumb {
+    background-color: #14e71e5e;
+  }
   .right_block {
     width: 70%;
-    padding: 50px;
+    padding: 20px;
     display: flex;
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
     flex-direction: column;
     justify-content: space-between;
   }
-  .test {
-    height: 100%;
-  }
-
-  .divider {
-    width: 1px;
-    height: 100%;
-    background-color: black;
-    margin: 0 15px;
-  }
 
   .main_slider {
     width: 100%;
-    height: 80%;
+    height: calc(100% - 120px);
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 0 4px 0px rgba((0), 0, 0, 0.1);
@@ -287,5 +349,11 @@ export default {
 /* the parent */
 .slick-list {
   margin: 0 -15px;
+}
+
+@keyframes rotation { 
+0% {transform:rotate(0deg);} 
+95% {transform:rotate(0deg);} 
+100% {transform:rotate(360deg);}
 }
 </style>

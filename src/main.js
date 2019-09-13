@@ -24,6 +24,10 @@ Vue.use(VueGoogleMaps, {
 })
 Vue.config.productionTip = false
 
+Vue.filter('truncate', function (value, count) {
+    return `${value.slice(0, count)}...`;
+})
+
 new Vue({
   router,
   store,

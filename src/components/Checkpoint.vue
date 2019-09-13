@@ -2,10 +2,9 @@
   <v-expansion-panel
     @mouseenter.native="displayMoreButton=true"
     @mouseleave.native="displayMoreButton=false"
-    style="margin-left: 31.5px;"
+    :style="{marginLeft: nestedLvl == 1  ? '0px' : '31.5px'}"
     class="checkpoint_full"
   >
-    <!-- {{ checkpoint.border_color }} -->
     <v-expansion-panel-header style="position: relative" @click="setCheckpointId(checkpoint.id)">
       <template v-slot:actions>
         <v-icon color="error"></v-icon>
@@ -19,7 +18,7 @@
         :class="{ 'subcheckpoint': checkpoint.checkable_type == 'Checkpoint', 'plan_checkpoint' : checkpoint.checkable_type == 'Plan' }"
       >
         <transition name="click">
-          <div v-if="displayMoreButton" class="click" @click="setAndOpenModal(checkpoint.id)"></div>
+          <div v-if="displayMoreButton" class="click" @click.stop="setAndOpenModal(checkpoint.id)"></div>
         </transition>
         {{ checkpoint.title }}
       </div>
@@ -34,7 +33,7 @@
       <div
         class="checkpoint_description"
         :class="{ 'margin10':getSubCheckpoints(checkpoint.id, 'Checkpoint')['id']==checkpoint.id && checkpoint.checkable_type=='Plan' }"
-      >{{ checkpoint.description }}</div>
+      >{{ checkpoint.description | truncate(120) }}</div>
       <v-expansion-panels
         style="width: calc(100% - 15px); margin-bottom: 10px;"
         v-if="getSubCheckpoints(checkpoint.id, 'Checkpoint')[0]['id']!=checkpoint.id"
@@ -107,7 +106,6 @@ export default {
 .checkpoint_title {
   font-size: 16px;
   position: relative;
-  padding-left: 10px;
   .click {
     display: block;
     width: 20px;
@@ -116,7 +114,8 @@ export default {
     background-size: cover;
     position: absolute;
     right: 0;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%)
   }
 }
 

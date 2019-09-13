@@ -13,7 +13,7 @@
       v-else
       class="plan_description"
       @click="fullDescription = !fullDescription"
-    >{{ plan.description | truncate }}</p>
+    >{{ plan.description | truncate(90) }}</p>
     <div class="plan_routes_list">
       <div class="plan_route" v-for="(item, index) in subCheckpoints" :key="index">
         <img class="circle" src="@/assets/PlanIndex/PlanPreview/circle.svg" alt />
@@ -24,7 +24,7 @@
     <div class="plan_route_bottom_info">
       <div class="left_block">
         <v-rating v-model="fav" full-icon="mdi-heart" empty-icon="mdi-heart-outline" clearable length="1" background-color="green lighten-3" color="green"></v-rating>
-        <hr style="opacity: .2; margin: 10px 10px; height: 20px;">
+        <hr style="opacity: .2; margin: 10px 10px; height: 20px;" />
         <v-rating :value="plan.rating" readonly background-color="green lighten-3" color="green"></v-rating>
       </div>
       <div class="right_block">
@@ -54,16 +54,9 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   props: ["plan"],
-  components: {
-  },
-  filters: {
-    truncate(value) {
-      return `${value.slice(0, 90)}...`;
-    }
-  },
+  components: {},
   data() {
     return {
-      // subCheckpoints: [],
       fullDescription: false,
       fav: 0
     };
@@ -71,13 +64,13 @@ export default {
   computed: {
     ...mapGetters(["getSubCheckpoints"]),
     subCheckpoints() {
-      return this.getSubCheckpoints(this.plan.id, 'Plan')
+      return this.getSubCheckpoints(this.plan.id, "Plan");
     }
   },
   methods: {},
   mounted() {
     window.fav = () => {
-      return this.fav
+      return this.fav;
     };
   },
   watch: {
