@@ -16,6 +16,12 @@ export default new Vuex.Store({
 
   },
   state: {
+    nested_colors: ['reserv', '#00572b', '#009e4e', '#00d96b']
+  },
+  getters: {
+    nestedColors(state) {
+      return state.nested_colors;
+    }
   },
   modules: {
     user, plan, checkpoint, place, map

@@ -34,7 +34,6 @@ export default {
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat elit. Proin quis ultricies mauris, vitae ornare mauris. Mauris sapien ante, ullamcorper sit amet magna ut, dignissim dignissim leo. Nam interdum tincidunt mi quis faucibus. Praesent bibendum lacus in eros mollis, ac eleifend augue ultricies. Aliquam ullamcorper gravida metus vitae fringilla. Aliquam ac vehicula lectus. Maecenas leo sapien, accumsan in mi vel, mollis eleifend sapien. Nunc sed est vitae eros cursus rutrum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce eu dictum nisl, sed pellentesque ante. Etiam sed ornare nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat elit. Proin quis ultricies mauris, vitae ornare mauris. Mauris sapien ante, ullamcorper sit amet magna ut, dignissim dignissim leo. Nam interdum tincidunt mi quis faucibus. Praesent bibendum lacus in eros mollis, ac eleifend augue ultricies. Aliquam ullamcorper gravida metus vitae fringilla. Aliquam ac vehicula lectus. Maecenas leo sapien, accumsan in mi vel, mollis eleifend sapien. Nunc sed est vitae eros cursus rutrum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce eu dictum nisl, sed pellentesque ante. Etiam sed ornare nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat elit. Proin quis ultricies mauris, vitae ornare mauris. Mauris sapien ante, ullamcorper sit amet magna ut, dignissim dignissim leo. Nam interdum tincidunt mi quis faucibus. Praesent bibendum lacus in eros mollis, ac eleifend augue ultricies. Aliquam ullamcorper gravida metus vitae fringilla. Aliquam ac vehicula lectus. Maecenas leo sapien, accumsan in mi vel, mollis eleifend sapien. Nunc sed est vitae eros cursus rutrum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce eu dictum nisl, sed pellentesque ante. Etiam sed ornare nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat elit. Proin quis ultricies mauris, vitae ornare mauris. Mauris sapien ante, ullamcorper sit amet magna ut, dignissim dignissim leo. Nam interdum tincidunt mi quis faucibus. Praesent bibendum lacus in eros mollis, ac eleifend augue ultricies. Aliquam ullamcorper gravida metus vitae fringilla. Aliquam ac vehicula lectus. Maecenas leo sapien, accumsan in mi vel, mollis eleifend sapien. Nunc sed est vitae eros cursus rutrum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce eu dictum nisl, sed pellentesque ante. Etiam sed ornare nisi.",
         checkable_type: "Plan",
         checkable_id: 1,
-        border_color: '#013d03'
       },
       {
         id: 2,
@@ -43,7 +42,6 @@ export default {
         description: "Description2",
         checkable_type: "Plan",
         checkable_id: 1,
-        border_color: 'red'
       },
       {
         id: 3,
@@ -52,7 +50,6 @@ export default {
         description: "Description city1 - place",
         checkable_type: "Checkpoint",
         checkable_id: 1,
-        border_color: '#00b306'
       },
       {
         id: 4,
@@ -61,7 +58,6 @@ export default {
         description: "Description city1 - place2",
         checkable_type: "Checkpoint",
         checkable_id: 1,
-        border_color: '#00b306'
       },
       {
         id: 5,
@@ -70,7 +66,6 @@ export default {
         description: "Description city1 -place3",
         checkable_type: "Checkpoint",
         checkable_id: 1,
-        border_color: '#00b306'
       },
       {
         id: 6,
@@ -79,7 +74,6 @@ export default {
         description: "Description city1",
         checkable_type: "Plan",
         checkable_id: 2,
-        border_color: 'red'
       },
       {
         id: 7,
@@ -88,7 +82,6 @@ export default {
         description: "Description city2",
         checkable_type: "Plan",
         checkable_id: 2,
-        border_color: 'red'
       },
       {
         id: 8,
@@ -97,7 +90,6 @@ export default {
         description: "City 1 Place 3 subPlace 1",
         checkable_type: "Checkpoint",
         checkable_id: 5,
-        border_color: '#00ff09'
       },
       {
         id: 9,
@@ -106,7 +98,6 @@ export default {
         description: "City 1 Place 3 subPlace 2",
         checkable_type: "Checkpoint",
         checkable_id: 5,
-        border_color: '#00ff09'
       }
     ],
     current_checkpoint: null,

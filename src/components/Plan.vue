@@ -6,12 +6,13 @@
         <p class="plan_description">{{ description }}</p>
         <div class="checkpoint_list_wrapper">
           <div class="checkpoints_list">
-            <v-expansion-panels accordion style="width: calc(100% - 15px)">
+            <v-expansion-panels accordion style="width: calc(100% - 15px);">
               <checkpoint
                 v-for="(checkpoint,i) in getSubCheckpoints(id, 'Plan')"
                 :key="i"
                 :nestedLvl="1"
                 :checkpoint="checkpoint"
+                :style="{paddingTop: i == 0 ? '' : '10px', marginBottom: '10px'}"
               />
             </v-expansion-panels>
           </div>

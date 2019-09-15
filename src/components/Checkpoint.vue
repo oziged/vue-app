@@ -10,7 +10,7 @@
         <v-icon color="error"></v-icon>
       </template>
       <div
-        :style="{position: 'absolute', width: '4px', height: '100%', top: '0', left: nestedLvl==1&&checkpoint.checkable_type=='Plan' ? '-15px' : -10+nestedLvl*1+'px', backgroundColor: checkpoint.border_color}"
+        :style="{position: 'absolute', width: '4px', height: '100%', top: '0', left: nestedLvl==1&&checkpoint.checkable_type=='Plan' ? '-15px' : -10+nestedLvl*1+'px', backgroundColor: nestedColors[nestedLvl]}"
       ></div>
       <div
         style="height: 100%"
@@ -24,11 +24,11 @@
       </div>
     </v-expansion-panel-header>
     <v-expansion-panel-content
-      style="padding-left: 20px; margin-left: -20px;"
+      style="padding-left: 20px; margin-left: -20px; position: relative;"
       :class="{ 'checkpoint_content' : checkpoint.checkable_type == 'Plan'}"
     >
       <div
-        :style="{position: 'absolute', width: '4px', height: '100%', top: '0', left: nestedLvl==1&&checkpoint.checkable_type=='Plan' ? '-15px' : -10+nestedLvl*1+'px', backgroundColor: checkpoint.border_color}"
+        :style="{position: 'absolute', width: '4px', height: '100%', top: '0', left: nestedLvl==1&&checkpoint.checkable_type=='Plan' ? '5px' : 10+nestedLvl*1+'px', backgroundColor: nestedColors[nestedLvl]}"
       ></div>
       <div
         class="checkpoint_description"
@@ -85,7 +85,8 @@ export default {
     ...mapGetters([
       "getSubCheckpoints",
       "getCheckpoint",
-      "planCheckpointModalDisplay"
+      "planCheckpointModalDisplay",
+      "nestedColors"
     ])
   },
   mounted() {}

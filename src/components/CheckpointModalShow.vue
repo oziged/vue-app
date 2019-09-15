@@ -11,14 +11,7 @@
             <v-icon>mdi-arrow-right-thick</v-icon>
           </v-btn>
         </div>
-        <div class="prev_next_checkpoint_big">
-          <div class="left_block">
-            
-          </div>
-          <div class="right_block">
-            
-          </div>
-        </div>
+
         <div class="left_block">
           <div class="current_checkpoint_title">{{ currentCheckpoint.title }}</div>
           <div class="current_checkpoint_description">{{ currentCheckpoint.description }}</div>
@@ -253,23 +246,6 @@ export default {
       width: 30px;
       height: 30px;
       animation: rotation 10s infinite
-    }
-  }
-
-  .prev_next_checkpoint_big {
-    .left_block, .right_block {
-      overflow: hidden;
-      width: 7%;
-      height: 100vh;
-      position: fixed;
-      background-color: rgba(0, 0, 0, 0.377);
-      top: 0;
-    }
-    .left_block {
-      left: 0;
-    }
-    .right_block {
-      right: 0;
     }
   }
 
