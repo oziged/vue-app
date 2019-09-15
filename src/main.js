@@ -25,8 +25,7 @@ Vue.use(VueGoogleMaps, {
 Vue.config.productionTip = false
 
 Vue.filter('truncate', function (value, count) {
-  return `${value.split(' ').slice(0, 20).join(' ')}...`
-    // return `${value.slice(0, count)}...`;
+  return `${value.split(' ').slice(0, count).join(' ')}...`
 })
 
 new Vue({

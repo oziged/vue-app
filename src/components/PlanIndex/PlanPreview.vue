@@ -13,7 +13,7 @@
       v-else
       class="plan_description"
       @click="fullDescription = !fullDescription"
-    >{{ plan.description | truncate(90) }}</p>
+    >{{ plan.description | truncate(15) }}</p>
     <div class="plan_routes_list">
       <div class="plan_route" v-for="(item, index) in subCheckpoints" :key="index">
         <img class="circle" src="@/assets/PlanIndex/PlanPreview/circle.svg" alt />

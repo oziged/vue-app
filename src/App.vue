@@ -7,19 +7,22 @@
       </transition>
     </div>
     <checkpoint-modal-show :value="planCheckpointModalDisplay" @input="toggleCheckpointModal" />
+    <checkpoint-new :value="true" />
   </v-app>
 </template>
 
 <script>
 import AppHeader from "./components/AppHeader";
 import CheckpointModalShow from "./components/CheckpointModalShow";
+import CheckpointNew from "./components/CheckpointNew";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "App",
   components: {
     AppHeader,
-    CheckpointModalShow
+    CheckpointModalShow,
+    CheckpointNew
   },
   methods: {
     ...mapActions(["toggleCheckpointModal"])

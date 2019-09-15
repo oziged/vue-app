@@ -33,7 +33,7 @@
       <div
         class="checkpoint_description"
         :class="{ 'margin10':getSubCheckpoints(checkpoint.id, 'Checkpoint')['id']==checkpoint.id && checkpoint.checkable_type=='Plan' }"
-      >{{ checkpoint.description | truncate(120) }}</div>
+      >{{ checkpoint.description | truncate(20) }}</div>
       <v-expansion-panels
         style="width: calc(100% - 15px); margin-bottom: 10px;"
         v-if="getSubCheckpoints(checkpoint.id, 'Checkpoint')[0]['id']!=checkpoint.id"

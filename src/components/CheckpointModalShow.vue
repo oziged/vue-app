@@ -32,68 +32,12 @@
           </div>
         </div>
         <div class="right_block">
-          <!-- <slick class="main_slider" ref="slick" :options="slickOptionsMain">
-            <div class="slide">
-              <app-map
-                style="width: 100%; height: 100%"
-                :displayedItemId="displayedItemId"
-                :displayedItemType="displayedItemType"
-              />
-            </div>
-            <div
-              class="slide"
-              style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center;"
-            ></div>
-            <div
-              class="slide"
-              style="background: url('https://miro.medium.com/max/2660/1*_6EdJgpcWyeWne36eFH7eA@2x.jpeg') no-repeat center center;background-size: cover;"
-            ></div>
-            <div
-              class="slide"
-              style="background: url('http://rhinobooksnashville.com/wp-content/uploads/2019/06/30459708568_7b45f32c1c_o.jpg') no-repeat center center;background-size: cover;"
-            ></div>
-            <div
-              class="slide"
-              style="background: url('https://www.rd.com/wp-content/uploads/2017/12/00_Top-Travel-Trends-for-2018_209155915_06photo_FT.jpg') no-repeat center center;background-size: cover;"
-            ></div>
-          </slick>
-          <slick class="sub_slider" ref="slick" :options="slickOptionsMain">
-            <div class="sub_slide_wrapper">
-              <div
-                class="sub_slide"
-                style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
-              >1</div>
-            </div>
-            <div class="sub_slide_wrapper">
-              <div
-                class="sub_slide"
-                style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
-              >2</div>
-            </div>
-            <div class="sub_slide_wrapper">
-              <div
-                class="sub_slide"
-                style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
-              >3</div>
-            </div>
-            <div class="sub_slide_wrapper">
-              <div
-                class="sub_slide"
-                style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
-              >4</div>
-            </div>
-            <div class="sub_slide_wrapper">
-              <div
-                class="sub_slide"
-                style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
-              >5</div>
-            </div>
-          </slick> -->
           <slider
             :displayedItemId="displayedItemId"
             :displayedItemType="displayedItemType"
             :slickOptionsMain="slickOptionsMain"
             :slickOptionsSub="slickOptionsSub"
+            :images="['http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg', 'http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg', 'http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg', 'http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg', 'http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg', 'http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg']"
           />
         </div>
       </div>
