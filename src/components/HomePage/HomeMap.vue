@@ -1,7 +1,6 @@
 <template>
   <section>
     <div class="home_content">
-      <v-text-field class="g_live_search"></v-text-field>
       <h2 class="home_title">Travel Plan</h2>
       <p
         class="home_title_desc"
@@ -89,10 +88,5 @@ export default {
     background-color: black;
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
   }
-}
-
-.g_live_search {
-  width: 500px;
-  margin: 0 auto;
 }
 </style>

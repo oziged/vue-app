@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import HomeMap from '../components/HomeMap';
+import HomeMap from '../components/HomePage/HomeMap';
 
 export default {
   components: {

@@ -3,7 +3,7 @@
     <div>
       <app-header />
       <transition name="router-anim" mode="out-in">
-        <router-view class="content" :key="$route.fullPath"></router-view>
+        <router-view class="router_content" :key="$route.fullPath"></router-view>
       </transition>
     </div>
     <checkpoint-modal-show :value="planCheckpointModalDisplay" @input="toggleCheckpointModal" />
@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import AppHeader from "./components/AppHeader";
 import CheckpointModalShow from "./components/CheckpointModalShow";
 import { mapGetters, mapActions } from "vuex";
@@ -25,15 +24,7 @@ export default {
   methods: {
     ...mapActions(["toggleCheckpointModal"])
   },
-  mounted() {
-    window.modal = () => {
-      return this.modal;
-    };
-    window.on = () => {
-      this.toggleCheckpointModal();
-      return this.planCheckpointModalDisplay;
-    };
-  },
+  mounted() {},
   computed: {
     ...mapGetters(["planCheckpointModalDisplay"])
   }
@@ -55,26 +46,12 @@ export default {
   background-color: white;
 }
 
-.content {
-  min-height: calc(100vh - 80px);
-  background-color: white;
-}
-
 * {
   box-sizing: border-box;
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 /* VUETIFY STYLES FIX */
 
-// .range_selector input {
-// text-align: center;
-// }
 .checkpoints_list {
   .v-expansion-panel {
     .v-expansion-panel-content__wrap {
@@ -90,11 +67,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
   .v-expansion-panel--active .v-expansion-panel-header {
     min-height: 40px;
-  }
-
-  .v-expansion-panel--active .v-item--active {
-    // margin-bottom: 10px;
-    // padding-bottom: 2px;
   }
 
   .v-expansion-panel:before {
