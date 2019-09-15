@@ -21,13 +21,7 @@
             outlined
             required
           ></v-textarea>
-          <v-text-field
-            label="Map Place"
-            v-model="mapPlace"
-            color="green"
-            outlined
-            required
-          ></v-text-field>
+          <v-text-field ref="mapPlace" label="Map Place" color="green" outlined required></v-text-field>
         </v-form>
       </div>
     </v-card>
@@ -39,12 +33,24 @@ export default {
   data() {
     return {
       title: "",
+      description: "",
       valid: false,
       titleRules: [
         v => !!v || "Title is required",
         v => v.length <= 20 || "Name must be less than 20 characters"
       ]
     };
+  },
+  mounted() {
+    this.$gmapApiPromiseLazy().then(() => {
+      let input = this.$refs.mapPlace.$el.querySelector("input");
+      input.placeholder = ''
+      let autocomplete = new google.maps.places.Autocomplete(input);
+      autocomplete.addListener('place_changed', function() {
+      var place = autocomplete.getPlace();
+      console.log(place);
+    })
+    });
   }
 };
 </script>
