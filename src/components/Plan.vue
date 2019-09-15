@@ -2,7 +2,7 @@
   <div>
     <div class="plan">
       <div class="plan_info">
-        <h1 class="plan_title" @click="showMainCheckpoints">{{ title }}</h1>
+        <h1 class="plan_title" @click="showPlanSubCheckpoints">{{ title }}</h1>
         <p class="plan_description">{{ description }}</p>
         <div class="checkpoint_list_wrapper">
           <div class="checkpoints_list">
@@ -18,7 +18,11 @@
           </div>
         </div>
       </div>
-      <app-map class="plan_map" :checkpointId="checkpointId" />
+      <app-map
+        class="plan_map"
+        :displayedItemId="displayedItemId"
+        :displayedItemType="displayedItemType"
+      />
     </div>
   </div>
 </template>
@@ -40,18 +44,18 @@ export default {
   data: () => ({
     title: "",
     description: "",
-    checkpointId: null
+    displayedItemId: null,
+    displayedItemType: "Plan"
   }),
   methods: {
     ...mapActions(["updateMapPlaces", "setCurrentCheckpoint"]),
-    showMainCheckpoints() {
-      let subCheckpoints = this.getSubCheckpoints(this.id, "Plan");
-      if (subCheckpoints) {
-        this.updateMapPlaces(subCheckpoints);
-      }
+    showPlanSubCheckpoints() {
+      this.displayedItemId = this.id;
+      this.displayedItemType = "Plan";
     },
     setCheckpointId(id) {
-      this.checkpointId = id;
+      this.displayedItemId = id;
+      this.displayedItemType = "Checkpoint";
     }
   },
   provide() {
@@ -60,12 +64,15 @@ export default {
     };
   },
   mounted() {
+    window.info = ()=>{
+      return [this.displayedItemId, this.displayedItemType]
+    }
     let plan = this.getPlan(this.id);
     this.title = plan.title;
     this.description = plan.description;
 
     this.$gmapApiPromiseLazy().then(() => {
-      this.showMainCheckpoints();
+      this.displayedItemId = this.id;
     });
   },
   computed: {
@@ -97,7 +104,7 @@ export default {
       margin-bottom: 10px;
       background-color: #fff;
     }
-    .checkpoint_list_wrapper { 
+    .checkpoint_list_wrapper {
       margin-left: 23px;
     }
   }

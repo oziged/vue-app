@@ -32,7 +32,7 @@ import { mapGetters, mapActions } from "vuex";
 import { gmapApi } from "vue2-google-maps";
 
 export default {
-  props: ["checkpointId"],
+  props: ["displayedItemId", "displayedItemType"],
   data() {
     return {
       renderer: null,
@@ -90,22 +90,7 @@ export default {
         </div>
       </div>`;
     },
-    generateWaypoints(places) {
-      return places.slice(1, -1).map(place => {
-        return {
-          location: new google.maps.LatLng(
-            place.position.lat,
-            place.position.lng
-          )
-        };
-      });
-    }
-  },
-  watch: {
-    checkpointId() {
-      let checkpoints = this.getSubCheckpoints(this.checkpointId, "Checkpoint");
-      let places = checkpoints.map(item => this.getPlace(item.place_id));
-
+    displayMapPlaces(places) {
       if (places.length == 1) {
         // display 1 marker on the map for checkpoint
         this.markersList = places;
@@ -150,56 +135,28 @@ export default {
         );
       }
     },
-    mapCurrentPlaces() {
-      if (this.mapCurrentPlaces.length == 1) {
-        // display 1 marker on the map for checkpoint
-        this.markersList = this.mapCurrentPlaces;
-        this.zoom = 0;
-        if (this.renderer != null) {
-          this.renderer.setMap(null);
-        }
-        this.$nextTick(() => {
-          this.$refs.gmap.$mapObject.panTo(this.mapCurrentPlaces[0].position);
-          this.zoom = 15;
-        });
-      } else if (this.mapCurrentPlaces.length > 1) {
-        // display route for few subcheckpoints
-        this.markersList = [];
-        let _self = this;
-        this.service == null
-          ? (this.service = new google.maps.DirectionsService())
-          : "";
-        this.renderer == null
-          ? (this.renderer = new google.maps.DirectionsRenderer())
-          : "";
-        this.renderer.setOptions({ map: this.$refs.gmap.$mapObject });
-        this.service.route(
-          {
-            origin: new google.maps.LatLng(
-              this.mapCurrentPlaces[0].position.lat,
-              this.mapCurrentPlaces[0].position.lng
-            ),
-            waypoints: this.generateWaypoints(this.mapCurrentPlaces),
-            destination: new google.maps.LatLng(
-              this.mapCurrentPlaces.slice(-1)[0].position.lat,
-              this.mapCurrentPlaces.slice(-1)[0].position.lng
-            ),
-            travelMode: "DRIVING"
-          },
-          function(response, status) {
-            if (status === "OK") {
-              _self.renderer.setDirections(response);
-            } else {
-              window.alert("Directions request failed due to " + status);
-            }
-          }
-        );
-      }
+    generateWaypoints(places) {
+      return places.slice(1, -1).map(place => {
+        return {
+          location: new google.maps.LatLng(
+            place.position.lat,
+            place.position.lng
+          )
+        };
+      });
     }
   },
-  mounted() {
-    console.log(this.checkpointId + "  qweqwe ");
+  watch: {
+    displayedItemId() {
+      let checkpoints = this.getSubCheckpoints(
+        this.displayedItemId,
+        this.displayedItemType
+      );
+      let places = checkpoints.map(item => this.getPlace(item.place_id));
+      this.displayMapPlaces(places);
+    }
   },
+  mounted() {},
   computed: {
     ...mapGetters([
       "allPlaces",

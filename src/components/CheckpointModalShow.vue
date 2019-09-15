@@ -32,9 +32,13 @@
           </div>
         </div>
         <div class="right_block">
-          <slick class="main_slider" ref="slick" :options="slickOptions">
+          <!-- <slick class="main_slider" ref="slick" :options="slickOptionsMain">
             <div class="slide">
-              <app-map style="width: 100%; height: 100%" :checkpointId="checkpointId" />
+              <app-map
+                style="width: 100%; height: 100%"
+                :displayedItemId="displayedItemId"
+                :displayedItemType="displayedItemType"
+              />
             </div>
             <div
               class="slide"
@@ -53,7 +57,7 @@
               style="background: url('https://www.rd.com/wp-content/uploads/2017/12/00_Top-Travel-Trends-for-2018_209155915_06photo_FT.jpg') no-repeat center center;background-size: cover;"
             ></div>
           </slick>
-          <slick class="sub_slider" ref="slick" :options="slickOptions2">
+          <slick class="sub_slider" ref="slick" :options="slickOptionsMain">
             <div class="sub_slide_wrapper">
               <div
                 class="sub_slide"
@@ -84,7 +88,13 @@
                 style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center!important;"
               >5</div>
             </div>
-          </slick>
+          </slick> -->
+          <slider
+            :displayedItemId="displayedItemId"
+            :displayedItemType="displayedItemType"
+            :slickOptionsMain="slickOptionsMain"
+            :slickOptionsSub="slickOptionsSub"
+          />
         </div>
       </div>
     </v-card>
@@ -95,6 +105,7 @@
 import { mapGetters, mapActions } from "vuex";
 import Checkpoint from "./Checkpoint";
 import AppMap from "./AppMap";
+import Slider from "./Slider";
 import Slick from "vue-slick";
 import "slick-carousel/slick/slick.css";
 
@@ -102,13 +113,15 @@ export default {
   components: {
     AppMap,
     Checkpoint,
-    Slick
+    Slick,
+    Slider
   },
   props: ["value"],
   data() {
     return {
-      checkpointId: null,
-      slickOptions: {
+      displayedItemId: null,
+      displayedItemType: "Checkpoint",
+      slickOptionsMain: {
         initialSlide: 0,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -118,7 +131,7 @@ export default {
         waitForAnimate: false,
         asNavFor: ".sub_slider"
       },
-      slickOptions2: {
+      slickOptionsSub: {
         slidesToShow: 8,
         slidesToScroll: 1,
         asNavFor: ".main_slider",
@@ -154,7 +167,8 @@ export default {
       this.$emit("input");
     },
     setCheckpointId(id) {
-      this.checkpointId = id;
+      this.displayedItemType = "Checkpoint";
+      this.displayedItemId = id;
     },
     next() {
       this.$refs.slick.next();
@@ -175,14 +189,14 @@ export default {
       console.log(this.value);
     },
     getPlanModalCheckpointId() {
-      console.log('getplanche');
-      this.checkpointId = null;
+      console.log("getplanche");
+      this.displayedItemId = null;
       this.$nextTick(() => {
         document.querySelectorAll(".slide").forEach(item => {
           item.parentElement.style.height = "100%";
           item.parentElement.style.width = "100%";
         });
-        this.checkpointId = this.getPlanModalCheckpointId;
+        this.displayedItemId = this.getPlanModalCheckpointId;
       });
     }
   },
@@ -245,7 +259,7 @@ export default {
     img {
       width: 30px;
       height: 30px;
-      animation: rotation 10s infinite
+      animation: rotation 10s infinite;
     }
   }
 
@@ -264,51 +278,51 @@ export default {
   }
   .right_block {
     width: 70%;
-    padding: 20px;
-    display: flex;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    flex-direction: column;
-    justify-content: space-between;
+    // padding: 20px;
+    // display: flex;
+    // overflow-y: scroll;
+    // overflow-x: hidden;
+    // flex-direction: column;
+    // justify-content: space-between;
   }
 
-  .main_slider {
-    width: 100%;
-    height: calc(100% - 120px);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 4px 0px rgba((0), 0, 0, 0.1);
-  }
+  // .main_slider {
+  //   width: 100%;
+  //   height: calc(100% - 120px);
+  //   border-radius: 10px;
+  //   overflow: hidden;
+  //   box-shadow: 0 0 4px 0px rgba((0), 0, 0, 0.1);
+  // }
 
-  .slick_active {
-  }
+  // .slick_active {
+  // }
 
-  .sub_slider {
-    height: 100px;
-    overflow: hidden;
-    .sub_slide {
-      transition: 1s;
-      border: 5px solid rgb(221, 237, 214);
-    }
-    .slick-current .sub_slide {
-      transition: 1s;
-      border: 5px solid rgb(138, 210, 116);
-    }
-  }
+  // .sub_slider {
+  //   height: 100px;
+  //   overflow: hidden;
+  //   .sub_slide {
+  //     transition: 1s;
+  //     border: 5px solid rgb(221, 237, 214);
+  //   }
+  //   .slick-current .sub_slide {
+  //     transition: 1s;
+  //     border: 5px solid rgb(138, 210, 116);
+  //   }
+  // }
 
-  .slide {
-    width: 100%;
-    height: 100%;
-  }
+  // .slide {
+  //   width: 100%;
+  //   height: 100%;
+  // }
 
-  .sub_slide_wrapper {
-    width: 100%;
-    height: 100px;
-    .sub_slide {
-      width: calc(100% - 5px);
-      height: 100%;
-    }
-  }
+  // .sub_slide_wrapper {
+  //   width: 100%;
+  //   height: 100px;
+  //   .sub_slide {
+  //     width: calc(100% - 5px);
+  //     height: 100%;
+  //   }
+  // }
 }
 </style>
 
@@ -327,9 +341,15 @@ export default {
   margin: 0 -15px;
 }
 
-@keyframes rotation { 
-0% {transform:rotate(0deg);} 
-95% {transform:rotate(0deg);} 
-100% {transform:rotate(360deg);}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  95% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
