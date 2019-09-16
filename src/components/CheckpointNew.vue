@@ -1,5 +1,5 @@
 <template>
-  <v-dialog :value="true" @input="input" width="80vw">
+  <v-dialog :value="true" width="80vw">
     <v-card>
       <div class="checkpoint_new_modal">
         <v-form v-model="valid">
@@ -41,12 +41,22 @@
             style="width: 100%; height: 100%"
           >
             <GmapMarker
+              ref="marker"
               :position="mapPlace"
               :clickable="true"
-              :draggable="true"
+              :draggable="false"
               @click="toggleInfoWindow(m,index)"
             />
           </GmapMap>
+        </div>
+        <div class="preview">
+          <div class="left_block">
+            <div class="checkpoint_title">{{ title }}</div>
+            <div class="checkpoint_description">{{ description }}</div>
+          </div>
+          <div class="right_block">
+            <slider :disableMap="true" :images="['/assets/defaultImage.jpg']"/>
+          </div>
         </div>
       </div>
     </v-card>
@@ -55,13 +65,17 @@
 
 <script>
 import { gmapApi } from "vue2-google-maps";
+import Slider from './Slider'
 
 export default {
+  components: {
+    Slider
+  },
   data() {
     return {
       title: "",
       description: "",
-      mapPlace: "",
+      mapPlace: { lat: 2, lng: 22 },
       displaySaveMapButton: false,
       center: {
         lat: 12,
@@ -79,8 +93,9 @@ export default {
     closeMap() {
       this.displaySaveMapButton = false;
       this.$refs.map.style.height = "0px";
+      let temp = this.$refs.mapPlace.$el.querySelector("input").value;
       this.$nextTick(() => {
-        // this.$refs.mapPlace.$el.querySelector("input").value = "";
+        this.$refs.mapPlace.$el.querySelector("input").value = temp;
       });
     }
   },
@@ -98,19 +113,17 @@ export default {
         let place = autocomplete.getPlace();
         this.mapPlace = place.geometry.location;
         this.$refs.gmap.$mapObject.panTo(place.geometry.location);
-        console.log(input.value);
-        console.log(this.$refs.mapPlace.$el.value);
-        this.$nextTick(()=>{
-          input.value = place.formatted_address;
-        })
-
-        google.maps.event.addListener(
-          this.$refs.gmap.$mapObject,
-          "click",
-          e => {
-            this.mapPlace = e.latLng;
-          }
-        );
+        let temp = input.value;
+        this.$nextTick(() => {
+          input.value = temp;
+        });
+      });
+      google.maps.event.addListener(this.$refs.gmap.$mapObject, "click", e => {
+        let temp = this.$refs.mapPlace.$el.querySelector("input").value;
+        this.mapPlace = e.latLng;
+        this.$nextTick(() => {
+          this.$refs.mapPlace.$el.querySelector("input").value = temp;
+        });
       });
     });
   }
@@ -145,5 +158,26 @@ export default {
   transform: translateX(-50%);
   z-index: 100;
   height: 0;
+}
+
+.preview {
+  display: flex;
+}
+
+.left_block {
+  width: 30%;
+  .checkpoint_title {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 30px;
+    background: url("https://image.flaticon.com/icons/svg/25/25615.svg");
+    background-position: center left;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+  }
+}
+
+.right_block {
+  width: 70%;
 }
 </style>

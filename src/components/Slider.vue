@@ -1,7 +1,7 @@
 <template>
   <div class="slider">
     <slick class="main_slider" ref="slick" :options="slickOptionsMain">
-      <div class="slide">
+      <div v-if="!disableMap" class="slide">
         <app-map
           style="width: 100%; height: 100%"
           :displayedItemId="displayedItemId"
@@ -12,20 +12,18 @@
         v-for="(item, index) in images"
         :key="index"
         class="slide"
-        :style="{background: `url('${item}') no-repeat center center`}"
+        :style="{background: `url(${item}) no-repeat center center`}"
       ></div>
     </slick>
 
     <slick class="sub_slider" ref="slick" :options="slickOptionsSub">
-      <div class="sub_slide_wrapper">
+      <div v-if="!disableMap" class="sub_slide_wrapper">
         <div
           class="sub_slide"
           style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center"
         ></div>
       </div>
-      <div 
-        class="sub_slide_wrapper"
-        v-for="(item, index) in images" :key="index">
+      <div class="sub_slide_wrapper" v-for="(item, index) in images" :key="index">
         <div
           class="sub_slide"
           :style="{background: `url('${item}') no-repeat center center`}"
@@ -46,11 +44,17 @@ export default {
     "displayedItemType",
     "slickOptionsMain",
     "slickOptionsSub",
-    "images"
+    "images",
+    "disableMap"
   ],
   components: {
     AppMap,
     Slick
+  },
+  mounted() {
+    window.w = () => {
+      return this.images;
+    };
   }
 };
 </script>

@@ -7,7 +7,7 @@
   >
     <v-expansion-panel-header style="position: relative" @click="setCheckpointId(checkpoint.id)">
       <template v-slot:actions>
-        <v-icon color="error"></v-icon>
+        <v-icon color="no-icon"></v-icon>
       </template>
       <div
         :style="{position: 'absolute', width: '4px', height: '100%', top: '0', left: nestedLvl==1&&checkpoint.checkable_type=='Plan' ? '-15px' : -10+nestedLvl*1+'px', backgroundColor: nestedColors[nestedLvl]}"
