@@ -80,7 +80,7 @@ export default {
       this.displaySaveMapButton = false;
       this.$refs.map.style.height = "0px";
       this.$nextTick(() => {
-        this.$refs.mapPlace.$el.querySelector("input").value = "";
+        // this.$refs.mapPlace.$el.querySelector("input").value = "";
       });
     }
   },
@@ -95,10 +95,14 @@ export default {
       input.placeholder = "";
       let autocomplete = new google.maps.places.Autocomplete(input);
       autocomplete.addListener("place_changed", () => {
-        // let place = autocomplete.getPlace();
-        // input.value = place.formatted_address;
-        // this.mapPlace = place.geometry.location;
-        // this.$refs.gmap.$mapObject.panTo(place.geometry.location);
+        let place = autocomplete.getPlace();
+        this.mapPlace = place.geometry.location;
+        this.$refs.gmap.$mapObject.panTo(place.geometry.location);
+        console.log(input.value);
+        console.log(this.$refs.mapPlace.$el.value);
+        this.$nextTick(()=>{
+          input.value = place.formatted_address;
+        })
 
         google.maps.event.addListener(
           this.$refs.gmap.$mapObject,
