@@ -21,6 +21,14 @@
             outlined
             required
           ></v-textarea>
+          <quill-editor
+            v-model="description"
+            ref="myQuillEditor"
+            :options="editorOption"
+            @blur="onEditorBlur($event)"
+            @focus="onEditorFocus($event)"
+            @ready="onEditorReady($event)"
+          ></quill-editor>
           <v-text-field
             clearable
             ref="mapPlace"
@@ -80,7 +88,10 @@
         <div class="preview">
           <div class="left_block">
             <div class="checkpoint_title">{{ title || 'Title' }}</div>
-            <div class="checkpoint_description">{{ description || 'Description' }}</div>
+            <div
+              v-html="description"
+              class="checkpoint_description"
+            >{{ description || 'Description' }}</div>
           </div>
           <div class="right_block">
             <transition name="fade">
