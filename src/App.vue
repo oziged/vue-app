@@ -80,4 +80,9 @@ export default {
     padding-top: 0;
   }
 }
+
+.v-file-input .v-input__slot {
+  margin-left: -32px;
+  width: calc(100% + 32px);
+}
 </style>

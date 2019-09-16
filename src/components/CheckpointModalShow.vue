@@ -37,7 +37,7 @@
             :displayedItemType="displayedItemType"
             :slickOptionsMain="slickOptionsMain"
             :slickOptionsSub="slickOptionsSub"
-            :images="['http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg', 'http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg', 'http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg', 'http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg', 'http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg', 'http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg']"
+            :images="['http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg' ]"
           />
         </div>
       </div>
@@ -114,13 +114,6 @@ export default {
       this.displayedItemType = "Checkpoint";
       this.displayedItemId = id;
     },
-    next() {
-      this.$refs.slick.next();
-    },
-
-    prev() {
-      this.$refs.slick.prev();
-    }
   },
   provide() {
     return {
@@ -129,11 +122,7 @@ export default {
   },
   mounted() {},
   watch: {
-    value() {
-      console.log(this.value);
-    },
     getPlanModalCheckpointId() {
-      console.log("getplanche");
       this.displayedItemId = null;
       this.$nextTick(() => {
         document.querySelectorAll(".slide").forEach(item => {

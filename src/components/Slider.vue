@@ -1,6 +1,6 @@
 <template>
   <div class="slider">
-    <slick class="main_slider" ref="slick" :options="slickOptionsMain">
+    <slick class="main_slider" ref="slickMain" :options="slickOptionsMain">
       <div v-if="!disableMap" class="slide">
         <app-map
           style="width: 100%; height: 100%"
@@ -12,11 +12,11 @@
         v-for="(item, index) in images"
         :key="index"
         class="slide"
-        :style="{background: `url(${item}) no-repeat center center`}"
+        :style="{background: `url('${item}') no-repeat center center/cover`}"
       ></div>
     </slick>
 
-    <slick class="sub_slider" ref="slick" :options="slickOptionsSub">
+    <slick class="sub_slider" ref="slickSub" :options="slickOptionsSub">
       <div v-if="!disableMap" class="sub_slide_wrapper">
         <div
           class="sub_slide"
@@ -26,7 +26,7 @@
       <div class="sub_slide_wrapper" v-for="(item, index) in images" :key="index">
         <div
           class="sub_slide"
-          :style="{background: `url('${item}') no-repeat center center`}"
+          :style="{background: `url('${item}') no-repeat center center/cover`}"
         >{{ index }}</div>
       </div>
     </slick>
@@ -51,10 +51,12 @@ export default {
     AppMap,
     Slick
   },
+  methods: {},
   mounted() {
-    window.w = () => {
-      return this.images;
-    };
+    document.querySelectorAll(".slide").forEach(item => {
+      item.parentElement.style.height = "100%";
+      item.parentElement.style.width = "100%";
+    });
   }
 };
 </script>

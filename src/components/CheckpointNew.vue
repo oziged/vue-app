@@ -21,7 +21,15 @@
             outlined
             required
           ></v-textarea>
-          <v-text-field clearable ref="mapPlace" label="Map Place" color="green" outlined required></v-text-field>
+          <v-text-field
+            clearable
+            ref="mapPlace"
+            label="Map Place"
+            color="green"
+            outlined
+            required
+            @focus="openMap"
+          ></v-text-field>
         </v-form>
         <div class="map" ref="map">
           <transition name="fade">
@@ -49,15 +57,45 @@
             />
           </GmapMap>
         </div>
+        <v-file-input
+          v-model="files"
+          @change="updateSlider"
+          color="deep-purple accent-4"
+          counter
+          label="File input"
+          multiple
+          placeholder="Select your files"
+          prepend-icon="no-icon"
+          outlined
+          :show-size="1000"
+        >
+          <template v-slot:selection="{ index, text }">
+            <v-chip v-if="index < 2" color="deep-purple accent-4" dark label small>{{ text }}</v-chip>
+            <span
+              v-else-if="index === 2"
+              class="overline grey--text text--darken-3 mx-2"
+            >+{{ files.length - 2 }} File(s)</span>
+          </template>
+        </v-file-input>
         <div class="preview">
           <div class="left_block">
-            <div class="checkpoint_title">{{ title }}</div>
-            <div class="checkpoint_description">{{ description }}</div>
+            <div class="checkpoint_title">{{ title || 'Title' }}</div>
+            <div class="checkpoint_description">{{ description || 'Description' }}</div>
           </div>
           <div class="right_block">
-            <slider :disableMap="true" :images="['/assets/defaultImage.jpg']"/>
+            <transition name="fade">
+              <slider
+                v-if="displaySlider"
+                ref="slider"
+                :disableMap="true"
+                :images="images"
+                :slickOptionsMain="slickOptionsMain"
+                :slickOptionsSub="slickOptionsSub"
+              />
+            </transition>
           </div>
         </div>
+        <v-btn @click="closeMap" color="success" dark>save checkpoint</v-btn>
       </div>
     </v-card>
   </v-dialog>
@@ -65,7 +103,7 @@
 
 <script>
 import { gmapApi } from "vue2-google-maps";
-import Slider from './Slider'
+import Slider from "./Slider";
 
 export default {
   components: {
@@ -73,10 +111,18 @@ export default {
   },
   data() {
     return {
+      displaySlider: true,
       title: "",
       description: "",
       mapPlace: { lat: 2, lng: 22 },
       displaySaveMapButton: false,
+      files: [],
+      images: [
+        "https://teamkruyt.nl/wp-content/uploads/2016/12/light-blue-background-1.jpg",
+        "https://teamkruyt.nl/wp-content/uploads/2016/12/light-blue-background-1.jpg",
+        "https://teamkruyt.nl/wp-content/uploads/2016/12/light-blue-background-1.jpg",
+        "https://teamkruyt.nl/wp-content/uploads/2016/12/light-blue-background-1.jpg"
+      ],
       center: {
         lat: 12,
         lng: 12
@@ -86,10 +132,56 @@ export default {
       titleRules: [
         v => !!v || "Title is required",
         v => v.length <= 20 || "Name must be less than 20 characters"
-      ]
+      ],
+      slickOptionsMain: {
+        initialSlide: 0,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        draggable: false,
+        waitForAnimate: false,
+        asNavFor: ".sub_slider"
+      },
+      slickOptionsSub: {
+        initialSlide: 0,
+        slidesToShow: 8,
+        slidesToScroll: 1,
+        asNavFor: ".main_slider",
+        arrows: false,
+        focusOnSelect: true,
+        waitForAnimate: false,
+        responsive: [
+          {
+            breakpoint: 1500,
+            settings: {
+              slidesToShow: 5
+            }
+          },
+          {
+            breakpoint: 1200,
+            settings: {
+              slidesToShow: 4
+            }
+          },
+          {
+            breakpoint: 900,
+            settings: {
+              slidesToShow: 3
+            }
+          }
+        ]
+      }
     };
   },
   methods: {
+    t(event) {
+      console.log(event);
+    },
+    openMap() {
+      this.$refs.map.style.height = "500px";
+      this.displaySaveMapButton = true;
+    },
     closeMap() {
       this.displaySaveMapButton = false;
       this.$refs.map.style.height = "0px";
@@ -97,16 +189,23 @@ export default {
       this.$nextTick(() => {
         this.$refs.mapPlace.$el.querySelector("input").value = temp;
       });
+    },
+    updateSlider() {
+      this.images = this.files.map(item => {
+        return window.URL.createObjectURL(item);
+      });
+      this.displaySlider = false;
+      setTimeout(() => {
+        this.displaySlider = true;
+      }, 1000);
+    },
+    console() {
+      console.log("console");
     }
   },
   mounted() {
     this.$gmapApiPromiseLazy().then(() => {
       let input = this.$refs.mapPlace.$el.querySelector("input");
-      window.input = input;
-      input.addEventListener("focus", () => {
-        this.$refs.map.style.height = "500px";
-        this.displaySaveMapButton = true;
-      });
       input.placeholder = "";
       let autocomplete = new google.maps.places.Autocomplete(input);
       autocomplete.addListener("place_changed", () => {
@@ -179,5 +278,7 @@ export default {
 
 .right_block {
   width: 70%;
+  min-height: 400px;
+  max-height: 600px;
 }
 </style>
