@@ -1,6 +1,6 @@
 <template>
-  <modal-window :key="key" :value="value" @input="input">
-    <div class="checkpoint_new_modal" :key="key">
+  <modal-window :value="value" @input="input">
+    <div class="checkpoint_new_modal">
       <v-form ref="form">
         <v-text-field
           label="Title"
