@@ -1,7 +1,5 @@
 <template>
   <modal-window :value="value" @input="input">
-    <!-- <v-dialog :value="true" width="80vw"> -->
-    <!-- <v-card> -->
     <div class="checkpoint_new_modal">
       <v-form v-model="valid">
         <v-text-field
@@ -15,6 +13,7 @@
         <v-textarea
           label="Description"
           v-model="description"
+          :rules="descriptionRules"
           auto-grow
           rows="4"
           row-height="25"
@@ -27,6 +26,7 @@
           ref="mapPlace"
           label="Map Place"
           v-model="mapPlaceInput"
+          :rules="mapPlaceRules"
           color="green"
           outlined
           required
@@ -46,7 +46,7 @@
         </transition>
         <GmapMap
           ref="gmap"
-          :center="center"
+          :center="currentLocation"
           :zoom="zoom"
           map-type-id="terrain"
           style="width: 100%; height: 100%"
@@ -63,7 +63,7 @@
       <v-file-input
         v-model="files"
         @change="updateSlider"
-        color="deep-purple accent-4"
+        color="green"
         counter
         label="File input"
         multiple
@@ -73,11 +73,8 @@
         :show-size="1000"
       >
         <template v-slot:selection="{ index, text }">
-          <v-chip v-if="index < 2" color="deep-purple accent-4" dark label small>{{ text }}</v-chip>
-          <span
-            v-else-if="index === 2"
-            class="overline grey--text text--darken-3 mx-2"
-          >+{{ files.length - 2 }} File(s)</span>
+          <v-chip v-if="index < 2" color="green" dark label small>{{ text }}</v-chip>
+          <span v-else-if="index === 2" class="overline green">+{{ files.length - 2 }} File(s)</span>
         </template>
       </v-file-input>
       <div class="preview">
@@ -101,11 +98,10 @@
       <v-btn @click="closeMap" color="success" dark>save checkpoint</v-btn>
     </div>
   </modal-window>
-  <!-- </v-card> -->
-  <!-- </v-dialog> -->
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import { gmapApi } from "vue2-google-maps";
 import Slider from "./Slider";
 import ModalWindow from "./ModalWindow";
@@ -126,10 +122,10 @@ export default {
       displaySaveMapButton: false,
       files: [],
       images: [
-        "https://teamkruyt.nl/wp-content/uploads/2016/12/light-blue-background-1.jpg",
-        "https://teamkruyt.nl/wp-content/uploads/2016/12/light-blue-background-1.jpg",
-        "https://teamkruyt.nl/wp-content/uploads/2016/12/light-blue-background-1.jpg",
-        "https://teamkruyt.nl/wp-content/uploads/2016/12/light-blue-background-1.jpg"
+        "https://cdn.dribbble.com/users/479289/screenshots/4521207/plexus_bg_2.gif",
+        "https://cdn.dribbble.com/users/479289/screenshots/4521207/plexus_bg_2.gif",
+        "https://cdn.dribbble.com/users/479289/screenshots/4521207/plexus_bg_2.gif",
+        "https://cdn.dribbble.com/users/479289/screenshots/4521207/plexus_bg_2.gif"
       ],
       center: {
         lat: 12,
@@ -139,8 +135,13 @@ export default {
       valid: false,
       titleRules: [
         v => !!v || "Title is required",
-        v => v.length <= 20 || "Name must be less than 20 characters"
+        v => v.length <= 20 || "Name must be less than 30 characters"
       ],
+      descriptionRules: [
+        v => !!v || "Description is required",
+        v => v.length <= 5000 || "Description must be less than 5000 characters"
+      ],
+      mapPlaceRules: [v => !!v || "Place on map is required"],
       slickOptionsMain: {
         initialSlide: 0,
         slidesToShow: 1,
@@ -189,7 +190,11 @@ export default {
       this.displaySaveMapButton = true;
     },
     closeMap(e) {
-      if (e.target.closest('.map') && !e.target.closest('.save_map_place')) return;
+      if (
+        (e.target.closest(".map") && !e.target.closest(".save_map_place")) ||
+        e.target.className == "gm-ui-hover-effect"
+      )
+        return;
       this.displaySaveMapButton = false;
       this.$refs.map.style.height = "0px";
       this.$refs.map.style.marginBottom = "0px";
@@ -205,10 +210,10 @@ export default {
     },
     input() {
       this.$emit("input");
-    },
-    checkParent(selector) {
-      console.log(document.querySelector(selector));
     }
+  },
+  computed: {
+    ...mapGetters(["currentLocation"])
   },
   watch: {
     value() {

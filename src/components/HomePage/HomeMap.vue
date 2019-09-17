@@ -5,13 +5,7 @@
       <p
         class="home_title_desc"
       >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur, minus nesciunt! Consequuntur, autem aut eius reiciendis quia rerum tenetur earum porro deserunt eligendi tempore, sequi quidem quasi nam. Aliquam, rerum!</p>
-      <GmapMap
-        class="home_map"
-        ref="gmap"
-        :center="currentLocation"
-        :zoom="5"
-        map-type-id="terrain"
-      >
+      <GmapMap class="home_map" ref="gmap" :center="center" :zoom="5" map-type-id="terrain">
         <GmapMarker
           :key="index"
           v-for="(m, index) in allPlaces"
@@ -33,21 +27,17 @@ export default {
   data() {
     return {
       markersOpacity: 0,
-      currentLocation: { lat: 0, lng: 0 },
+      center: { lat: 0, lng: 0 },
       markers: []
     };
   },
   computed: {
-    ...mapGetters(["allPlaces"])
+    ...mapGetters(["allPlaces", "currentLocation"])
   },
-  methods: {
-    geolocation: function() {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.currentLocation = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-      });
+  methods: {},
+  watch: {
+    currentLocation() {
+      this.center = this.currentLocation;
     }
   },
   mounted() {

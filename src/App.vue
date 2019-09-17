@@ -28,9 +28,10 @@ export default {
     ModalWindow
   },
   methods: {
-    ...mapActions(["toggleCheckpointModal", "toggleCheckpointNewModal"])
+    ...mapActions(["toggleCheckpointModal", "toggleCheckpointNewModal", "updateCurrentLocation"])
   },
   mounted() {
+    this.updateCurrentLocation();
     window.toggle = () => {
       this.toggleCheckpointNewModal()
     }

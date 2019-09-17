@@ -5,6 +5,7 @@ import plan from './modules/plan'
 import checkpoint from './modules/checkpoint'
 import place from './modules/place'
 import map from './modules/map'
+import geolocation from './modules/geolocation'
 
 Vue.use(Vuex)
 
@@ -24,6 +25,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    user, plan, checkpoint, place, map
+    user, plan, checkpoint, place, map, geolocation
   }
 })
