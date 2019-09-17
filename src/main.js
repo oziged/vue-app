@@ -10,14 +10,9 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import {VueMasonryPlugin} from 'vue-masonry';
 import MagicGrid from 'vue-magic-grid'
 import vClickOutside from 'v-click-outside'
-import VueQuillEditor from 'vue-quill-editor'
+import Toasted from 'vue-toasted';
 
-// require styles
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
-
-Vue.use(VueQuillEditor, /* { default global options } */)
+Vue.use(Toasted)
 Vue.use(vClickOutside)
 Vue.use(MagicGrid)
 Vue.use(VueMasonryPlugin)

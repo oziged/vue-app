@@ -35,6 +35,7 @@ export default {
     window.toggle = () => {
       this.toggleCheckpointNewModal()
     }
+    this.$toasted.show('hola billo');
   },
   computed: {
     ...mapGetters(["planCheckpointModalDisplay", "checkpointNewModalDisplay"])

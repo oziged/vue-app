@@ -250,7 +250,6 @@ export default {
               let place = autocomplete.getPlace();
               this.mapPlace = place.geometry.location;
               this.$refs.gmap.$mapObject.panTo(place.geometry.location);
-              console.log(input.value);
               let temp = input.value;
               this.mapPlaceInput = temp;
             });
@@ -269,11 +268,7 @@ export default {
       }
     }
   },
-  mounted() {
-    window.set = s => {
-      this.mapPlaceInput = s;
-    };
-  }
+  mounted() {}
 };
 </script>
 
