@@ -1,120 +1,127 @@
 <template>
-  <v-dialog :value="true" width="80vw">
-    <v-card>
-      <div class="checkpoint_new_modal">
-        <v-form v-model="valid">
-          <v-text-field
-            label="Title"
-            v-model="title"
-            :rules="titleRules"
-            color="green"
-            outlined
-            required
-          ></v-text-field>
-          <v-textarea
-            label="Description"
-            v-model="description"
-            auto-grow
-            rows="4"
-            row-height="25"
-            color="green"
-            outlined
-            required
-          ></v-textarea>
-          <v-text-field
-            clearable
-            ref="mapPlace"
-            label="Map Place"
-            color="green"
-            outlined
-            required
-            @focus="openMap"
-          ></v-text-field>
-        </v-form>
-        <div class="map" ref="map">
-          <transition name="fade">
-            <v-btn
-              v-if="displaySaveMapButton"
-              @click="closeMap"
-              class="save_map_place"
-              color="success"
-              dark
-            >SAVE</v-btn>
-          </transition>
-          <GmapMap
-            ref="gmap"
-            :center="center"
-            :zoom="zoom"
-            map-type-id="terrain"
-            style="width: 100%; height: 100%"
-          >
-            <GmapMarker
-              ref="marker"
-              :position="mapPlace"
-              :clickable="true"
-              :draggable="false"
-              @click="toggleInfoWindow(m,index)"
-            />
-          </GmapMap>
-        </div>
-        <v-file-input
-          v-model="files"
-          @change="updateSlider"
-          color="deep-purple accent-4"
-          counter
-          label="File input"
-          multiple
-          placeholder="Select your files"
-          prepend-icon="no-icon"
+  <modal-window :value="value" @input="input">
+    <!-- <v-dialog :value="true" width="80vw"> -->
+    <!-- <v-card> -->
+    <div class="checkpoint_new_modal">
+      <v-form v-model="valid">
+        <v-text-field
+          label="Title"
+          v-model="title"
+          :rules="titleRules"
+          color="green"
           outlined
-          :show-size="1000"
+          required
+        ></v-text-field>
+        <v-textarea
+          label="Description"
+          v-model="description"
+          auto-grow
+          rows="4"
+          row-height="25"
+          color="green"
+          outlined
+          required
+        ></v-textarea>
+        <v-text-field
+          clearable
+          ref="mapPlace"
+          label="Map Place"
+          v-model="mapPlaceInput"
+          color="green"
+          outlined
+          required
+          @focus="openMap"
+        ></v-text-field>
+      </v-form>
+      <div class="map" ref="map">
+        <transition name="fade">
+          <v-btn
+            v-if="displaySaveMapButton"
+            @click="closeMap"
+            class="save_map_place"
+            color="success"
+            dark
+          >SAVE</v-btn>
+        </transition>
+        <GmapMap
+          ref="gmap"
+          :center="center"
+          :zoom="zoom"
+          map-type-id="terrain"
+          style="width: 100%; height: 100%"
         >
-          <template v-slot:selection="{ index, text }">
-            <v-chip v-if="index < 2" color="deep-purple accent-4" dark label small>{{ text }}</v-chip>
-            <span
-              v-else-if="index === 2"
-              class="overline grey--text text--darken-3 mx-2"
-            >+{{ files.length - 2 }} File(s)</span>
-          </template>
-        </v-file-input>
-        <div class="preview">
-          <div class="left_block">
-            <div class="checkpoint_title">{{ title || 'Title' }}</div>
-            <div class="checkpoint_description">{{ description || 'Description' }}</div>
-          </div>
-          <div class="right_block">
-            <transition name="fade">
-              <slider
-                v-if="displaySlider"
-                ref="slider"
-                :disableMap="true"
-                :images="images"
-                :slickOptionsMain="slickOptionsMain"
-                :slickOptionsSub="slickOptionsSub"
-              />
-            </transition>
-          </div>
-        </div>
-        <v-btn @click="closeMap" color="success" dark>save checkpoint</v-btn>
+          <GmapMarker
+            ref="marker"
+            :position="mapPlace"
+            :clickable="true"
+            :draggable="false"
+            @click="toggleInfoWindow(m,index)"
+          />
+        </GmapMap>
       </div>
-    </v-card>
-  </v-dialog>
+      <v-file-input
+        v-model="files"
+        @change="updateSlider"
+        color="deep-purple accent-4"
+        counter
+        label="File input"
+        multiple
+        placeholder="Select your files"
+        prepend-icon="no-icon"
+        outlined
+        :show-size="1000"
+      >
+        <template v-slot:selection="{ index, text }">
+          <v-chip v-if="index < 2" color="deep-purple accent-4" dark label small>{{ text }}</v-chip>
+          <span
+            v-else-if="index === 2"
+            class="overline grey--text text--darken-3 mx-2"
+          >+{{ files.length - 2 }} File(s)</span>
+        </template>
+      </v-file-input>
+      <div class="preview">
+        <div class="left_block">
+          <div class="checkpoint_title">{{ title || 'Title' }}</div>
+          <div class="checkpoint_description">{{ description || 'Description' }}</div>
+        </div>
+        <div class="right_block">
+          <transition name="fade">
+            <slider
+              v-if="displaySlider"
+              ref="slider"
+              :disableMap="true"
+              :images="images"
+              :slickOptionsMain="slickOptionsMain"
+              :slickOptionsSub="slickOptionsSub"
+            />
+          </transition>
+        </div>
+      </div>
+      <v-btn @click="closeMap" color="success" dark>save checkpoint</v-btn>
+    </div>
+  </modal-window>
+  <!-- </v-card> -->
+  <!-- </v-dialog> -->
 </template>
 
 <script>
 import { gmapApi } from "vue2-google-maps";
 import Slider from "./Slider";
+import ModalWindow from "./ModalWindow";
 
 export default {
   components: {
-    Slider
+    Slider,
+    ModalWindow
   },
+  props: ["value"],
   data() {
     return {
       displaySlider: true,
       title: "",
       description: "",
       mapPlace: { lat: 2, lng: 22 },
+      mapPlaceInput: "",
       displaySaveMapButton: false,
       files: [],
       images: [
@@ -175,9 +182,6 @@ export default {
     };
   },
   methods: {
-    t(event) {
-      console.log(event);
-    },
     openMap() {
       this.$refs.map.style.height = "500px";
       this.displaySaveMapButton = true;
@@ -185,10 +189,10 @@ export default {
     closeMap() {
       this.displaySaveMapButton = false;
       this.$refs.map.style.height = "0px";
-      let temp = this.$refs.mapPlace.$el.querySelector("input").value;
-      this.$nextTick(() => {
-        this.$refs.mapPlace.$el.querySelector("input").value = temp;
-      });
+      // let temp = this.$refs.mapPlace.$el.querySelector("input").value;
+      // this.$nextTick(() => {
+      // this.$refs.mapPlace.$el.querySelector("input").value = temp;
+      // });
     },
     updateSlider() {
       this.images = this.files.map(item => {
@@ -199,32 +203,56 @@ export default {
         this.displaySlider = true;
       }, 1000);
     },
-    console() {
-      console.log("console");
+    input() {
+      this.$emit("input");
+    }
+  },
+  watch: {
+    value() {
+      if (this.value == true) {
+        this.$nextTick(() => {
+          this.$gmapApiPromiseLazy().then(() => {
+            let input = this.$refs.mapPlace.$el.querySelector("input");
+            let autocomplete = new google.maps.places.Autocomplete(input);
+            setTimeout(() => {
+              input.placeholder = "";
+            }, 0);
+            autocomplete.addListener("place_changed", () => {
+              let place = autocomplete.getPlace();
+              this.mapPlace = place.geometry.location;
+              this.$refs.gmap.$mapObject.panTo(place.geometry.location);
+              console.log(input.value);
+              let temp = input.value;
+              this.mapPlaceInput = temp;
+              // this.$nextTick(() => {
+              // input.value = temp;
+              // this.$refs.mapPlace.value = temp;
+              // });
+            });
+            google.maps.event.addListener(
+              this.$refs.gmap.$mapObject,
+              "click",
+              e => {
+                this.mapPlace = e.latLng;
+                this.mapPlaceInput = this.mapPlace;
+                // this.$nextTick(() => {
+                // this.$refs.mapPlace.value = this.mapPlace;
+                // this.$refs.mapPlace.$el.querySelector("input").value = this.mapPlace;
+                // });
+              }
+            );
+          });
+        });
+      }
+      else {
+        this.displaySaveMapButton = false;
+      }
     }
   },
   mounted() {
-    this.$gmapApiPromiseLazy().then(() => {
-      let input = this.$refs.mapPlace.$el.querySelector("input");
-      input.placeholder = "";
-      let autocomplete = new google.maps.places.Autocomplete(input);
-      autocomplete.addListener("place_changed", () => {
-        let place = autocomplete.getPlace();
-        this.mapPlace = place.geometry.location;
-        this.$refs.gmap.$mapObject.panTo(place.geometry.location);
-        let temp = input.value;
-        this.$nextTick(() => {
-          input.value = temp;
-        });
-      });
-      google.maps.event.addListener(this.$refs.gmap.$mapObject, "click", e => {
-        let temp = this.$refs.mapPlace.$el.querySelector("input").value;
-        this.mapPlace = e.latLng;
-        this.$nextTick(() => {
-          this.$refs.mapPlace.$el.querySelector("input").value = temp;
-        });
-      });
-    });
+    window.set = s => {
+      this.mapPlaceInput = s;
+    };
   }
 };
 </script>
@@ -280,5 +308,8 @@ export default {
   width: 70%;
   min-height: 400px;
   max-height: 600px;
+  .slider {
+    padding: 0 20px;
+  }
 }
 </style>

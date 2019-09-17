@@ -7,7 +7,8 @@
       </transition>
     </div>
     <checkpoint-modal-show :value="planCheckpointModalDisplay" @input="toggleCheckpointModal" />
-    <checkpoint-new :value="true" />
+    <checkpoint-new :value="checkpointNewModalDisplay" @input="toggleCheckpointNewModal"/>
+    <!-- <modal-window v-model="checkpointNewModalDisplay" @input="toggleCheckpointNewModal"></modal-window> -->
   </v-app>
 </template>
 
@@ -16,20 +17,26 @@ import AppHeader from "./components/AppHeader";
 import CheckpointModalShow from "./components/CheckpointModalShow";
 import CheckpointNew from "./components/CheckpointNew";
 import { mapGetters, mapActions } from "vuex";
+import ModalWindow from './components/ModalWindow';
 
 export default {
   name: "App",
   components: {
     AppHeader,
     CheckpointModalShow,
-    CheckpointNew
+    CheckpointNew,
+    ModalWindow
   },
   methods: {
-    ...mapActions(["toggleCheckpointModal"])
+    ...mapActions(["toggleCheckpointModal", "toggleCheckpointNewModal"])
   },
-  mounted() {},
+  mounted() {
+    window.toggle = () => {
+      this.toggleCheckpointNewModal()
+    }
+  },
   computed: {
-    ...mapGetters(["planCheckpointModalDisplay"])
+    ...mapGetters(["planCheckpointModalDisplay", "checkpointNewModalDisplay"])
   }
 };
 </script>

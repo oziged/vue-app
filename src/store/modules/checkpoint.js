@@ -9,7 +9,10 @@ export default {
     },
     toggleCheckpointModal({ commit }) {
       commit("toggleCheckpointModal");
-    }
+    },
+    toggleCheckpointNewModal({ commit }) {
+      commit("toggleCheckpointNewModal");
+    },
   },
   mutations: {
     setPlanMainCheckpointId(state, id) {
@@ -23,6 +26,9 @@ export default {
     },
     toggleCheckpointModal(state) {
       state.checkpoint_modal_display = !state.checkpoint_modal_display;
+    },
+    toggleCheckpointNewModal(state) {
+      state.checkpoint_new_modal_display = !state.checkpoint_new_modal_display;
     }
   },
   state: {
@@ -102,7 +108,8 @@ export default {
     ],
     current_checkpoint: null,
     plan_modal_checkpoint_id: null,
-    checkpoint_modal_display: false
+    checkpoint_modal_display: false,
+    checkpoint_new_modal_display: false,
   },
   getters: {
     allCheckpoints(state) {
@@ -137,6 +144,9 @@ export default {
     },
     planCheckpointModalDisplay(state) {
       return state.checkpoint_modal_display;
+    },
+    checkpointNewModalDisplay(state) {
+      return state.checkpoint_new_modal_display;
     },
   }
 };

@@ -1,6 +1,7 @@
 <template>
-  <v-dialog :value="value" @input="input" width="80vw">
-    <v-card>
+  <!-- <v-dialog :value="value" @input="input" width="80vw"> -->
+    <!-- <v-card> -->
+      <modal-window :value="value" @input="input">
       <div class="checkpoint_modal">
         <div class="prev_next_checkpoint_small">
           <v-btn text icon color="black">
@@ -41,14 +42,16 @@
           />
         </div>
       </div>
-    </v-card>
-  </v-dialog>
+      </modal-window>
+    <!-- </v-card> -->
+  <!-- </v-dialog> -->
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import Checkpoint from "./Checkpoint";
 import AppMap from "./AppMap";
+import ModalWindow from './ModalWindow';
 import Slider from "./Slider";
 import Slick from "vue-slick";
 import "slick-carousel/slick/slick.css";
@@ -58,7 +61,8 @@ export default {
     AppMap,
     Checkpoint,
     Slick,
-    Slider
+    Slider,
+    ModalWindow
   },
   props: ["value"],
   data() {
@@ -114,6 +118,9 @@ export default {
       this.displayedItemType = "Checkpoint";
       this.displayedItemId = id;
     },
+    input() {
+      this.$emit('input');
+    }
   },
   provide() {
     return {
