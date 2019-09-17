@@ -30,6 +30,7 @@
           color="green"
           outlined
           required
+          v-click-outside="closeMap"
           @focus="openMap"
         ></v-text-field>
       </v-form>
@@ -184,15 +185,14 @@ export default {
   methods: {
     openMap() {
       this.$refs.map.style.height = "500px";
+      this.$refs.map.style.marginBottom = "20px";
       this.displaySaveMapButton = true;
     },
-    closeMap() {
+    closeMap(e) {
+      if (e.target.closest('.map') && !e.target.closest('.save_map_place')) return;
       this.displaySaveMapButton = false;
       this.$refs.map.style.height = "0px";
-      // let temp = this.$refs.mapPlace.$el.querySelector("input").value;
-      // this.$nextTick(() => {
-      // this.$refs.mapPlace.$el.querySelector("input").value = temp;
-      // });
+      this.$refs.map.style.marginBottom = "0px";
     },
     updateSlider() {
       this.images = this.files.map(item => {
@@ -205,6 +205,9 @@ export default {
     },
     input() {
       this.$emit("input");
+    },
+    checkParent(selector) {
+      console.log(document.querySelector(selector));
     }
   },
   watch: {
@@ -243,8 +246,7 @@ export default {
             );
           });
         });
-      }
-      else {
+      } else {
         this.displaySaveMapButton = false;
       }
     }
@@ -275,6 +277,7 @@ export default {
 .map {
   height: 0px;
   transition: 1s;
+  margin-bottom: 0px;
   position: relative;
 }
 
