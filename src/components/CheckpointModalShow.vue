@@ -127,7 +127,9 @@ export default {
       setCheckpointId: this.setCheckpointId
     };
   },
-  mounted() {},
+  mounted() {
+      
+  },
   watch: {
     getPlanModalCheckpointId() {
       this.displayedItemId = null;

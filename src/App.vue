@@ -9,6 +9,7 @@
     <checkpoint-modal-show :value="planCheckpointModalDisplay" @input="toggleCheckpointModal" />
     <checkpoint-new :value="checkpointNewModalDisplay" @input="toggleCheckpointNewModal"/>
     <!-- <modal-window v-model="checkpointNewModalDisplay" @input="toggleCheckpointNewModal"></modal-window> -->
+    <notifications style="bottom: 30px;" position="center bottom" group="foo" />
   </v-app>
 </template>
 
@@ -35,7 +36,6 @@ export default {
     window.toggle = () => {
       this.toggleCheckpointNewModal()
     }
-    this.$toasted.show('hola billo');
   },
   computed: {
     ...mapGetters(["planCheckpointModalDisplay", "checkpointNewModalDisplay"])

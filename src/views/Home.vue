@@ -1,9 +1,9 @@
 <template>
-    <home-map/>
+  <home-map />
 </template>
 
 <script>
-import HomeMap from '../components/HomePage/HomeMap';
+import HomeMap from "../components/HomePage/HomeMap";
 
 export default {
   components: {

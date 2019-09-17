@@ -1,7 +1,7 @@
 <template>
-  <modal-window :value="value" @input="input">
-    <div class="checkpoint_new_modal">
-      <v-form v-model="valid">
+  <modal-window :key="key" :value="value" @input="input">
+    <div class="checkpoint_new_modal" :key="key">
+      <v-form ref="form">
         <v-text-field
           label="Title"
           v-model="title"
@@ -96,7 +96,7 @@
           </transition>
         </div>
       </div>
-      <v-btn @click="closeMap" color="success" dark>save checkpoint</v-btn>
+      <v-btn class="save_checkpoint" @click="submit" color="success" dark>save checkpoint</v-btn>
     </div>
   </modal-window>
 </template>
@@ -189,6 +189,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["toggleCheckpointNewModal"]),
     openMap() {
       this.$refs.map.style.height = "500px";
       this.$refs.map.style.marginBottom = "20px";
@@ -218,6 +219,13 @@ export default {
         }
       });
     },
+    submit() {
+      if (this.$refs.form.validate()) {
+        console.log('checkpoint created');
+        this.toggleCheckpointNewModal();
+        this.$forceUpdate();
+      }
+    },
     input() {
       this.$emit("input");
     },
@@ -229,6 +237,12 @@ export default {
         ) {
           this.files.splice(i, 1);
           i--;
+          this.$notify({
+            group: "foo",
+            type: "error",
+            title: "Error",
+            text: "One of your files didn't upload"
+          });
         }
       }
     }
@@ -284,7 +298,7 @@ export default {
 }
 
 .checkpoint_new_modal {
-  padding: 20px;
+  padding: 50px;
 }
 
 .map {
@@ -305,6 +319,8 @@ export default {
 
 .preview {
   display: flex;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .left_block {
@@ -325,7 +341,12 @@ export default {
   min-height: 400px;
   max-height: 600px;
   .slider {
-    padding: 0 20px;
+    padding: 0 0 0 20px;
   }
+}
+
+.save_checkpoint {
+  display: block;
+  margin: 40px auto 0 auto;
 }
 </style>

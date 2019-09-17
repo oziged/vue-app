@@ -10,9 +10,10 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import {VueMasonryPlugin} from 'vue-masonry';
 import MagicGrid from 'vue-magic-grid'
 import vClickOutside from 'v-click-outside'
-import Toasted from 'vue-toasted';
+import Notifications from 'vue-notification'
 
-Vue.use(Toasted)
+
+Vue.use(Notifications)
 Vue.use(vClickOutside)
 Vue.use(MagicGrid)
 Vue.use(VueMasonryPlugin)
