@@ -67,6 +67,7 @@
         counter
         label="File input"
         multiple
+        accept="image/png, image/jpeg, image/jpg"
         placeholder="Select your files"
         prepend-icon="no-icon"
         outlined
@@ -121,6 +122,10 @@ export default {
       mapPlaceInput: "",
       displaySaveMapButton: false,
       files: [],
+      filesValidations: {
+        size: 5,
+        types: ["image/png", "image/jpg", "image/jpeg"]
+      },
       images: [
         "https://cdn.dribbble.com/users/479289/screenshots/4521207/plexus_bg_2.gif",
         "https://cdn.dribbble.com/users/479289/screenshots/4521207/plexus_bg_2.gif",
@@ -200,16 +205,32 @@ export default {
       this.$refs.map.style.marginBottom = "0px";
     },
     updateSlider() {
-      this.images = this.files.map(item => {
-        return window.URL.createObjectURL(item);
+      this.validateFiles();
+      this.$nextTick(() => {
+        this.images = this.files.map(item => {
+          return window.URL.createObjectURL(item);
+        });
+        if (this.files.length) {
+          this.displaySlider = false;
+          setTimeout(() => {
+            this.displaySlider = true;
+          }, 1000);
+        }
       });
-      this.displaySlider = false;
-      setTimeout(() => {
-        this.displaySlider = true;
-      }, 1000);
     },
     input() {
       this.$emit("input");
+    },
+    validateFiles() {
+      for (let i = 0; i < this.files.length; i++) {
+        if (
+          !this.filesValidations.types.includes(this.files[i].type) ||
+          this.files[i].size > this.filesValidations.size * 1000000
+        ) {
+          this.files.splice(i, 1);
+          i--;
+        }
+      }
     }
   },
   computed: {
@@ -232,10 +253,6 @@ export default {
               console.log(input.value);
               let temp = input.value;
               this.mapPlaceInput = temp;
-              // this.$nextTick(() => {
-              // input.value = temp;
-              // this.$refs.mapPlace.value = temp;
-              // });
             });
             google.maps.event.addListener(
               this.$refs.gmap.$mapObject,
@@ -243,10 +260,6 @@ export default {
               e => {
                 this.mapPlace = e.latLng;
                 this.mapPlaceInput = this.mapPlace;
-                // this.$nextTick(() => {
-                // this.$refs.mapPlace.value = this.mapPlace;
-                // this.$refs.mapPlace.$el.querySelector("input").value = this.mapPlace;
-                // });
               }
             );
           });
