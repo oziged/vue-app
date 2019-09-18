@@ -1,13 +1,13 @@
 <template>
   <v-app>
     <div>
-      <app-header/>
+      <app-header />
       <transition name="router-anim" mode="out-in">
         <router-view class="router_content" :key="$route.fullPath"></router-view>
       </transition>
     </div>
     <checkpoint-modal-show :value="planCheckpointModalDisplay" @input="toggleCheckpointModal" />
-    <checkpoint-new :value="checkpointNewModalDisplay" @input="toggleCheckpointNewModal"/>
+    <checkpoint-new :value="checkpointNewModalDisplay" @input="toggleCheckpointNewModal" />
     <!-- <modal-window v-model="checkpointNewModalDisplay" @input="toggleCheckpointNewModal"></modal-window> -->
     <notifications style="bottom: 30px;" position="center bottom" group="foo" />
   </v-app>
@@ -18,7 +18,7 @@ import AppHeader from "./components/AppHeader";
 import CheckpointModalShow from "./components/CheckpointModalShow";
 import CheckpointNew from "./components/CheckpointNew";
 import { mapGetters, mapActions } from "vuex";
-import ModalWindow from './components/ModalWindow';
+import ModalWindow from "./components/ModalWindow";
 
 export default {
   name: "App",
@@ -29,13 +29,17 @@ export default {
     ModalWindow
   },
   methods: {
-    ...mapActions(["toggleCheckpointModal", "toggleCheckpointNewModal", "updateCurrentLocation"])
+    ...mapActions([
+      "toggleCheckpointModal",
+      "toggleCheckpointNewModal",
+      "updateCurrentLocation"
+    ])
   },
   mounted() {
     this.updateCurrentLocation();
     window.toggle = () => {
-      this.toggleCheckpointNewModal()
-    }
+      this.toggleCheckpointNewModal();
+    };
   },
   computed: {
     ...mapGetters(["planCheckpointModalDisplay", "checkpointNewModalDisplay"])
@@ -56,6 +60,10 @@ export default {
 
 #app {
   background-color: white;
+}
+.router_content {
+  margin: 0 auto;
+  max-width: 1250px;
 }
 
 * {

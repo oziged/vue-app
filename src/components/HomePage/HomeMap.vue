@@ -5,7 +5,7 @@
       <p
         class="home_title_desc"
       >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur, minus nesciunt! Consequuntur, autem aut eius reiciendis quia rerum tenetur earum porro deserunt eligendi tempore, sequi quidem quasi nam. Aliquam, rerum!</p>
-      <GmapMap class="home_map" ref="gmap" :center="center" :zoom="5" map-type-id="terrain">
+      <GmapMap class="home_map" ref="gmap" :center="currentLocation" :zoom="5" map-type-id="terrain">
         <GmapMarker
           :key="index"
           v-for="(m, index) in allPlaces"
@@ -22,6 +22,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { clearInterval } from "timers";
+import TweenMax from "gsap";
 
 export default {
   data() {
@@ -41,6 +42,8 @@ export default {
     }
   },
   mounted() {
+    TweenMax.to(".home_title, .home_title_desc", 1, { opacity: 1, delay: .5 });
+    TweenMax.to(".home_map", 1, { opacity: 1, y: 0, delay: 1 });
     this.$gmapApiPromiseLazy().then(() => {
       setTimeout(() => {
         let a = setInterval(() => {
@@ -60,12 +63,14 @@ export default {
     text-align: center;
     width: fit-content;
     margin: 0 auto;
+    opacity: 0;
     padding-bottom: 5px;
     margin-bottom: 10px;
     border-bottom: 1px solid #000;
   }
   .home_title_desc {
     text-align: center;
+    opacity: 0;
     max-width: 500px;
     margin: 0 auto;
     margin-bottom: 40px;
@@ -73,6 +78,8 @@ export default {
   .home_map {
     max-width: 1000px;
     height: 600px;
+    opacity: 0;
+    transform: translateY(-200px);
     margin: 0 auto;
     padding: 250px;
     background-color: black;

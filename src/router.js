@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import PlanShow from './views/PlanShow.vue'
 import PlanIndex from './views/PlanIndex.vue'
+import UserShow from './views/UserShow'
 
 Vue.use(Router)
 
@@ -20,6 +21,10 @@ export default new Router({
     {
       path: '/plans',
       component: PlanIndex
+    },
+    { 
+      path: '/user/:id', 
+      component: UserShow
     },
   ]
 })

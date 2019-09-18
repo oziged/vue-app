@@ -1,19 +1,18 @@
 <template>
   <div>
-      <plan :id="$route.params.id"/>
+    <user-info :id="$route.params.id" />
   </div>
 </template>
 
 <script>
-import Plan from '../components/Plan'
+import UserInfo from "../components/UserShow/UserInfo";
 
 export default {
   components: {
-    Plan
+    UserInfo
   },
-}
+};
 </script>
 
 <style>
-
 </style>
