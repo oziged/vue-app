@@ -53,6 +53,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import Checkpoint from "./Checkpoint";
+import TweenMax from "gsap";
 
 export default {
   name: "Checkpoint",
@@ -68,11 +69,21 @@ export default {
   },
   methods: {
     setAndOpenModal(id) {
-      this.setPlanModalCheckpointId(id);
-      this.toggleCheckpointModal();
-      this.planCheckpointModalDisplay == false
-        ? this.toggleCheckpointModal()
-        : "";
+      if (id == this.getPlanModalCheckpointId) return;
+      if (this.$el.closest(".modal_window")) {
+        TweenMax.to(".left_block, .prev_next_checkpoint_small", .5, { opacity: 0, x: '-100%', ease: Power3.easeOut });
+        TweenMax.to(".left_block, .prev_next_checkpoint_small", .5, { opacity: 1, x: '0%', ease: Power3.easeOut, delay: .5 });
+        TweenMax.to(".right_block", .5, { opacity: 0, x: '100%', ease: Power3.easeOut });
+        TweenMax.to(".right_block", .5, { opacity: 1, x: '0%', ease: Power3.easeOut, delay: .5 });
+        setTimeout(() => {
+          this.setPlanModalCheckpointId(id);
+        }, 500);
+      } else {
+        this.setPlanModalCheckpointId(id);
+        this.planCheckpointModalDisplay == false
+          ? this.toggleCheckpointModal()
+          : "";
+      }
     },
     ...mapActions([
       "updateMapPlaces",
@@ -86,7 +97,8 @@ export default {
       "getSubCheckpoints",
       "getCheckpoint",
       "planCheckpointModalDisplay",
-      "nestedColors"
+      "nestedColors",
+      "getPlanModalCheckpointId"
     ])
   },
   mounted() {}
@@ -116,7 +128,7 @@ export default {
     position: absolute;
     right: 0;
     top: 50%;
-    transform: translateY(-50%)
+    transform: translateY(-50%);
   }
 }
 

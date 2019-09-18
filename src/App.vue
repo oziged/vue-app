@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <div>
-      <app-header />
+      <app-header/>
       <transition name="router-anim" mode="out-in">
         <router-view class="router_content" :key="$route.fullPath"></router-view>
       </transition>

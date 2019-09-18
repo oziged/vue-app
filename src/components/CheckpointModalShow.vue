@@ -38,7 +38,7 @@
             :displayedItemType="displayedItemType"
             :slickOptionsMain="slickOptionsMain"
             :slickOptionsSub="slickOptionsSub"
-            :images="['http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg' ]"
+            :images="['http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg']"
           />
         </div>
       </div>
@@ -110,7 +110,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["updateMapPlaces", "setCurrentCheckpoint"]),
+    ...mapActions(["updateMapPlaces", "setCurrentCheckpoint", "setPlanModalCheckpointId"]),
     input(e) {
       this.$emit("input");
     },
@@ -120,6 +120,7 @@ export default {
     },
     input() {
       this.$emit('input');
+      this.setPlanModalCheckpointId(null);
     }
   },
   provide() {
@@ -144,7 +145,14 @@ export default {
   },
   computed: {
     currentCheckpoint() {
-      return this.getCheckpoint(this.getPlanModalCheckpointId);
+      let temp = this.getCheckpoint(this.getPlanModalCheckpointId);
+      if (!!temp == false) {
+        return {
+          title: '',
+          description: ''
+        }
+      }
+      return temp;
     },
     ...mapGetters([
       "getSubCheckpoints",
