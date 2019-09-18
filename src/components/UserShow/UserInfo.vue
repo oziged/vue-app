@@ -30,7 +30,7 @@
         <v-btn color="success" dark>REPORT USER</v-btn>
       </div>
     </div>
-    <!-- <modal-window :value="true">123321</modal-window> -->
+    <modal-window :value="true">123321</modal-window>
   </div>
 </template>
 
