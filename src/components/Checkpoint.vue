@@ -39,12 +39,14 @@
         v-if="getSubCheckpoints(checkpoint.id, 'Checkpoint')[0]['id']!=checkpoint.id"
         accordion
       >
-        <checkpoint
-          v-for="(item,i) in getSubCheckpoints(checkpoint.id, 'Checkpoint')"
-          :key="i"
-          :nestedLvl="nestedLvl+1"
-          :checkpoint="item"
-        />
+        <draggable style="width: calc(100% + 15px); margin-left: -15px;">
+          <checkpoint
+            v-for="(item,i) in getSubCheckpoints(checkpoint.id, 'Checkpoint')"
+            :key="i"
+            :nestedLvl="nestedLvl+1"
+            :checkpoint="item"
+          />
+        </draggable>
       </v-expansion-panels>
     </v-expansion-panel-content>
   </v-expansion-panel>
@@ -54,6 +56,7 @@
 import { mapGetters, mapActions } from "vuex";
 import Checkpoint from "./Checkpoint";
 import TweenMax from "gsap";
+import draggable from "vuedraggable";
 
 export default {
   name: "Checkpoint",
@@ -65,16 +68,35 @@ export default {
     };
   },
   components: {
-    Checkpoint
+    Checkpoint,
+    draggable
   },
   methods: {
     setAndOpenModal(id) {
       if (id == this.getPlanModalCheckpointId) return;
       if (this.$el.closest(".modal_window")) {
-        TweenMax.to(".left_block, .prev_next_checkpoint_small", .5, { opacity: 0, x: '-100%', ease: Power3.easeOut });
-        TweenMax.to(".left_block, .prev_next_checkpoint_small", .5, { opacity: 1, x: '0%', ease: Power3.easeOut, delay: .5 });
-        TweenMax.to(".right_block", .5, { opacity: 0, x: '100%', ease: Power3.easeOut });
-        TweenMax.to(".right_block", .5, { opacity: 1, x: '0%', ease: Power3.easeOut, delay: .5 });
+        TweenMax.to(".left_block, .prev_next_checkpoint_small", 0.5, {
+          opacity: 0,
+          x: "-100%",
+          ease: Power3.easeOut
+        });
+        TweenMax.to(".left_block, .prev_next_checkpoint_small", 0.5, {
+          opacity: 1,
+          x: "0%",
+          ease: Power3.easeOut,
+          delay: 0.5
+        });
+        TweenMax.to(".right_block", 0.5, {
+          opacity: 0,
+          x: "100%",
+          ease: Power3.easeOut
+        });
+        TweenMax.to(".right_block", 0.5, {
+          opacity: 1,
+          x: "0%",
+          ease: Power3.easeOut,
+          delay: 0.5
+        });
         setTimeout(() => {
           this.setPlanModalCheckpointId(id);
         }, 500);

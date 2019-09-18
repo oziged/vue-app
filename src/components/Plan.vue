@@ -7,6 +7,7 @@
         <div class="checkpoint_list_wrapper">
           <div class="checkpoints_list">
             <v-expansion-panels accordion style="width: calc(100% - 15px);">
+              <draggable style="width: 100%">
               <checkpoint
                 v-for="(checkpoint,i) in getSubCheckpoints(id, 'Plan')"
                 :key="i"
@@ -14,6 +15,7 @@
                 :checkpoint="checkpoint"
                 :style="{paddingTop: i == 0 ? '' : '10px', marginBottom: '10px'}"
               />
+              </draggable>
             </v-expansion-panels>
           </div>
         </div>
@@ -32,6 +34,7 @@ import { BadgerAccordion, BadgerAccordionItem } from "vue-badger-accordion";
 import { mapGetters, mapActions } from "vuex";
 import AppMap from "./AppMap";
 import Checkpoint from "./Checkpoint";
+import draggable from 'vuedraggable'
 
 export default {
   props: ["id"],
@@ -39,7 +42,8 @@ export default {
     AppMap,
     Checkpoint,
     BadgerAccordion,
-    BadgerAccordionItem
+    BadgerAccordionItem,
+    draggable,
   },
   data: () => ({
     title: "",
