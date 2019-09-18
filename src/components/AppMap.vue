@@ -2,6 +2,7 @@
   <div>
     <GmapMap
       ref="gmap"
+      class="map"
       :center="center"
       :zoom="zoom"
       map-type-id="terrain"
@@ -153,7 +154,12 @@ export default {
         this.displayedItemType
       );
       let places = checkpoints.map(item => this.getPlace(item.place_id));
-      this.displayMapPlaces(places);
+      setTimeout(() => {
+        this.$nextTick(() => {
+          this.$refs.gmap.$mapObject.panTo({lat: 0, lng: 0});
+          this.displayMapPlaces(places);
+        });
+      }, 1000);
     }
   },
   mounted() {},

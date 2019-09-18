@@ -3,6 +3,7 @@
     <slick class="main_slider" ref="slickMain" :options="slickOptionsMain">
       <div v-if="!disableMap" class="slide">
         <app-map
+          ref="map"
           style="width: 100%; height: 100%"
           :displayedItemId="displayedItemId"
           :displayedItemType="displayedItemType"

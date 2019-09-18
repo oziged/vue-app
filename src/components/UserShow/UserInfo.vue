@@ -26,17 +26,48 @@
         </div>
       </div>
       <div class="interactive">
-        <v-btn color="success" dark>SEND MESSAGE</v-btn>
-        <v-btn color="success" dark>REPORT USER</v-btn>
+        <v-btn @click="toggleSendMessageModal" color="success" dark>SEND MESSAGE</v-btn>
+        <v-btn @click="toggleReportModal" color="success" dark>REPORT USER</v-btn>
       </div>
     </div>
-    <modal-window :value="true">123321</modal-window>
+    <modal-window
+      :value="displaySendMessageModal"
+      @input="toggleSendMessageModal"
+      :height="'fit-content'"
+      :width="'fit-content'"
+    >
+      <div class="send_message_modal">
+        <div class="header">
+          <span>New message</span>
+        </div>
+        <div class="content">
+          <textarea name id cols="30" rows="10" placeholder="Type here smth..."></textarea>
+          <v-btn class="send_message_button" color="success" dark>SEND MESSAGE</v-btn>
+        </div>
+      </div>
+    </modal-window>
+    <modal-window
+      :value="displayReportModal"
+      @input="toggleReportModal"
+      :height="'fit-content'"
+      :width="'fit-content'"
+    >
+      <div class="report_modal">
+        <div class="header">
+          <span>New message</span>
+        </div>
+        <div class="content">
+          <textarea name id cols="30" rows="10" placeholder="Type here smth..."></textarea>
+          <v-btn class="send_message_button" color="#ca1c1c" dark>SEND REPORT</v-btn>
+        </div>
+      </div>
+    </modal-window>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import ModalWindow from '../ModalWindow'
+import ModalWindow from "../ModalWindow";
 
 export default {
   components: {
@@ -44,7 +75,9 @@ export default {
   },
   data() {
     return {
-      user: null
+      user: null,
+      displaySendMessageModal: false,
+      displayReportModal: false
     };
   },
   props: ["id"],
@@ -54,7 +87,14 @@ export default {
   mounted() {
     this.user = this.getUser(this.id);
   },
-  methods: {}
+  methods: {
+    toggleSendMessageModal() {
+      this.displaySendMessageModal = !this.displaySendMessageModal;
+    },
+    toggleReportModal() {
+      this.displayReportModal = !this.displayReportModal;
+    }
+  }
 };
 </script>
 
@@ -124,6 +164,42 @@ export default {
   padding-bottom: 5px;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
+}
+
+.send_message_modal, .report_modal {
+  width: 500px;
+  .header {
+    padding: 20px;
+    color: white;
+    background-color: rgb(6, 184, 107);
+  }
+  .content {
+    textarea {
+      width: 100%;
+      height: 100%;
+      resize: none;
+      padding: 20px;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+      &:focus {
+        outline: none;
+      }
+    }
+    .v-btn {
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.report_modal {
+  .header {
+    background-color: #ca1c1c;
+  }
+  .content {
+  }
 }
 </style>
 

@@ -1,7 +1,7 @@
 <template>
   <transition name="zoom-in">
     <div v-if="value" class="modal_bg">
-      <div class="modal_window" v-click-outside="input">
+      <div class="modal_window" :style="{width: width, height: height}" v-click-outside="input">
         <slot></slot>
       </div>
     </div>
@@ -10,18 +10,14 @@
 
 <script>
 export default {
-  props: ["value"],
-  mounted() {
-    window.off = () => {
-      this.value = !this.value;
-    };
-  },
+  props: ["value", "width", "height"],
+  mounted() {},
   methods: {
-      input(e) {
-          if (e.target.className == 'gm-ui-hover-effect') return;
-          this.$emit('input');
-      }
-  },
+    input(e) {
+      if (e.target.className == "gm-ui-hover-effect") return;
+      this.$emit("input");
+    }
+  }
 };
 </script>
 
@@ -44,7 +40,7 @@ export default {
   transform: translate(-50%, -50%);
   border-radius: 10px;
   background-color: white;
-  box-shadow: 0 0 8px rgba(0, 0, 0, .1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   width: 90%;
   height: 90%;
   overflow-y: auto;
@@ -56,6 +52,7 @@ export default {
   z-index: 99;
   top: 0;
   left: 0;
+  overflow: hidden;
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
 }
