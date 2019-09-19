@@ -8,13 +8,13 @@
           <div class="checkpoints_list">
             <v-expansion-panels accordion style="width: calc(100% - 15px);">
               <draggable style="width: 100%">
-              <checkpoint
-                v-for="(checkpoint,i) in getSubCheckpoints(id, 'Plan')"
-                :key="i"
-                :nestedLvl="1"
-                :checkpoint="checkpoint"
-                :style="{paddingTop: i == 0 ? '' : '10px', marginBottom: '10px'}"
-              />
+                  <checkpoint
+                    v-for="(checkpoint,i) in getSubCheckpoints(id, 'Plan')"
+                    :key="i"
+                    :nestedLvl="1"
+                    :checkpoint="checkpoint"
+                    :style="{paddingTop: i == 0 ? '10px' : '10px', marginBottom: '10px'}"
+                  />
               </draggable>
             </v-expansion-panels>
           </div>
@@ -34,7 +34,7 @@ import { BadgerAccordion, BadgerAccordionItem } from "vue-badger-accordion";
 import { mapGetters, mapActions } from "vuex";
 import AppMap from "./AppMap";
 import Checkpoint from "./Checkpoint";
-import draggable from 'vuedraggable'
+import draggable from "vuedraggable";
 
 export default {
   props: ["id"],
@@ -43,7 +43,7 @@ export default {
     Checkpoint,
     BadgerAccordion,
     BadgerAccordionItem,
-    draggable,
+    draggable
   },
   data: () => ({
     title: "",
@@ -68,9 +68,9 @@ export default {
     };
   },
   mounted() {
-    window.info = ()=>{
-      return [this.displayedItemId, this.displayedItemType]
-    }
+    window.info = () => {
+      return [this.displayedItemId, this.displayedItemType];
+    };
     let plan = this.getPlan(this.id);
     this.title = plan.title;
     this.description = plan.description;
@@ -96,6 +96,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.drag-move {
+  transition: transform 1s;
+}
+
 .plan {
   margin: 10px 20px;
   display: flex;
