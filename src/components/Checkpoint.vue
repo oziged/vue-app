@@ -39,7 +39,7 @@
       >{{ checkpoint.description | truncate(20) }}</div>
       <v-expansion-panels
         style="margin-bottom: 10px;"
-        v-if="getSubCheckpoints(checkpoint.id, 'Checkpoint')[0]['id']!=checkpoint.id"
+        v-if="nested.length>0"
         accordion
       >
         <nested-draggable
