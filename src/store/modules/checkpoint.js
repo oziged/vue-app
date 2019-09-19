@@ -123,13 +123,14 @@ export default {
       };
     },
     getSubCheckpoints(state, getters) {
-      return (id, type) => {
+      return (id, type, canBeNull) => {
         let sub = state.checkpoints.filter(checkpoint => {
           return (
             checkpoint.checkable_id == id && checkpoint.checkable_type == type
           );
         });
         if (sub.length) return sub;
+        if (type == "Checkpoint" && canBeNull) return false;
         if (type == "Checkpoint") return [getters.getCheckpoint(id)];
       };
     },

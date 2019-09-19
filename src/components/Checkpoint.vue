@@ -4,7 +4,7 @@
     @mouseleave.native="displayMoreButton=false"
     :style="{marginLeft: nestedLvl == 1  ? '0px' : '31.5px'}"
     class="checkpoint_full"
-  >
+  ><slot></slot>
     <v-expansion-panel-header style="position: relative" @click="setCheckpointId(checkpoint.id)">
       <template v-slot:actions>
         <v-icon color="no-icon"></v-icon>
@@ -39,14 +39,15 @@
         v-if="getSubCheckpoints(checkpoint.id, 'Checkpoint')[0]['id']!=checkpoint.id"
         accordion
       >
-        <draggable style="width: calc(100% + 15px); margin-left: -15px;">
+        <nested-draggable @end="console" v-if="nested.length" :tasks="nested" style="width: calc(100% + 15px); margin-left: -15px;">
           <checkpoint
-            v-for="(item,i) in getSubCheckpoints(checkpoint.id, 'Checkpoint')"
+            v-for="(item,i) in nested"
             :key="i"
+            :nested="item.nested"
             :nestedLvl="nestedLvl+1"
-            :checkpoint="item"
+            :checkpoint="item.item"
           />
-        </draggable>
+        </nested-draggable>
       </v-expansion-panels>
     </v-expansion-panel-content>
   </v-expansion-panel>
@@ -56,11 +57,12 @@
 import { mapGetters, mapActions } from "vuex";
 import Checkpoint from "./Checkpoint";
 import TweenMax from "gsap";
+import nestedDraggable from "vuedraggable";
 import draggable from "vuedraggable";
 
 export default {
   name: "Checkpoint",
-  props: ["checkpoint", "nestedLvl"],
+  props: ["checkpoint", "nestedLvl", "nested"],
   inject: ["setCheckpointId"],
   data() {
     return {
@@ -69,6 +71,7 @@ export default {
   },
   components: {
     Checkpoint,
+    nestedDraggable,
     draggable
   },
   methods: {
@@ -106,6 +109,9 @@ export default {
           ? this.toggleCheckpointModal()
           : "";
       }
+    },
+    console(e) {
+      console.log(e);
     },
     ...mapActions([
       "updateMapPlaces",

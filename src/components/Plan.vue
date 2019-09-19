@@ -6,15 +6,17 @@
         <p class="plan_description">{{ description }}</p>
         <div class="checkpoint_list_wrapper">
           <div class="checkpoints_list">
+            <nested-draggable :tasks="data"></nested-draggable>
             <v-expansion-panels accordion style="width: calc(100% - 15px);">
-              <draggable style="width: 100%">
-                  <checkpoint
-                    v-for="(checkpoint,i) in getSubCheckpoints(id, 'Plan')"
-                    :key="i"
-                    :nestedLvl="1"
-                    :checkpoint="checkpoint"
-                    :style="{paddingTop: i == 0 ? '10px' : '10px', marginBottom: '10px'}"
-                  />
+              <draggable  @end="console" :list="data" style="width: 100%" >
+                <checkpoint
+                  v-for="(checkpoint,i) in data"
+                  :key="i"
+                  :nestedLvl="1"
+                  :checkpoint="checkpoint.item"
+                  :nested="checkpoint.nested"
+                  :style="{paddingTop: i == 0 ? '10px' : '10px', marginBottom: '10px'}"
+                ></checkpoint>
               </draggable>
             </v-expansion-panels>
           </div>
@@ -35,6 +37,7 @@ import { mapGetters, mapActions } from "vuex";
 import AppMap from "./AppMap";
 import Checkpoint from "./Checkpoint";
 import draggable from "vuedraggable";
+import nestedDraggable from 'vuedraggable';
 
 export default {
   props: ["id"],
@@ -43,13 +46,15 @@ export default {
     Checkpoint,
     BadgerAccordion,
     BadgerAccordionItem,
-    draggable
+    draggable,
+    nestedDraggable
   },
   data: () => ({
     title: "",
     description: "",
     displayedItemId: null,
-    displayedItemType: "Plan"
+    displayedItemType: "Plan",
+    data: [],
   }),
   methods: {
     ...mapActions(["updateMapPlaces", "setCurrentCheckpoint"]),
@@ -60,6 +65,9 @@ export default {
     setCheckpointId(id) {
       this.displayedItemId = id;
       this.displayedItemType = "Checkpoint";
+    },
+    console(e) {
+      console.log(e);
     }
   },
   provide() {
@@ -67,7 +75,11 @@ export default {
       setCheckpointId: this.setCheckpointId
     };
   },
+  
   mounted() {
+    window.data = () => {
+      return this.data;
+    }
     window.info = () => {
       return [this.displayedItemId, this.displayedItemType];
     };
@@ -78,6 +90,28 @@ export default {
     this.$gmapApiPromiseLazy().then(() => {
       this.displayedItemId = this.id;
     });
+    let res = [];
+    let self = this;
+    function deep(id) {
+      let array = [];
+      let subChecks = self.getSubCheckpoints(id, "Checkpoint", true);
+      if (subChecks) {
+        subChecks.forEach(item => {
+          let obj = { item: item, id: item.id, nested: deep(item.id) };
+
+array.push(obj);
+        });
+        return array;
+      } else {
+        return [];
+      }
+    }
+    this.getSubCheckpoints(this.id, "Plan").forEach(item => {
+      let obj = { item: item, id: item.id, nested: deep(item.id) };
+      res.push(obj);
+    });
+    console.log(res);
+    this.data = res;
   },
   computed: {
     ...mapGetters([
