@@ -4,7 +4,9 @@
     @mouseleave.native="displayMoreButton=false"
     :style="{marginLeft: nestedLvl == 1  ? '0px' : '31.5px'}"
     class="checkpoint_full"
-  ><slot></slot>
+    :data-id="checkpoint.id"
+  >
+    <slot></slot>
     <v-expansion-panel-header style="position: relative" @click="setCheckpointId(checkpoint.id)">
       <template v-slot:actions>
         <v-icon color="no-icon"></v-icon>
@@ -17,6 +19,7 @@
         class="checkpoint_title"
         :class="{ 'subcheckpoint': checkpoint.checkable_type == 'Checkpoint', 'plan_checkpoint' : checkpoint.checkable_type == 'Plan' }"
       >
+        <div @click.stop="moveUp" class="move_up"></div>
         <transition name="click">
           <div v-if="displayMoreButton" class="click" @click.stop="setAndOpenModal(checkpoint.id)"></div>
         </transition>
@@ -39,14 +42,20 @@
         v-if="getSubCheckpoints(checkpoint.id, 'Checkpoint')[0]['id']!=checkpoint.id"
         accordion
       >
-        <nested-draggable @end="console" v-if="nested.length" :tasks="nested" style="width: calc(100% + 15px); margin-left: -15px;">
-          <checkpoint
-            v-for="(item,i) in nested"
-            :key="i"
-            :nested="item.nested"
-            :nestedLvl="nestedLvl+1"
-            :checkpoint="item.item"
-          />
+        <nested-draggable
+          v-if="nested.length"
+          :tasks="nested"
+          style="width: calc(100% + 15px); margin-left: -15px;"
+        >
+          <draggable @end="console" :list="nested">
+            <checkpoint
+              v-for="(item,i) in nested"
+              :key="i"
+              :nested="item.nested"
+              :nestedLvl="nestedLvl+1"
+              :checkpoint="item.item"
+            />
+          </draggable>
         </nested-draggable>
       </v-expansion-panels>
     </v-expansion-panel-content>
@@ -110,6 +119,12 @@ export default {
           : "";
       }
     },
+    moveUp(e) {
+      let target = e.target.closest("[data-id]");
+      // let target = e.target.closest("[data-id]").dataset.id;
+      console.log(target);
+      console.log(target.parentNode.closest('.checkpoint_full').dataset.id);
+    },
     console(e) {
       console.log(e);
     },
@@ -155,6 +170,18 @@ export default {
     background-size: cover;
     position: absolute;
     right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .move_up {
+    display: block;
+    background-color: black;
+    width: 20px;
+    height: 20px;
+    // background: url("../assets/Checkpoint/more.png") no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
   }

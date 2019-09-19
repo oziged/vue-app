@@ -6,9 +6,9 @@
         <p class="plan_description">{{ description }}</p>
         <div class="checkpoint_list_wrapper">
           <div class="checkpoints_list">
-            <nested-draggable :tasks="data"></nested-draggable>
             <v-expansion-panels accordion style="width: calc(100% - 15px);">
-              <draggable  @end="console" :list="data" style="width: 100%" >
+              <nested-draggable  @end="console" :tasks="data" style="width: 100%" >
+                <draggable :list="data">
                 <checkpoint
                   v-for="(checkpoint,i) in data"
                   :key="i"
@@ -17,7 +17,8 @@
                   :nested="checkpoint.nested"
                   :style="{paddingTop: i == 0 ? '10px' : '10px', marginBottom: '10px'}"
                 ></checkpoint>
-              </draggable>
+                </draggable>
+              </nested-draggable>
             </v-expansion-panels>
           </div>
         </div>
@@ -79,7 +80,24 @@ export default {
   mounted() {
     window.data = () => {
       return this.data;
-    }
+    };
+    let start = this.data;
+    window.start = () =>this.data;
+    window.deepSearch = (start, searchId) => {
+      start.forEach(item => {
+        if (item.id != searchId && item.nested.length > 0) window.deepSearch(item.nested, searchId);
+        else {
+         if (item.id == searchId) {console.log('FOUND!!!!!'); console.log(item); }
+        }
+      })
+    };
+    window.swap = () => {
+      this.data.push(this.data[0])
+      // [this.data[0], this.data[1]] = [this.data[1], this.data[0]];
+      this.$forceUpdate();
+      // [arr[0], arr[1]] = [arr[1], arr[0]];
+    },
+
     window.info = () => {
       return [this.displayedItemId, this.displayedItemType];
     };
