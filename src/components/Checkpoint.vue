@@ -19,8 +19,12 @@
         class="checkpoint_title"
         :class="{ 'subcheckpoint': nestedLvl > 1, 'plan_checkpoint' : nestedLvl==1 }"
       >
-        <div @click.stop="moveUp" class="move_up"></div>
         <transition name="click">
+        <div v-if="displayMoreButton" @click.stop="prepareMoveUp" class="move_up"></div>
+        </transition>
+        <transition name="click">
+        <div v-if="displayMoreButton" @click.stop="prepareMoveDown" class="move_down"></div>
+        </transition>
           <div v-if="displayMoreButton" class="click" @click.stop="setAndOpenModal(checkpoint.id)"></div>
         </transition>
         {{ checkpoint.title }}
@@ -72,7 +76,7 @@ import draggable from "vuedraggable";
 export default {
   name: "Checkpoint",
   props: ["checkpoint", "nestedLvl", "nested"],
-  inject: ["setCheckpointId"],
+  inject: ["setCheckpointId", "moveUp", "moveDown"],
   data() {
     return {
       displayMoreButton: false
@@ -119,12 +123,21 @@ export default {
           : "";
       }
     },
-    moveUp(e) {
+    prepareMoveUp(e) {
       let target = e.target.closest("[data-id]");
       // let target = e.target.closest("[data-id]").dataset.id;
       console.log(target);
       console.log(target.parentNode.closest('.checkpoint_full'));
       console.log(target.parentNode.closest('.checkpoint_full').dataset.id);
+      this.moveUp(target.dataset.id);
+    },
+    prepareMoveDown(e) {
+      let target = e.target.closest("[data-id]");
+      // let target = e.target.closest("[data-id]").dataset.id;
+      console.log(target);
+      console.log(target.parentNode.closest('.checkpoint_full'));
+      console.log('tatata' + target.dataset.id)
+      this.moveDown(target.dataset.id);
     },
     console(e) {
       console.log(e);
@@ -177,12 +190,26 @@ export default {
   .move_up {
     display: block;
     background-color: black;
+    background: url("https://cdn1.iconfinder.com/data/icons/mix-ui/24/Up_Top_Arrow_Arrows_Back_Direction-512.png") no-repeat center center;
     width: 20px;
     height: 20px;
     // background: url("../assets/Checkpoint/more.png") no-repeat center center;
     background-size: cover;
     position: absolute;
-    right: 20px;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+    .move_down {
+    display: block;
+    background-color: black;
+    background: url("https://cdn1.iconfinder.com/data/icons/general-ui-outlined-thick/24/chevron-down-512.png") no-repeat center center;
+    width: 20px;
+    height: 20px;
+    // background: url("../assets/Checkpoint/more.png") no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    right: 70px;
     top: 50%;
     transform: translateY(-50%);
   }
