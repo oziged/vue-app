@@ -48,7 +48,7 @@
     </modal-window>
     <modal-window
       :value="displayReportModal"
-      @input="displayReportModal"
+      @input="toggleReportModal"
       :height="'fit-content'"
       :width="'fit-content'"
     >
