@@ -12,12 +12,12 @@
         <v-icon color="no-icon"></v-icon>
       </template>
       <div
-        :style="{position: 'absolute', width: '4px', height: '100%', top: '0', left: nestedLvl==1&&checkpoint.checkable_type=='Plan' ? '-15px' : -10+nestedLvl*1+'px', backgroundColor: nestedColors[nestedLvl]}"
+        :style="{position: 'absolute', width: '4px', height: '100%', top: '0', left: nestedLvl==1 ? '-15px' : -10+nestedLvl*1+'px', backgroundColor: nestedColors[nestedLvl]}"
       ></div>
       <div
         style="height: 100%"
         class="checkpoint_title"
-        :class="{ 'subcheckpoint': checkpoint.checkable_type == 'Checkpoint', 'plan_checkpoint' : checkpoint.checkable_type == 'Plan' }"
+        :class="{ 'subcheckpoint': nestedLvl > 1, 'plan_checkpoint' : nestedLvl==1 }"
       >
         <div @click.stop="moveUp" class="move_up"></div>
         <transition name="click">
@@ -31,7 +31,7 @@
       :class="{ 'checkpoint_content' : checkpoint.checkable_type == 'Plan'}"
     >
       <div
-        :style="{position: 'absolute', width: '4px', height: '100%', top: '0', left: nestedLvl==1&&checkpoint.checkable_type=='Plan' ? '5px' : 10+nestedLvl*1+'px', backgroundColor: nestedColors[nestedLvl]}"
+        :style="{position: 'absolute', width: '4px', height: '100%', top: '0', left: nestedLvl==1 ? '5px' : 10+nestedLvl*1+'px', backgroundColor: nestedColors[nestedLvl]}"
       ></div>
       <div
         class="checkpoint_description"
@@ -123,6 +123,7 @@ export default {
       let target = e.target.closest("[data-id]");
       // let target = e.target.closest("[data-id]").dataset.id;
       console.log(target);
+      console.log(target.parentNode.closest('.checkpoint_full'));
       console.log(target.parentNode.closest('.checkpoint_full').dataset.id);
     },
     console(e) {

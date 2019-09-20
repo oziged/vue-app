@@ -4,7 +4,7 @@
       <div class="plan_info">
         <h1 class="plan_title" @click="showPlanSubCheckpoints">{{ title }}</h1>
         <p class="plan_description">{{ description }}</p>
-        <div class="checkpoint_list_wrapper">
+        <div v-if="display" class="checkpoint_list_wrapper">
           <div class="checkpoints_list">
             <v-expansion-panels accordion style="width: calc(100% - 15px);">
               <nested-draggable @end="console" :tasks="data" style="width: 100%">
@@ -51,11 +51,13 @@ export default {
     nestedDraggable
   },
   data: () => ({
+    display: true,
     title: "",
     description: "",
     displayedItemId: null,
     displayedItemType: "Plan",
-    data: []
+    data: [],
+    oldParent: ""
   }),
   methods: {
     ...mapActions(["updateMapPlaces", "setCurrentCheckpoint"]),
@@ -78,19 +80,33 @@ export default {
   },
 
   mounted() {
+    window.d = () => {
+      this.display = !this.display;
+      this.$forceUpdate();
+    }
     window.data = () => {
       return this.data;
     };
     let start = this.data;
+    window.clear = () => {
+      this.oldParent = null;
+    };
     window.start = () => this.data;
     window.deepSearch = (start, searchId) => {
-      start.forEach(item => {
-        if (item.id != searchId && item.nested.length > 0)
+      console.log(start);
+      console.log("start");
+      start.forEach((item, index) => {
+        if (item.id != searchId && item.nested.length > 0) {
+          this.oldParent = start;
           window.deepSearch(item.nested, searchId);
-        else {
+        } else {
           if (item.id == searchId) {
             console.log("FOUND!!!!!");
+            console.log(start);
             console.log(item);
+            console.log(this.oldParent);
+            start.splice(index, 1);
+            this.oldParent.push(item);
           }
         }
       });
