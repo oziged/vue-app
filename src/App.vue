@@ -71,7 +71,7 @@ export default {
 }
 
 ul {
-  list-style-type: none;
+  // list-style-type: none;
 }
 
 /* VUETIFY STYLES FIX */

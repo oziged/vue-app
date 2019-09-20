@@ -1,9 +1,10 @@
 <template>
   <div>
-    <modal-window :value="false" :width="'50%'" :height="'50%'">
-      <ul style="margin: 20px; padding: 0">
-        <test v-for="(item, index) in data" :key="index" :data="item" />
-      </ul>
+    <modal-window :value="true" :width="'50%'" :height="'50%'">
+       <test :tasks="data"/>
+      <!-- <ul style="margin: 20px; padding: 0"> -->
+        <!-- <test v-for="(item, index) in data" :key="index" :data="item" /> -->
+      <!-- </ul> -->
     </modal-window>
     <div class="plan">
       <div class="plan_info">
