@@ -70,6 +70,10 @@ export default {
   box-sizing: border-box;
 }
 
+ul {
+  list-style-type: none;
+}
+
 /* VUETIFY STYLES FIX */
 
 .checkpoints_list {

@@ -1,5 +1,10 @@
 <template>
   <div>
+    <modal-window :value="false" :width="'50%'" :height="'50%'">
+      <ul style="margin: 20px; padding: 0">
+        <test v-for="(item, index) in data" :key="index" :data="item" />
+      </ul>
+    </modal-window>
     <div class="plan">
       <div class="plan_info">
         <h1 class="plan_title" @click="showPlanSubCheckpoints">{{ title }}</h1>
@@ -39,16 +44,20 @@ import AppMap from "./AppMap";
 import Checkpoint from "./Checkpoint";
 import draggable from "vuedraggable";
 import nestedDraggable from "vuedraggable";
+import ModalWindow from "./ModalWindow";
+import Test from "./Test";
 
 export default {
   props: ["id"],
   components: {
     AppMap,
+    Test,
     Checkpoint,
     BadgerAccordion,
     BadgerAccordionItem,
     draggable,
-    nestedDraggable
+    nestedDraggable,
+    ModalWindow
   },
   data: () => ({
     display: true,
@@ -97,6 +106,18 @@ export default {
         }
       });
     },
+    getDeepObject(start, searchId) {
+      start.forEach((item, index) => {
+        if (item.id != searchId && item.nested.length > 0) {
+          this.oldParent = start;
+          this.getDeepObject(item.nested, searchId);
+        } else {
+          if (item.id == searchId) {
+            return item;
+          }
+        }
+      });
+    },
     deepSearchDown(start, searchId) {
       console.log(start);
       console.log("start");
@@ -111,7 +132,7 @@ export default {
             console.log(item);
             console.log(start[index + 1]);
             start[index + 1].nested.push(item);
-            start.splice(index,1);
+            start.splice(index, 1);
             // start.splice(index, 1);
             // this.oldParent.push(item);
           }
@@ -128,10 +149,31 @@ export default {
   },
 
   mounted() {
-    window.d = () => {
-      this.display = !this.display;
-      this.$forceUpdate();
+    window.nest = (x,y) => {
+      window.getDeepObject(this.data, x).nested.push(window.getDeepObject(this.data, y));
     };
+    window.getDeepObject = (start, searchId) => {
+      start == null ? (start = this.data) : "";
+      let returnedItem = null;
+      search(start, searchId);
+      function search(start, searchId) {
+        start.some((item, index) => {
+          if (item.id != searchId && item.nested.length > 0) {
+            search(item.nested, searchId);
+          } else {
+            if (item.id == searchId) {
+              returnedItem = item;
+            }
+            return false;
+          }
+        });
+      }
+      return returnedItem;
+    },
+      (window.d = () => {
+        this.display = !this.display;
+        this.$forceUpdate();
+      });
     window.data = () => {
       return this.data;
     };
