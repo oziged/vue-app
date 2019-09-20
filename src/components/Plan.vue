@@ -128,34 +128,21 @@ export default {
         } else {
           if (item.id == searchId) {
             console.log("FOUND!!!!!");
-            // console.log(start);
+            console.log(start);
             console.log(item);
             console.log(start[index + 1]);
             start[index + 1].nested.push(item);
             start.splice(index, 1);
-            // start.splice(index, 1);
-            // this.oldParent.push(item);
+            start.splice(index, 1);
+            this.oldParent.push(item);
           }
         }
       });
-    }
-  },
-  provide() {
-    return {
-      setCheckpointId: this.setCheckpointId,
-      moveUp: this.moveUp,
-      moveDown: this.moveDown
-    };
-  },
-
-  mounted() {
-    window.nest = (x,y) => {
-      window.getDeepObject(this.data, x).nested.push(window.getDeepObject(this.data, y));
-    };
-    window.getDeepObject = (start, searchId) => {
-      start == null ? (start = this.data) : "";
+    },
+    getDeepObject(data, searchId) {
+      data == null ? (data = this.data) : "";
       let returnedItem = null;
-      search(start, searchId);
+      search(data, searchId);
       function search(start, searchId) {
         start.some((item, index) => {
           if (item.id != searchId && item.nested.length > 0) {
@@ -169,11 +156,21 @@ export default {
         });
       }
       return returnedItem;
-    },
-      (window.d = () => {
-        this.display = !this.display;
-        this.$forceUpdate();
-      });
+    }
+  },
+  provide() {
+    return {
+      setCheckpointId: this.setCheckpointId,
+      moveUp: this.moveUp,
+      moveDown: this.moveDown
+    };
+  },
+
+  mounted() {
+    window.d = () => {
+      this.display = !this.display;
+      this.$forceUpdate();
+    };
     window.data = () => {
       return this.data;
     };
