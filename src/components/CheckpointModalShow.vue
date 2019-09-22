@@ -1,57 +1,53 @@
 <template>
-  <!-- <v-dialog :value="value" @input="input" width="80vw"> -->
-    <!-- <v-card> -->
-      <modal-window :value="value" @input="input">
-      <div class="checkpoint_modal">
-        <div class="prev_next_checkpoint_small">
-          <v-btn text icon color="black">
-            <v-icon>mdi-arrow-left-thick</v-icon>
-          </v-btn>
-          <img src="@/assets/CheckpointModalShow/gps_place.png" alt />
-          <v-btn text icon color="black">
-            <v-icon>mdi-arrow-right-thick</v-icon>
-          </v-btn>
-        </div>
+  <modal-window :value="value" @input="input">
+    <div class="checkpoint_modal"> 
+      <div class="prev_next_checkpoint_small">
+        <v-btn text icon color="black">
+          <v-icon>mdi-arrow-left-thick</v-icon>
+        </v-btn>
+        <img src="@/assets/CheckpointModalShow/gps_place.png" alt />
+        <v-btn text icon color="black">
+          <v-icon>mdi-arrow-right-thick</v-icon>
+        </v-btn>
+      </div>
 
-        <div class="left_block">
-          <div class="current_checkpoint_title">{{ currentCheckpoint.title }}</div>
-          <div class="current_checkpoint_description">{{ currentCheckpoint.description }}</div>
-          <div class="checkpoint_list_wrapper">
-            <div class="checkpoints_list">
-              <v-expansion-panels
-                v-if="getSubCheckpoints(currentCheckpoint.id, 'Checkpoint')['id']!=currentCheckpoint.id"
-                accordion
-              >
-                <checkpoint
-                  v-for="(item,i) in getSubCheckpoints(currentCheckpoint.id, 'Checkpoint')"
-                  :key="i"
-                  :nestedLvl="1"
-                  :checkpoint="item"
-                />
-              </v-expansion-panels>
-            </div>
+      <div class="left_block">
+        <div class="current_checkpoint_title">{{ currentCheckpoint.title }}</div>
+        <div class="current_checkpoint_description">{{ currentCheckpoint.description }}</div>
+        <div class="checkpoint_list_wrapper">
+          <div class="checkpoints_list">
+            <v-expansion-panels
+              accordion
+            >
+              <checkpoint
+                v-for="(chekpoint,i) in data"
+                :key="i"
+                :nestedLvl="1"
+                :checkpoint="chekpoint.item"
+                :nested="chekpoint.nested"
+              />
+            </v-expansion-panels>
           </div>
         </div>
-        <div class="right_block">
-          <slider
-            :displayedItemId="displayedItemId"
-            :displayedItemType="displayedItemType"
-            :slickOptionsMain="slickOptionsMain"
-            :slickOptionsSub="slickOptionsSub"
-            :images="['http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg']"
-          />
-        </div>
       </div>
-      </modal-window>
-    <!-- </v-card> -->
-  <!-- </v-dialog> -->
+      <div class="right_block">
+        <slider
+          :displayedItemId="displayedItemId"
+          :displayedItemType="displayedItemType"
+          :slickOptionsMain="slickOptionsMain"
+          :slickOptionsSub="slickOptionsSub"
+          :images="['http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg']"
+        />
+      </div>
+    </div>
+  </modal-window>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import Checkpoint from "./Checkpoint";
 import AppMap from "./AppMap";
-import ModalWindow from './ModalWindow';
+import ModalWindow from "./ModalWindow";
 import Slider from "./Slider";
 import Slick from "vue-slick";
 import "slick-carousel/slick/slick.css";
@@ -69,6 +65,7 @@ export default {
     return {
       displayedItemId: null,
       displayedItemType: "Checkpoint",
+      data: [],
       slickOptionsMain: {
         initialSlide: 0,
         slidesToShow: 1,
@@ -110,7 +107,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["updateMapPlaces", "setCurrentCheckpoint", "setPlanModalCheckpointId"]),
+    ...mapActions([
+      "updateMapPlaces",
+      "setCurrentCheckpoint",
+      "setPlanModalCheckpointId"
+    ]),
     input(e) {
       this.$emit("input");
     },
@@ -119,8 +120,39 @@ export default {
       this.displayedItemId = id;
     },
     input() {
-      this.$emit('input');
+      this.$emit("input");
       this.setPlanModalCheckpointId(null);
+    },
+    setCheckpointsData(id, type) {
+      let res = [];
+      let self = this;
+      function getNested(id) {
+        let array = [];
+        let subChecks = self.getSubCheckpoints(id, "Checkpoint", true);
+        if (subChecks) {
+          subChecks.forEach(item => {
+            let obj = {
+              text: item.title,
+              item: item,
+              id: item.id,
+              nested: getNested(item.id)
+            };
+            array.push(obj);
+          });
+          return array;
+        } else return [];
+      }
+      let subCheckpoints = this.getSubCheckpoints(id, type, true) || [];
+      subCheckpoints.forEach(item => {
+        let obj = {
+          text: item.title,
+          item: item,
+          id: item.id,
+          nested: getNested(item.id)
+        };
+        res.push(obj);
+      });
+      this.data = res;
     }
   },
   provide() {
@@ -129,10 +161,12 @@ export default {
     };
   },
   mounted() {
-      
+    window.modal = () => {
+      return this.data;
+    }
   },
   watch: {
-    getPlanModalCheckpointId() {
+    getPlanModalCheckpointId(newValue) {
       this.displayedItemId = null;
       this.$nextTick(() => {
         document.querySelectorAll(".slide").forEach(item => {
@@ -140,6 +174,7 @@ export default {
           item.parentElement.style.width = "100%";
         });
         this.displayedItemId = this.getPlanModalCheckpointId;
+        this.setCheckpointsData(newValue, "Checkpoint");
       });
     }
   },
@@ -148,9 +183,9 @@ export default {
       let temp = this.getCheckpoint(this.getPlanModalCheckpointId);
       if (!!temp == false) {
         return {
-          title: '',
-          description: ''
-        }
+          title: "",
+          description: ""
+        };
       }
       return temp;
     },

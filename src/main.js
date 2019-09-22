@@ -11,8 +11,9 @@ import {VueMasonryPlugin} from 'vue-masonry';
 import MagicGrid from 'vue-magic-grid'
 import vClickOutside from 'v-click-outside'
 import Notifications from 'vue-notification'
+import VueNestable from 'vue-nestable'
 
-
+Vue.use(VueNestable)
 Vue.use(Notifications)
 Vue.use(vClickOutside)
 Vue.use(MagicGrid)

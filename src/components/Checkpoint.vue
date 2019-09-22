@@ -5,8 +5,7 @@
     :style="{marginLeft: nestedLvl == 1  ? '0px' : '31.5px'}"
     class="checkpoint_full"
     :data-id="checkpoint.id"
-  >
-    <slot></slot>
+  > 
     <v-expansion-panel-header style="position: relative" @click="setCheckpointId(checkpoint.id)">
       <template v-slot:actions>
         <v-icon color="no-icon"></v-icon>
@@ -43,16 +42,10 @@
         :class="{ 'margin10':getSubCheckpoints(checkpoint.id, 'Checkpoint')['id']==checkpoint.id && checkpoint.checkable_type=='Plan' }"
       >{{ checkpoint.description | truncate(20) }}</div>
       <v-expansion-panels
-        style="margin-bottom: 10px;"
+        style="margin-bottom: 10px; width: calc(100% - 15px);"
         v-if="nested.length>0"
         accordion
       >
-        <nested-draggable
-          v-if="nested.length"
-          :tasks="nested"
-          style="width: calc(100% + 15px); margin-left: -15px;"
-        >
-          <draggable @end="console" :list="nested">
             <checkpoint
               v-for="(item,i) in nested"
               :key="i"
@@ -60,8 +53,6 @@
               :nestedLvl="nestedLvl+1"
               :checkpoint="item.item"
             />
-          </draggable>
-        </nested-draggable>
       </v-expansion-panels>
     </v-expansion-panel-content>
   </v-expansion-panel>
@@ -77,7 +68,7 @@ import draggable from "vuedraggable";
 export default {
   name: "Checkpoint",
   props: ["checkpoint", "nestedLvl", "nested"],
-  inject: ["setCheckpointId", "moveUp", "moveDown"],
+  inject: ["setCheckpointId"],
   data() {
     return {
       displayMoreButton: false
@@ -124,14 +115,6 @@ export default {
           : "";
       }
     },
-    prepareMoveUp(e) {
-      let target = e.target.closest("[data-id]");
-      this.moveUp(target.dataset.id);
-    },
-    prepareMoveDown(e) {
-      let target = e.target.closest("[data-id]");
-      this.moveDown(target.dataset.id);
-    },
     console(e) {
       console.log(e);
     },
@@ -177,32 +160,6 @@ export default {
     background-size: cover;
     position: absolute;
     right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  .move_up {
-    display: block;
-    background-color: black;
-    background: url("https://cdn3.iconfinder.com/data/icons/outline-style-1/512/double-arrow-top-512.png") no-repeat center center;
-    width: 20px;
-    height: 20px;
-    // background: url("../assets/Checkpoint/more.png") no-repeat center center;
-    background-size: cover;
-    position: absolute;
-    right: 40px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-    .move_down {
-    display: block;
-    background-color: black;
-    background: url("https://cdn3.iconfinder.com/data/icons/outline-style-1/512/double-arrow-bottom-512.png") no-repeat center center;
-    width: 20px;
-    height: 20px;
-    // background: url("../assets/Checkpoint/more.png") no-repeat center center;
-    background-size: cover;
-    position: absolute;
-    right: 70px;
     top: 50%;
     transform: translateY(-50%);
   }

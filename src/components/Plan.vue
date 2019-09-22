@@ -1,30 +1,42 @@
 <template>
   <div>
-    <modal-window :value="true" :width="'50%'" :height="'50%'">
-       <test :tasks="data"/>
-      <!-- <ul style="margin: 20px; padding: 0"> -->
-        <!-- <test v-for="(item, index) in data" :key="index" :data="item" /> -->
-      <!-- </ul> -->
+    <!-- MODAL WINDOW TO MOVE CHECKPOINTS -->
+
+    <modal-window v-model="displayMoveModal" :width="'600px'" :height="'auto'">
+      <div class="move_modal_wrapper">
+        <div class="plan_title">{{ title }}</div>
+        <vue-nestable v-model="data" :childrenProp="'nested'" class="nested">
+          <vue-nestable-handle slot-scope="{ item }" :item="item" class="nested_item">
+            {{ item.item.title }} 
+            <div class="edit_checkpoint">
+              
+            </div>
+          </vue-nestable-handle>
+        </vue-nestable>
+        <v-btn class="save_checkpoint" color="success" dark>update checkpoints</v-btn>
+      </div>
     </modal-window>
+
+    <!-- DISPLAY PLAN'S CHECKPOINTS -->
+
     <div class="plan">
       <div class="plan_info">
-        <h1 class="plan_title" @click="showPlanSubCheckpoints">{{ title }}</h1>
+        <div class="plan_title">
+          <h1 @click="showPlanSubCheckpoints">{{ title }}</h1>
+          <div class="moveModalIcon" @click="displayMoveModal=true"></div>
+        </div>
         <p class="plan_description">{{ description }}</p>
         <div v-if="display" class="checkpoint_list_wrapper">
           <div class="checkpoints_list">
             <v-expansion-panels accordion style="width: calc(100% - 15px);">
-              <nested-draggable @end="console" :tasks="data" style="width: 100%">
-                <draggable :list="data">
-                  <checkpoint
-                    v-for="(checkpoint,i) in data"
-                    :key="i"
-                    :nestedLvl="1"
-                    :checkpoint="checkpoint.item"
-                    :nested="checkpoint.nested"
-                    :style="{paddingTop: i == 0 ? '10px' : '10px', marginBottom: '10px'}"
-                  ></checkpoint>
-                </draggable>
-              </nested-draggable>
+              <checkpoint
+                v-for="(checkpoint,i) in data"
+                :key="i"
+                :nestedLvl="1"
+                :checkpoint="checkpoint.item"
+                :nested="checkpoint.nested"
+                :style="{paddingTop: i == 0 ? '10px' : '10px', marginBottom: '10px'}"
+              ></checkpoint>
             </v-expansion-panels>
           </div>
         </div>
@@ -35,6 +47,8 @@
         :displayedItemType="displayedItemType"
       />
     </div>
+
+    <!--  -->
   </div>
 </template>
 
@@ -46,13 +60,11 @@ import Checkpoint from "./Checkpoint";
 import draggable from "vuedraggable";
 import nestedDraggable from "vuedraggable";
 import ModalWindow from "./ModalWindow";
-import Test from "./Test";
 
 export default {
   props: ["id"],
   components: {
     AppMap,
-    Test,
     Checkpoint,
     BadgerAccordion,
     BadgerAccordionItem,
@@ -66,8 +78,8 @@ export default {
     description: "",
     displayedItemId: null,
     displayedItemType: "Plan",
-    data: [],
-    oldParent: ""
+    displayMoveModal: false,
+    data: []
   }),
   methods: {
     ...mapActions(["updateMapPlaces", "setCurrentCheckpoint"]),
@@ -82,67 +94,9 @@ export default {
     console(e) {
       console.log(e);
     },
-    moveUp(id) {
-      this.deepSearch(this.data, id);
-    },
-    moveDown(id) {
-      this.deepSearchDown(this.data, id);
-    },
-    deepSearch(start, searchId) {
-      console.log(start);
-      console.log("start");
-      start.forEach((item, index) => {
-        if (item.id != searchId && item.nested.length > 0) {
-          this.oldParent = start;
-          this.deepSearch(item.nested, searchId);
-        } else {
-          if (item.id == searchId) {
-            console.log("FOUND!!!!!");
-            console.log(start);
-            console.log(item);
-            console.log(this.oldParent);
-            start.splice(index, 1);
-            this.oldParent.push(item);
-          }
-        }
-      });
-    },
-    getDeepObject(start, searchId) {
-      start.forEach((item, index) => {
-        if (item.id != searchId && item.nested.length > 0) {
-          this.oldParent = start;
-          this.getDeepObject(item.nested, searchId);
-        } else {
-          if (item.id == searchId) {
-            return item;
-          }
-        }
-      });
-    },
-    deepSearchDown(start, searchId) {
-      console.log(start);
-      console.log("start");
-      start.forEach((item, index) => {
-        if (item.id != searchId && item.nested.length > 0) {
-          this.oldParent = start;
-          this.deepSearchDown(item.nested, searchId);
-        } else {
-          if (item.id == searchId) {
-            console.log("FOUND!!!!!");
-            console.log(start);
-            console.log(item);
-            console.log(start[index + 1]);
-            start[index + 1].nested.push(item);
-            start.splice(index, 1);
-            start.splice(index, 1);
-            this.oldParent.push(item);
-          }
-        }
-      });
-    },
     getDeepObject(data, searchId) {
       data == null ? (data = this.data) : "";
-      let returnedItem = null;
+      let returnedObj = null;
       search(data, searchId);
       function search(start, searchId) {
         start.some((item, index) => {
@@ -150,36 +104,62 @@ export default {
             search(item.nested, searchId);
           } else {
             if (item.id == searchId) {
-              returnedItem = item;
+              returnedObj = { item, parent: data };
             }
             return false;
           }
         });
       }
-      return returnedItem;
+      return returnedObj;
+    },
+    setCheckpointsData(id, type) {
+      let res = [];
+      let self = this;
+      function getNested(id) {
+        let array = [];
+        let subChecks = self.getSubCheckpoints(id, "Checkpoint", true);
+        if (subChecks) {
+          subChecks.forEach(item => {
+            let obj = {
+              text: item.title,
+              item: item,
+              id: item.id,
+              nested: getNested(item.id)
+            };
+            array.push(obj);
+          });
+          return array;
+        } else return [];
+      }
+      this.getSubCheckpoints(id, type).forEach(item => {
+        let obj = {
+          text: item.title,
+          item: item,
+          id: item.id,
+          nested: getNested(item.id)
+        };
+        res.push(obj);
+      });
+      this.data = res;
     }
   },
   provide() {
     return {
-      setCheckpointId: this.setCheckpointId,
-      moveUp: this.moveUp,
-      moveDown: this.moveDown
+      setCheckpointId: this.setCheckpointId
     };
   },
 
   mounted() {
-    window.d = () => {
-      this.display = !this.display;
-      this.$forceUpdate();
-    };
     window.data = () => {
       return this.data;
     };
-    let start = this.data;
-    window.clear = () => {
-      this.oldParent = null;
+    this.setCheckpointsData(this.id, "Plan");
+    window.modal = () => {
+      return this.displayMoveModal;
     };
-    window.start = () => this.data;
+    window.get = id => {
+      return this.getDeepObject(this.data, id);
+    };
     let plan = this.getPlan(this.id);
     this.title = plan.title;
     this.description = plan.description;
@@ -187,27 +167,6 @@ export default {
     this.$gmapApiPromiseLazy().then(() => {
       this.displayedItemId = this.id;
     });
-    let res = [];
-    let self = this;
-    function deep(id) {
-      let array = [];
-      let subChecks = self.getSubCheckpoints(id, "Checkpoint", true);
-      if (subChecks) {
-        subChecks.forEach(item => {
-          let obj = { item: item, id: item.id, nested: deep(item.id) };
-
-          array.push(obj);
-        });
-        return array;
-      } else {
-        return [];
-      }
-    }
-    this.getSubCheckpoints(this.id, "Plan").forEach(item => {
-      let obj = { item: item, id: item.id, nested: deep(item.id) };
-      res.push(obj);
-    });
-    this.data = res;
   },
   computed: {
     ...mapGetters([
@@ -226,8 +185,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.drag-move {
-  transition: transform 1s;
+.move_modal_wrapper {
+  padding: 20px;
+  .plan_title {
+    display: block;
+    cursor: pointer;
+    padding: 3px 10px;
+    margin-bottom: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+  }
+  .nested {
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .nested_item {
+    position: relative;
+  }
+  .edit_checkpoint {
+    cursor: pointer;
+    width: 20px;
+    opacity: 0.5;
+    height: 20px;
+    background: url("https://image.flaticon.com/icons/svg/17/17214.svg")
+      no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+  .save_checkpoint {
+    display: block;
+    margin: 20px auto 0px auto;
+  }
 }
 
 .plan {
@@ -238,6 +228,7 @@ export default {
     margin-right: 10px;
     .plan_title,
     .plan_description {
+      position: relative;
       padding: 10px;
       margin-bottom: 10px;
       background-color: #fff;
@@ -245,10 +236,107 @@ export default {
     .checkpoint_list_wrapper {
       margin-left: 23px;
     }
+    .plan_title {
+      .moveModalIcon {
+        display: block;
+        cursor: pointer;
+        width: 20px;
+        opacity: 0.5;
+        height: 20px;
+        background: url("https://image.flaticon.com/icons/svg/17/17214.svg")
+          no-repeat center center;
+        background-size: cover;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
   }
   .plan_map {
     width: 50%;
     height: 600px;
   }
+}
+</style>
+
+<style>
+/*
+* Style for nestable
+*/
+.nestable {
+  position: relative;
+}
+.nestable .nestable-list {
+  margin: 0;
+  padding: 0 0 0 40px;
+  list-style-type: none;
+}
+.nestable > .nestable-list {
+  position: relative;
+  padding: 0;
+}
+.nestable-item,
+.nestable-item-copy {
+  position: relative;
+  margin: 10px 0 0;
+}
+.nestable-item:first-child,
+.nestable-item-copy:first-child {
+  position: relative;
+  margin-top: 0;
+}
+.nestable-item .nestable-list,
+.nestable-item-copy .nestable-list {
+  position: relative;
+  margin-top: 10px;
+}
+.nestable-item {
+  position: relative;
+  position: relative;
+}
+.nestable-item.is-dragging .nestable-list {
+  position: relative;
+  pointer-events: none;
+}
+.nestable-item.is-dragging * {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.nestable-item.is-dragging:before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(195, 195, 195, 0.671);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.nestable-drag-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  pointer-events: none;
+}
+.nestable-drag-layer > .nestable-list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  background-color: rgba(131, 131, 131, 0.274);
+}
+.nestable [draggable="true"] {
+  cursor: move;
+  padding: 3px 10px;
+}
+.nestable-handle {
+  display: block;
+}
+
+.nestable-item-content {
+  border: 2px solid rgba(0, 0, 0, 0.1);
 }
 </style>

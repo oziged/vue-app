@@ -17,7 +17,7 @@ export default new Vuex.Store({
 
   },
   state: {
-    nested_colors: ['reserv', '#00572b', '#009e4e', '#00d96b']
+    nested_colors: ['reserv', '#00572b', '#009e4e', '#00d96b', 'red']
   },
   getters: {
     nestedColors(state) {
