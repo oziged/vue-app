@@ -57,6 +57,16 @@ export default {
   opacity: 0;
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.7s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
 #app {
   background-color: white;
 }

@@ -7,9 +7,23 @@
         <div class="plan_title">{{ title }}</div>
         <vue-nestable v-model="data" :childrenProp="'nested'" class="nested">
           <vue-nestable-handle slot-scope="{ item }" :item="item" class="nested_item">
-            {{ item.item.title }} 
-            <div class="edit_checkpoint">
-              
+            {{ item.item.title }}
+            <div @click="item.displaySubMenu = !item.displaySubMenu" class="edit_checkpoint_icon"></div>
+            <div v-if="item.displaySubMenu" class="edit_checkpoint_sub_menu">
+              <v-card max-width="400" tile>
+                <v-list>
+                  <v-list-item @click="console">
+                    <v-list-item-content>
+                      <v-list-item-title>Edit checkpoint</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-list-item-content>
+                      <v-list-item-title>Add subCheckpoint</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-card>
             </div>
           </vue-nestable-handle>
         </vue-nestable>
@@ -121,9 +135,9 @@ export default {
         if (subChecks) {
           subChecks.forEach(item => {
             let obj = {
-              text: item.title,
               item: item,
               id: item.id,
+              displaySubMenu: false,
               nested: getNested(item.id)
             };
             array.push(obj);
@@ -133,9 +147,9 @@ export default {
       }
       this.getSubCheckpoints(id, type).forEach(item => {
         let obj = {
-          text: item.title,
           item: item,
           id: item.id,
+          displaySubMenu: false,
           nested: getNested(item.id)
         };
         res.push(obj);
@@ -200,11 +214,17 @@ export default {
   }
   .nested_item {
     position: relative;
+    &:hover {
+      .edit_checkpoint_icon {
+        opacity: 0.5;
+      }
+    }
   }
-  .edit_checkpoint {
+  .edit_checkpoint_icon {
     cursor: pointer;
     width: 20px;
-    opacity: 0.5;
+    opacity: 0;
+    transition: 0.3s;
     height: 20px;
     background: url("https://image.flaticon.com/icons/svg/17/17214.svg")
       no-repeat center center;
@@ -213,6 +233,12 @@ export default {
     top: 50%;
     right: 10px;
     transform: translateY(-50%);
+  }
+  .edit_checkpoint_sub_menu {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(calc(-50% + 25px));
   }
   .save_checkpoint {
     display: block;
