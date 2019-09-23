@@ -7,11 +7,18 @@ export default {
     setPlanModalCheckpointId({ commit }, id) {
       commit("setPlanModalCheckpointId", id);
     },
+
     toggleCheckpointModal({ commit }) {
       commit("toggleCheckpointModal");
     },
     toggleCheckpointNewModal({ commit }) {
       commit("toggleCheckpointNewModal");
+    },
+    toggleCheckpointEditModal({ commit }) {
+      commit("toggleCheckpointEditModal");
+    },
+    setCheckpointEditId({ commit }, id) {
+      commit("setCheckpointEditId", id);
     },
   },
   mutations: {
@@ -29,7 +36,16 @@ export default {
     },
     toggleCheckpointNewModal(state) {
       state.checkpoint_new_modal_display = !state.checkpoint_new_modal_display;
-    }
+    },
+    setCurrentCheckpoint(state, checkpoint) {
+      state.checkpoint_edit_id = checkpoint;
+    },
+    toggleCheckpointEditModal(state) {
+      state.checkpoint_edit_modal_display = !state.checkpoint_edit_modal_display;
+    },
+    setCheckpointEditId(state, id) {
+      state.checkpoint_edit_id = id;
+    },
   },
   state: {
     checkpoints: [
@@ -108,7 +124,9 @@ export default {
     ],
     current_checkpoint: null,
     plan_modal_checkpoint_id: null,
+    checkpoint_edit_id: null,
     checkpoint_modal_display: false,
+    checkpoint_edit_modal_display: false,
     checkpoint_new_modal_display: false,
   },
   getters: {
@@ -148,6 +166,12 @@ export default {
     },
     checkpointNewModalDisplay(state) {
       return state.checkpoint_new_modal_display;
+    },
+    checkpointEditModalDisplay(state) {
+      return state.checkpoint_edit_modal_display;
+    },
+    getCheckpointEditId(state) {
+      return state.checkpoint_edit_id;
     },
   }
 };

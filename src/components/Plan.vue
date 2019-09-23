@@ -9,20 +9,27 @@
             {{ item.item.title }}
             <div @click="displayedSubMenu = item" class="edit_checkpoint_icon"></div>
             <transition name="fade">
-              <div v-if="displayedSubMenu == item" v-click-outside="closeDisplayedSubMenu" class="edit_checkpoint_sub_menu">
+              <div
+                v-if="displayedSubMenu == item"
+                v-click-outside="closeDisplayedSubMenu"
+                class="edit_checkpoint_sub_menu"
+              >
                 <v-card max-width="400">
                   <v-list>
-                    <v-list-item @mousedown.prevent @click.stop="">
+                    <v-list-item
+                      @mousedown.prevent
+                      @click.stop="closeDisplayedSubMenu(); setCheckpointEditId(item.item.id); toggleCheckpointEditModal()"
+                    >
                       <v-list-item-content>
                         <v-list-item-title>Edit checkpoint</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @mousedown.prevent @click.stop="">
+                    <v-list-item @mousedown.prevent @click.stop>
                       <v-list-item-content>
                         <v-list-item-title>Add subCheckpoint</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @mousedown.stop.prevent @click.stop="">
+                    <v-list-item @mousedown.stop.prevent @click.stop>
                       <v-list-item-content>
                         <v-list-item-title>Delete Checkpoint</v-list-item-title>
                       </v-list-item-content>
@@ -103,7 +110,12 @@ export default {
     data: []
   }),
   methods: {
-    ...mapActions(["updateMapPlaces", "setCurrentCheckpoint"]),
+    ...mapActions([
+      "updateMapPlaces",
+      "setCurrentCheckpoint",
+      "setCheckpointEditId",
+      "toggleCheckpointEditModal"
+    ]),
     showPlanSubCheckpoints() {
       this.displayedItemId = this.id;
       this.displayedItemType = "Plan";
@@ -158,7 +170,6 @@ export default {
         let obj = {
           item: item,
           id: item.id,
-          displaySubMenu: false,
           nested: getNested(item.id)
         };
         res.push(obj);
@@ -173,9 +184,19 @@ export default {
   },
 
   mounted() {
-      (window.data = () => {
-        return this.data;
-      });
+    window.submenu = () => {
+      return this.displayedSubMenu;
+    };
+    window.gett = () => {
+      return this.getCheckpointEditId;
+    };
+    window.set = id => {
+      this.setCheckpointEditId(id);
+      return this.getCheckpointEditId;
+    };
+    window.data = () => {
+      return this.data;
+    };
     this.setCheckpointsData(this.id, "Plan");
     window.modal = () => {
       return this.displayMoveModal;
@@ -201,7 +222,8 @@ export default {
       "getCheckpoint",
       "getSubCheckpoints",
       "getPlan",
-      "getPlanMainCheckpointId"
+      "getPlanMainCheckpointId",
+      "getCheckpointEditId"
     ])
   }
 };

@@ -17,7 +17,7 @@ export default {
     }
   },
   state: {
-    current_location: null
+    current_location: {lat: 0, lng: 0}
   },
   getters: {
     currentLocation(state) {

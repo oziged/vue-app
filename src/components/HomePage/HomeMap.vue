@@ -28,20 +28,22 @@ export default {
   data() {
     return {
       markersOpacity: 0,
-      center: { lat: 0, lng: 0 },
       markers: []
     };
   },
   computed: {
-    ...mapGetters(["allPlaces", "currentLocation"])
+    ...mapGetters(["allPlaces", "currentLocation"]),
   },
   methods: {},
   watch: {
     currentLocation() {
-      this.center = this.currentLocation;
+      this.center = this.currentLocation || {lat: 0, lng: 0};
     }
   },
   mounted() {
+    window.loc = () => {
+      return this.currentLocation;
+    }
     TweenMax.to(".home_title, .home_title_desc", 1, { opacity: 1, delay: .5 });
     TweenMax.to(".home_map", 1, { opacity: 1, y: 0, delay: 1 });
     this.$gmapApiPromiseLazy().then(() => {

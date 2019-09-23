@@ -221,7 +221,7 @@ export default {
     },
     submit() {
       if (this.$refs.form.validate()) {
-        console.log('checkpoint created');
+        console.log("checkpoint created");
         this.toggleCheckpointNewModal();
         this.$forceUpdate();
       }
@@ -248,9 +248,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["currentLocation"])
+    ...mapGetters(["currentLocation", "getCheckpoint", "getCheckpointEditId"])
   },
   watch: {
+    getCheckpointEditId(newValue) {
+      let checkpoint = this.getCheckpoint(newValue);
+        this.title = checkpoint.title;
+        this.description = checkpoint.description;
+    },
     value() {
       if (this.value == true) {
         this.$nextTick(() => {
@@ -282,7 +287,11 @@ export default {
       }
     }
   },
-  mounted() {}
+  mounted() {
+    window.lol = () => {
+      return this.title;
+    };
+  }
 };
 </script>
 

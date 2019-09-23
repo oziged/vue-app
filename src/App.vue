@@ -8,6 +8,7 @@
     </div>
     <checkpoint-modal-show :value="planCheckpointModalDisplay" @input="toggleCheckpointModal" />
     <checkpoint-new :value="checkpointNewModalDisplay" @input="toggleCheckpointNewModal" />
+    <checkpoint-edit :value="checkpointEditModalDisplay" @input="toggleCheckpointEditModal" />
     <notifications style="bottom: 30px;" position="center bottom" group="foo" />
   </v-app>
 </template>
@@ -16,6 +17,7 @@
 import AppHeader from "./components/AppHeader";
 import CheckpointModalShow from "./components/CheckpointModalShow";
 import CheckpointNew from "./components/CheckpointNew";
+import CheckpointEdit from './components/CheckpointEdit';
 import { mapGetters, mapActions } from "vuex";
 import ModalWindow from "./components/ModalWindow";
 
@@ -25,13 +27,15 @@ export default {
     AppHeader,
     CheckpointModalShow,
     CheckpointNew,
+    CheckpointEdit,
     ModalWindow
   },
   methods: {
     ...mapActions([
       "toggleCheckpointModal",
       "toggleCheckpointNewModal",
-      "updateCurrentLocation"
+      "updateCurrentLocation",
+      "toggleCheckpointEditModal"
     ])
   },
   mounted() {
@@ -39,9 +43,12 @@ export default {
     window.toggle = () => {
       this.toggleCheckpointNewModal();
     };
+        window.togglee = () => {
+      this.toggleCheckpointEditModal();
+    };
   },
   computed: {
-    ...mapGetters(["planCheckpointModalDisplay", "checkpointNewModalDisplay"])
+    ...mapGetters(["planCheckpointModalDisplay", "checkpointNewModalDisplay", "checkpointEditModalDisplay"])
   }
 };
 </script>
