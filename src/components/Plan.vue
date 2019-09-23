@@ -7,7 +7,10 @@
         <vue-nestable v-model="data" :childrenProp="'nested'" class="nested">
           <vue-nestable-handle slot-scope="{ item }" :item="item" class="nested_item">
             {{ item.item.title }}
-            <div @click="displayedSubMenu = item" class="edit_checkpoint_icon"></div>
+            <div
+              @click="displayedSubMenu = item; setSubMenuDirection();"
+              class="edit_checkpoint_icon"
+            ></div>
             <transition name="fade">
               <div
                 v-if="displayedSubMenu == item"
@@ -18,13 +21,16 @@
                   <v-list>
                     <v-list-item
                       @mousedown.prevent
-                      @click.stop="closeDisplayedSubMenu(); setCheckpointEditId(item.item.id); toggleCheckpointEditModal()"
+                      @click.stop="displayMoveModal = false; closeDisplayedSubMenu(); setCheckpointEditId(item.item.id); toggleCheckpointEditModal()"
                     >
                       <v-list-item-content>
                         <v-list-item-title>Edit checkpoint</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @mousedown.prevent @click.stop>
+                    <v-list-item
+                      @mousedown.prevent
+                      @click.stop="displayMoveModal = false; closeDisplayedSubMenu(); toggleCheckpointNewModal()"
+                    >
                       <v-list-item-content>
                         <v-list-item-title>Add subCheckpoint</v-list-item-title>
                       </v-list-item-content>
@@ -114,7 +120,8 @@ export default {
       "updateMapPlaces",
       "setCurrentCheckpoint",
       "setCheckpointEditId",
-      "toggleCheckpointEditModal"
+      "toggleCheckpointEditModal",
+      "toggleCheckpointNewModal"
     ]),
     showPlanSubCheckpoints() {
       this.displayedItemId = this.id;
@@ -126,6 +133,23 @@ export default {
     },
     console(e) {
       console.log(e);
+    },
+    setSubMenuDirection(e) {
+      let modal = document.querySelector(".move_modal_wrapper");
+      modal.style.overflow = "hidden";
+      this.$nextTick(() => {
+        let subMenu = document.querySelectorAll(".edit_checkpoint_sub_menu");
+        subMenu = subMenu[subMenu.length - 1];
+        if (
+          modal.getBoundingClientRect().bottom <
+          subMenu.getBoundingClientRect().bottom
+        ) {
+          subMenu.style.top = `-${160 + 5}px`;
+        }
+        setTimeout(() => {
+          modal.style.overflow = "auto";
+        }, 500);
+      });
     },
     closeDisplayedSubMenu() {
       this.displayedSubMenu = null;
@@ -269,7 +293,7 @@ export default {
     position: absolute;
     z-index: 100;
     right: 0;
-    top: 110%;
+    top: 0;
   }
   .save_checkpoint {
     display: block;
