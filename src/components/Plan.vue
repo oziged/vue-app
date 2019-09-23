@@ -1,30 +1,36 @@
 <template>
   <div>
     <!-- MODAL WINDOW TO MOVE CHECKPOINTS -->
-
     <modal-window v-model="displayMoveModal" :width="'600px'" :height="'auto'">
       <div class="move_modal_wrapper">
         <div class="plan_title">{{ title }}</div>
         <vue-nestable v-model="data" :childrenProp="'nested'" class="nested">
           <vue-nestable-handle slot-scope="{ item }" :item="item" class="nested_item">
             {{ item.item.title }}
-            <div @click="item.displaySubMenu = !item.displaySubMenu" class="edit_checkpoint_icon"></div>
-            <div v-if="item.displaySubMenu" class="edit_checkpoint_sub_menu">
-              <v-card max-width="400" tile>
-                <v-list>
-                  <v-list-item @click="console">
-                    <v-list-item-content>
-                      <v-list-item-title>Edit checkpoint</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>Add subCheckpoint</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-card>
-            </div>
+            <div @click="displayedSubMenu = item" class="edit_checkpoint_icon"></div>
+            <transition name="fade">
+              <div v-if="displayedSubMenu == item" v-click-outside="closeDisplayedSubMenu" class="edit_checkpoint_sub_menu">
+                <v-card max-width="400">
+                  <v-list>
+                    <v-list-item @mousedown.prevent @click.stop="">
+                      <v-list-item-content>
+                        <v-list-item-title>Edit checkpoint</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item @mousedown.prevent @click.stop="">
+                      <v-list-item-content>
+                        <v-list-item-title>Add subCheckpoint</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item @mousedown.stop.prevent @click.stop="">
+                      <v-list-item-content>
+                        <v-list-item-title>Delete Checkpoint</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+                </v-card>
+              </div>
+            </transition>
           </vue-nestable-handle>
         </vue-nestable>
         <v-btn class="save_checkpoint" color="success" dark>update checkpoints</v-btn>
@@ -90,6 +96,7 @@ export default {
     display: true,
     title: "",
     description: "",
+    displayedSubMenu: null,
     displayedItemId: null,
     displayedItemType: "Plan",
     displayMoveModal: false,
@@ -107,6 +114,9 @@ export default {
     },
     console(e) {
       console.log(e);
+    },
+    closeDisplayedSubMenu() {
+      this.displayedSubMenu = null;
     },
     getDeepObject(data, searchId) {
       data == null ? (data = this.data) : "";
@@ -137,7 +147,6 @@ export default {
             let obj = {
               item: item,
               id: item.id,
-              displaySubMenu: false,
               nested: getNested(item.id)
             };
             array.push(obj);
@@ -164,9 +173,9 @@ export default {
   },
 
   mounted() {
-    window.data = () => {
-      return this.data;
-    };
+      (window.data = () => {
+        return this.data;
+      });
     this.setCheckpointsData(this.id, "Plan");
     window.modal = () => {
       return this.displayMoveModal;
@@ -236,9 +245,9 @@ export default {
   }
   .edit_checkpoint_sub_menu {
     position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(calc(-50% + 25px));
+    z-index: 100;
+    right: 0;
+    top: 110%;
   }
   .save_checkpoint {
     display: block;
