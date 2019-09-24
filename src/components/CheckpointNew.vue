@@ -189,7 +189,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["toggleCheckpointNewModal"]),
+    ...mapActions(["toggleNewCheckpointModal"]),
     openMap() {
       this.$refs.map.style.height = "500px";
       this.$refs.map.style.marginBottom = "20px";
@@ -222,7 +222,7 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         console.log('checkpoint created');
-        this.toggleCheckpointNewModal();
+        this.toggleNewCheckpointModal();
         this.$forceUpdate();
       }
     },

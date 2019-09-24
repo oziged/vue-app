@@ -6,9 +6,9 @@
         <router-view class="router_content" :key="$route.fullPath"></router-view>
       </transition>
     </div>
-    <checkpoint-modal-show :value="planCheckpointModalDisplay" @input="toggleCheckpointModal" />
-    <checkpoint-new :value="checkpointNewModalDisplay" @input="toggleCheckpointNewModal" />
-    <checkpoint-edit :value="checkpointEditModalDisplay" @input="toggleCheckpointEditModal" />
+    <checkpoint-modal-show :value="mainCheckpointModalDisplay" @input="toggleMainCheckpointModal" />
+    <checkpoint-new :value="newCheckpointModalDisplay" @input="toggleNewCheckpointModal" />
+    <checkpoint-edit :value="editCheckpointModalDisplay" @input="toggleEditCheckpointModal" />
     <notifications style="bottom: 30px;" position="center bottom" group="foo" />
   </v-app>
 </template>
@@ -32,23 +32,17 @@ export default {
   },
   methods: {
     ...mapActions([
-      "toggleCheckpointModal",
-      "toggleCheckpointNewModal",
+      "toggleMainCheckpointModal",
+      "toggleNewCheckpointModal",
       "updateCurrentLocation",
-      "toggleCheckpointEditModal"
+      "toggleEditCheckpointModal"
     ])
   },
   mounted() {
     this.updateCurrentLocation();
-    window.toggle = () => {
-      this.toggleCheckpointNewModal();
-    };
-        window.togglee = () => {
-      this.toggleCheckpointEditModal();
-    };
   },
   computed: {
-    ...mapGetters(["planCheckpointModalDisplay", "checkpointNewModalDisplay", "checkpointEditModalDisplay"])
+    ...mapGetters(["mainCheckpointModalDisplay", "newCheckpointModalDisplay", "editCheckpointModalDisplay"])
   }
 };
 </script>

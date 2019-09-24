@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     setAndOpenModal(id) {
-      if (id == this.getPlanModalCheckpointId) return;
+      if (id == this.mainCheckpointModalId) return;
       if (this.$el.closest(".modal_window")) {
         TweenMax.to(".left_block, .prev_next_checkpoint_small", 0.5, {
           opacity: 0,
@@ -106,12 +106,12 @@ export default {
           delay: 0.5
         });
         setTimeout(() => {
-          this.setPlanModalCheckpointId(id);
+          this.setMainCheckpointModalId(id);
         }, 500);
       } else {
-        this.setPlanModalCheckpointId(id);
-        this.planCheckpointModalDisplay == false
-          ? this.toggleCheckpointModal()
+        this.setMainCheckpointModalId(id);
+        this.mainCheckpointModalDisplay == false
+          ? this.toggleMainCheckpointModal()
           : "";
       }
     },
@@ -120,18 +120,17 @@ export default {
     },
     ...mapActions([
       "updateMapPlaces",
-      "setCurrentCheckpoint",
-      "setPlanModalCheckpointId",
-      "toggleCheckpointModal"
+      "setMainCheckpointModalId",
+      "toggleMainCheckpointModal"
     ])
   },
   computed: {
     ...mapGetters([
       "getSubCheckpoints",
       "getCheckpoint",
-      "planCheckpointModalDisplay",
+      "mainCheckpointModalDisplay",
       "nestedColors",
-      "getPlanModalCheckpointId"
+      "mainCheckpointModalId"
     ])
   },
   mounted() {}

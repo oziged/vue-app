@@ -26,7 +26,7 @@
                   <v-list>
                     <v-list-item
                       @mousedown.prevent
-                      @click.stop="displayMoveModal = false; closeDisplayedSubMenu(); setCheckpointEditId(item.item.id); toggleCheckpointEditModal()"
+                      @click.stop="displayMoveModal = false; closeDisplayedSubMenu(); setEditCheckpointModalId(item.item.id); toggleEditCheckpointModal()"
                     >
                       <v-list-item-content>
                         <v-list-item-title>Edit checkpoint</v-list-item-title>
@@ -34,7 +34,7 @@
                     </v-list-item>
                     <v-list-item
                       @mousedown.prevent
-                      @click.stop="displayMoveModal = false; closeDisplayedSubMenu(); toggleCheckpointNewModal()"
+                      @click.stop="displayMoveModal = false; closeDisplayedSubMenu(); toggleNewCheckpointModal()"
                     >
                       <v-list-item-content>
                         <v-list-item-title>Add subCheckpoint</v-list-item-title>
@@ -124,10 +124,9 @@ export default {
   methods: {
     ...mapActions([
       "updateMapPlaces",
-      "setCurrentCheckpoint",
-      "setCheckpointEditId",
-      "toggleCheckpointEditModal",
-      "toggleCheckpointNewModal"
+      "setEditCheckpointModalId",
+      "toggleEditCheckpointModal",
+      "toggleNewCheckpointModal"
     ]),
     showPlanSubCheckpoints() {
       this.displayedItemId = this.id;
@@ -227,16 +226,6 @@ export default {
     }
   },
   mounted() {
-    window.submenu = () => {
-      return this.displayedSubMenu;
-    };
-    window.gett = () => {
-      return this.getCheckpointEditId;
-    };
-    window.set = id => {
-      this.setCheckpointEditId(id);
-      return this.getCheckpointEditId;
-    };
     window.data = () => {
       return this.data;
     };
@@ -266,7 +255,6 @@ export default {
       "getSubCheckpoints",
       "getPlan",
       "getPlanMainCheckpointId",
-      "getCheckpointEditId"
     ])
   }
 };

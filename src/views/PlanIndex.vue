@@ -22,7 +22,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["allPlans", "currentPlans"])
+    ...mapGetters(["allPlans"])
   }
 };
 </script>

@@ -1,51 +1,37 @@
 export default {
   actions: {
-    setCurrentCheckpoint({ commit, rootGetters }, id) {
-      let checkpoint = rootGetters.getCheckpoint(id);
-      commit("setCurrentCheckpoint", checkpoint);
+    setMainCheckpointModalId({ commit }, id) {
+      commit("setMainCheckpointModalId", id);
     },
-    setPlanModalCheckpointId({ commit }, id) {
-      commit("setPlanModalCheckpointId", id);
+    setEditCheckpointModalId({ commit }, id) {
+      commit("setEditCheckpointModalId", id);
     },
-
-    toggleCheckpointModal({ commit }) {
-      commit("toggleCheckpointModal");
+    toggleMainCheckpointModal({ commit }) {
+      commit("toggleMainCheckpointModal");
     },
-    toggleCheckpointNewModal({ commit }) {
-      commit("toggleCheckpointNewModal");
+    toggleNewCheckpointModal({ commit }) {
+      commit("toggleNewCheckpointModal");
     },
-    toggleCheckpointEditModal({ commit }) {
-      commit("toggleCheckpointEditModal");
-    },
-    setCheckpointEditId({ commit }, id) {
-      commit("setCheckpointEditId", id);
-    },
+    toggleEditCheckpointModal({ commit }) {
+      commit("toggleEditCheckpointModal");
+    }
   },
   mutations: {
-    setPlanMainCheckpointId(state, id) {
-      state.plan_main_checkpoint_id = id;
+    setMainCheckpointModalId(state, id) {
+      state.main_checkpoint_modal_id = id;
     },
-    setPlanModalCheckpointId(state, id) {
-      state.plan_modal_checkpoint_id = id;
+    toggleMainCheckpointModal(state) {
+      state.main_checkpoint_modal_display = !state.main_checkpoint_modal_display;
     },
-    setCurrentCheckpoint(state, checkpoint) {
-      state.current_checkpoint = checkpoint;
+    toggleNewCheckpointModal(state) {
+      state.new_checkpoint_modal_display = !state.new_checkpoint_modal_display;
     },
-    toggleCheckpointModal(state) {
-      state.checkpoint_modal_display = !state.checkpoint_modal_display;
+    toggleEditCheckpointModal(state) {
+      state.edit_checkpoint_modal_display = !state.edit_checkpoint_modal_display;
     },
-    toggleCheckpointNewModal(state) {
-      state.checkpoint_new_modal_display = !state.checkpoint_new_modal_display;
-    },
-    setCurrentCheckpoint(state, checkpoint) {
-      state.checkpoint_edit_id = checkpoint;
-    },
-    toggleCheckpointEditModal(state) {
-      state.checkpoint_edit_modal_display = !state.checkpoint_edit_modal_display;
-    },
-    setCheckpointEditId(state, id) {
-      state.checkpoint_edit_id = id;
-    },
+    setEditCheckpointModalId(state, id) {
+      state.edit_checkpoint_modal_id = id;
+    }
   },
   state: {
     checkpoints: [
@@ -53,9 +39,10 @@ export default {
         id: 1,
         place_id: 1,
         title: "City1",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat elit. Proin quis ultricies mauris, vitae ornare mauris. Mauris sapien ante, ullamcorper sit amet magna ut, dignissim dignissim leo. Nam interdum tincidunt mi quis faucibus. Praesent bibendum lacus in eros mollis, ac eleifend augue ultricies. Aliquam ullamcorper gravida metus vitae fringilla. Aliquam ac vehicula lectus. Maecenas leo sapien, accumsan in mi vel, mollis eleifend sapien. Nunc sed est vitae eros cursus rutrum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce eu dictum nisl, sed pellentesque ante. Etiam sed ornare nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat elit. Proin quis ultricies mauris, vitae ornare mauris. Mauris sapien ante, ullamcorper sit amet magna ut, dignissim dignissim leo. Nam interdum tincidunt mi quis faucibus. Praesent bibendum lacus in eros mollis, ac eleifend augue ultricies. Aliquam ullamcorper gravida metus vitae fringilla. Aliquam ac vehicula lectus. Maecenas leo sapien, accumsan in mi vel, mollis eleifend sapien. Nunc sed est vitae eros cursus rutrum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce eu dictum nisl, sed pellentesque ante. Etiam sed ornare nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat elit. Proin quis ultricies mauris, vitae ornare mauris. Mauris sapien ante, ullamcorper sit amet magna ut, dignissim dignissim leo. Nam interdum tincidunt mi quis faucibus. Praesent bibendum lacus in eros mollis, ac eleifend augue ultricies. Aliquam ullamcorper gravida metus vitae fringilla. Aliquam ac vehicula lectus. Maecenas leo sapien, accumsan in mi vel, mollis eleifend sapien. Nunc sed est vitae eros cursus rutrum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce eu dictum nisl, sed pellentesque ante. Etiam sed ornare nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat elit. Proin quis ultricies mauris, vitae ornare mauris. Mauris sapien ante, ullamcorper sit amet magna ut, dignissim dignissim leo. Nam interdum tincidunt mi quis faucibus. Praesent bibendum lacus in eros mollis, ac eleifend augue ultricies. Aliquam ullamcorper gravida metus vitae fringilla. Aliquam ac vehicula lectus. Maecenas leo sapien, accumsan in mi vel, mollis eleifend sapien. Nunc sed est vitae eros cursus rutrum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce eu dictum nisl, sed pellentesque ante. Etiam sed ornare nisi.",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat elit. Proin quis ultricies mauris, vitae ornare mauris. Mauris sapien ante, ullamcorper sit amet magna ut, dignissim dignissim leo. Nam interdum tincidunt mi quis faucibus. Praesent bibendum lacus in eros mollis, ac eleifend augue ultricies. Aliquam ullamcorper gravida metus vitae fringilla. Aliquam ac vehicula lectus. Maecenas leo sapien, accumsan in mi vel, mollis eleifend sapien. Nunc sed est vitae eros cursus rutrum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce eu dictum nisl, sed pellentesque ante. Etiam sed ornare nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat elit. Proin quis ultricies mauris, vitae ornare mauris. Mauris sapien ante, ullamcorper sit amet magna ut, dignissim dignissim leo. Nam interdum tincidunt mi quis faucibus. Praesent bibendum lacus in eros mollis, ac eleifend augue ultricies. Aliquam ullamcorper gravida metus vitae fringilla. Aliquam ac vehicula lectus. Maecenas leo sapien, accumsan in mi vel, mollis eleifend sapien. Nunc sed est vitae eros cursus rutrum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce eu dictum nisl, sed pellentesque ante. Etiam sed ornare nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat elit. Proin quis ultricies mauris, vitae ornare mauris. Mauris sapien ante, ullamcorper sit amet magna ut, dignissim dignissim leo. Nam interdum tincidunt mi quis faucibus. Praesent bibendum lacus in eros mollis, ac eleifend augue ultricies. Aliquam ullamcorper gravida metus vitae fringilla. Aliquam ac vehicula lectus. Maecenas leo sapien, accumsan in mi vel, mollis eleifend sapien. Nunc sed est vitae eros cursus rutrum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce eu dictum nisl, sed pellentesque ante. Etiam sed ornare nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat elit. Proin quis ultricies mauris, vitae ornare mauris. Mauris sapien ante, ullamcorper sit amet magna ut, dignissim dignissim leo. Nam interdum tincidunt mi quis faucibus. Praesent bibendum lacus in eros mollis, ac eleifend augue ultricies. Aliquam ullamcorper gravida metus vitae fringilla. Aliquam ac vehicula lectus. Maecenas leo sapien, accumsan in mi vel, mollis eleifend sapien. Nunc sed est vitae eros cursus rutrum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce eu dictum nisl, sed pellentesque ante. Etiam sed ornare nisi.",
         checkable_type: "Plan",
-        checkable_id: 1,
+        checkable_id: 1
       },
       {
         id: 2,
@@ -63,7 +50,7 @@ export default {
         title: "City2",
         description: "Description2",
         checkable_type: "Plan",
-        checkable_id: 1,
+        checkable_id: 1
       },
       {
         id: 3,
@@ -71,7 +58,7 @@ export default {
         title: "City1 - place",
         description: "Description city1 - place",
         checkable_type: "Checkpoint",
-        checkable_id: 1,
+        checkable_id: 1
       },
       {
         id: 4,
@@ -79,7 +66,7 @@ export default {
         title: "City1 - place2",
         description: "Description city1 - place2",
         checkable_type: "Checkpoint",
-        checkable_id: 1,
+        checkable_id: 1
       },
       {
         id: 5,
@@ -87,7 +74,7 @@ export default {
         title: "City1 - place3",
         description: "Description city1 -place3",
         checkable_type: "Checkpoint",
-        checkable_id: 1,
+        checkable_id: 1
       },
       {
         id: 6,
@@ -95,7 +82,7 @@ export default {
         title: "USA City1",
         description: "Description city1",
         checkable_type: "Plan",
-        checkable_id: 2,
+        checkable_id: 2
       },
       {
         id: 7,
@@ -103,7 +90,7 @@ export default {
         title: "USA City2",
         description: "Description city2",
         checkable_type: "Plan",
-        checkable_id: 2,
+        checkable_id: 2
       },
       {
         id: 8,
@@ -111,7 +98,7 @@ export default {
         title: "City 1 Place 3 subPlace 1",
         description: "City 1 Place 3 subPlace 1",
         checkable_type: "Checkpoint",
-        checkable_id: 5,
+        checkable_id: 5
       },
       {
         id: 9,
@@ -119,15 +106,14 @@ export default {
         title: "City 1 Place 3 subPlace 2",
         description: "City 1 Place 3 subPlace 2",
         checkable_type: "Checkpoint",
-        checkable_id: 5,
+        checkable_id: 5
       }
     ],
-    current_checkpoint: null,
-    plan_modal_checkpoint_id: null,
-    checkpoint_edit_id: null,
-    checkpoint_modal_display: false,
-    checkpoint_edit_modal_display: false,
-    checkpoint_new_modal_display: false,
+    main_checkpoint_modal_id: null,
+    main_checkpoint_modal_display: false,
+    edit_checkpoint_modal_id: null,
+    edit_checkpoint_modal_display: false,
+    new_checkpoint_modal_display: false
   },
   getters: {
     allCheckpoints(state) {
@@ -152,26 +138,20 @@ export default {
         if (type == "Checkpoint") return [getters.getCheckpoint(id)];
       };
     },
-    getPlanMainCheckpointId(state) {
-      return state.plan_main_checkpoint_id;
+    mainCheckpointModalId(state) {
+      return state.main_checkpoint_modal_id;
     },
-    getPlanModalCheckpointId(state) {
-      return state.plan_modal_checkpoint_id;
+    mainCheckpointModalDisplay(state) {
+      return state.main_checkpoint_modal_display;
     },
-    currentCheckpoint(state) {
-      return state.current_checkpoint;
+    editCheckpointModalDisplay(state) {
+      return state.edit_checkpoint_modal_display;
     },
-    planCheckpointModalDisplay(state) {
-      return state.checkpoint_modal_display;
+    editCheckpointModalId(state) {
+      return state.edit_checkpoint_modal_id;
     },
-    checkpointNewModalDisplay(state) {
-      return state.checkpoint_new_modal_display;
-    },
-    checkpointEditModalDisplay(state) {
-      return state.checkpoint_edit_modal_display;
-    },
-    getCheckpointEditId(state) {
-      return state.checkpoint_edit_id;
-    },
+    newCheckpointModalDisplay(state) {
+      return state.new_checkpoint_modal_display;
+    }
   }
 };

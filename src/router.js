@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import HomePage from './views/HomePage.vue'
 import PlanShow from './views/PlanShow.vue'
 import PlanIndex from './views/PlanIndex.vue'
 import UserShow from './views/UserShow'
@@ -12,7 +12,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Home
+      component: HomePage
     },
     { 
       path: '/plan/:id', 

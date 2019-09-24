@@ -109,8 +109,7 @@ export default {
   methods: {
     ...mapActions([
       "updateMapPlaces",
-      "setCurrentCheckpoint",
-      "setPlanModalCheckpointId"
+      "setMainCheckpointModalId"
     ]),
     input(e) {
       this.$emit("input");
@@ -121,7 +120,7 @@ export default {
     },
     input() {
       this.$emit("input");
-      this.setPlanModalCheckpointId(null);
+      this.setMainCheckpointModalId(null);
     },
     setCheckpointsData(id, type) {
       let res = [];
@@ -166,21 +165,21 @@ export default {
     }
   },
   watch: {
-    getPlanModalCheckpointId(newValue) {
+    mainCheckpointModalId(newValue) {
       this.displayedItemId = null;
       this.$nextTick(() => {
         document.querySelectorAll(".slide").forEach(item => {
           item.parentElement.style.height = "100%";
           item.parentElement.style.width = "100%";
         });
-        this.displayedItemId = this.getPlanModalCheckpointId;
+        this.displayedItemId = this.mainCheckpointModalId;
         this.setCheckpointsData(newValue, "Checkpoint");
       });
     }
   },
   computed: {
     currentCheckpoint() {
-      let temp = this.getCheckpoint(this.getPlanModalCheckpointId);
+      let temp = this.getCheckpoint(this.mainCheckpointModalId);
       if (!!temp == false) {
         return {
           title: "",
@@ -192,8 +191,8 @@ export default {
     ...mapGetters([
       "getSubCheckpoints",
       "getCheckpoint",
-      "getPlanModalCheckpointId",
-      "planCheckpointModalDisplay"
+      "mainCheckpointModalId",
+      "mainCheckpointModalDisplay"
     ])
   }
 };

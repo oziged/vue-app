@@ -1,7 +1,7 @@
 export default {
   actions: {
     updateCurrentLocation({ commit }) {
-      let currentLocation = null;
+      let currentLocation = {};
       navigator.geolocation.getCurrentPosition(position => {
         currentLocation = {
           lat: position.coords.latitude,
