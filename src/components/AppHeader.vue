@@ -19,11 +19,13 @@ export default {
     header {
       width: 100%;
       height: 80px;
+      position: relative;
       background: white;
+      z-index: 10;
       transition: .3s;
       box-shadow: 0 0 4px 0px #00000036;
       &:hover {
-        background-color: rgba(198, 255, 210, 0.164);
+        background-color: #f8fff5;;
       }
 
       .nav_list {

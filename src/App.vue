@@ -50,10 +50,18 @@ export default {
 <style lang="scss">
 .router-anim-enter-active,
 .router-anim-leave-active {
-  transition: all 0.3s;
+  transition: all .6s;
 }
 
-.router-anim-enter,
+.router-anim-enter {
+  transform: translateY(-100%);
+}
+
+.router-anim-leave-to {
+  transform: translateY(100%);
+}
+
+.router-anim-enter, 
 .router-anim-leave-to {
   opacity: 0;
 }
