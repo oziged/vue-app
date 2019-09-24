@@ -23,12 +23,15 @@ export default {
       height: 80px;
       background: white;
       transition: .3s;
+      box-shadow: 0 0 4px 0px #00000036;
       &:hover {
         background-color: rgba(198, 255, 210, 0.164);
       }
 
       .nav_list {
         height: 100%;
+        max-width: 1250px;
+        margin: 0 auto;
         display: flex;
       }
 

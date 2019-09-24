@@ -60,7 +60,6 @@ export default {
 
 <style lang="scss" scoped>
 .home_content {
-  margin-top: 10px;
   .home_title {
     text-align: center;
     width: fit-content;

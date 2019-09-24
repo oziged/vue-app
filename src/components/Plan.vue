@@ -1,7 +1,12 @@
 <template>
   <div>
     <!-- MODAL WINDOW TO MOVE CHECKPOINTS -->
-    <modal-window v-model="displayMoveModal" :width="'600px'" :height="'auto'">
+    <modal-window
+      v-model="displayMoveModal"
+      :width="'600px'"
+      :height="'auto'"
+      :overflowY="overflowY"
+    >
       <div class="move_modal_wrapper">
         <div class="plan_title">{{ title }}</div>
         <vue-nestable v-model="data" :childrenProp="'nested'" class="nested">
@@ -113,7 +118,8 @@ export default {
     displayedItemId: null,
     displayedItemType: "Plan",
     displayMoveModal: false,
-    data: []
+    data: [],
+    overflowY: "visible"
   }),
   methods: {
     ...mapActions([
@@ -136,7 +142,7 @@ export default {
     },
     setSubMenuDirection(e) {
       let modal = document.querySelector(".move_modal_wrapper");
-      modal.style.overflow = "hidden";
+      // modal.style.overflow = "hidden";
       this.$nextTick(() => {
         let subMenu = document.querySelectorAll(".edit_checkpoint_sub_menu");
         subMenu = subMenu[subMenu.length - 1];
@@ -147,7 +153,7 @@ export default {
           subMenu.style.top = `-${160 + 5}px`;
         }
         setTimeout(() => {
-          modal.style.overflow = "auto";
+          // modal.style.overflow = "auto";
         }, 500);
       });
     },
@@ -206,7 +212,20 @@ export default {
       setCheckpointId: this.setCheckpointId
     };
   },
-
+  watch: {
+    displayMoveModal(newValue) {
+      if (newValue) {
+        this.$nextTick(() => {
+          let windowHeight = document.documentElement.clientHeight;
+          let modal = document.querySelector(".move_modal_wrapper");
+          let modalHeight = modal.clientHeight;
+          if ((modalHeight * 100) / windowHeight > 90) {
+            this.overflowY = "scroll";
+          }
+        });
+      }
+    }
+  },
   mounted() {
     window.submenu = () => {
       return this.displayedSubMenu;
@@ -302,7 +321,6 @@ export default {
 }
 
 .plan {
-  margin: 10px 20px;
   display: flex;
   .plan_info {
     width: 50%;

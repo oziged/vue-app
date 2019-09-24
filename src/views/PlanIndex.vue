@@ -30,10 +30,7 @@ export default {
 <style lang="scss" scoped>
   .plans_list {
     position: relative;
-    margin: 0 50px;
+    margin: 0 0;
   }
 
-  .filter_sort_header {
-    margin: 30px 50px;
-  }
 </style>

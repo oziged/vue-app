@@ -1,7 +1,7 @@
 <template>
   <transition name="zoom-in">
     <div v-if="value" class="modal_bg">
-      <div class="modal_window" :style="{width: width, height: height}" v-click-outside="input">
+      <div class="modal_window" :style="{width: width, height: height, overflowX: overflowX, overflowY: overflowY}" v-click-outside="input">
         <div style="position: relative; width: 100%; height: 100%">
         <slot></slot>
         </div>
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  props: ["value", "width", "height"],
+  props: ["value", "width", "height", "overflowX", "overflowY"],
   mounted() {},
   methods: {
     input(e) {
@@ -46,6 +46,8 @@ export default {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   width: 90%;
   height: 90%;
+  max-height: 90%;
+  max-width: 90%;
   overflow-y: auto;
 }
 

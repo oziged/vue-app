@@ -128,9 +128,9 @@ export default {
 <style lang="scss" scoped>
 .filter_sort_header {
   display: flex;
+  margin-bottom: 20px;
   align-items: center;
   height: 60px;
-  margin: 0 50px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   .left_block {

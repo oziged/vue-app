@@ -80,6 +80,7 @@ export default {
 .router_content {
   margin: 0 auto;
   max-width: 1250px;
+  padding: 20px 0;
 }
 
 * {
