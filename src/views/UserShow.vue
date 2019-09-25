@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div style="padding-top: 20px;     margin: 0 auto;
+    max-width: 1250px;">
     <user-info :id="$route.params.id" />
   </div>
 </template>

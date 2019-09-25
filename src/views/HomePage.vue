@@ -1,5 +1,5 @@
 <template>
-  <home-map />
+  <home-map style="padding-top: 20px"/>
 </template>
 
 <script>

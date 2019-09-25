@@ -5,6 +5,7 @@
       <router-link class="nav_item" to="/plans"><span>Plans</span></router-link>
       <router-link class="nav_item" to="/plan/1"><span>Plan1</span></router-link>
       <router-link class="nav_item" to="/plan/2"><span>Plan2</span></router-link>
+      <router-link class="nav_item" to="/about"><span>Plan2</span></router-link>
     </div>
   </header>
 </template>

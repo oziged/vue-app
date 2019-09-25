@@ -1,8 +1,14 @@
 <template>
   <v-app>
     <div>
-      <app-header />
-      <transition name="router-anim" mode="out-in">
+      <app-header ref="header" />
+      <transition
+        appear
+        :duration="{leave}"
+        v-on:before-enter="beforeEnter"
+        v-on:before-leave="beforeLeave"
+        mode="out-in"
+      >
         <router-view class="router_content" :key="$route.fullPath"></router-view>
       </transition>
     </div>
@@ -17,9 +23,10 @@
 import AppHeader from "./components/AppHeader";
 import CheckpointModalShow from "./components/CheckpointModalShow";
 import CheckpointNew from "./components/CheckpointNew";
-import CheckpointEdit from './components/CheckpointEdit';
+import CheckpointEdit from "./components/CheckpointEdit";
 import { mapGetters, mapActions } from "vuex";
 import ModalWindow from "./components/ModalWindow";
+import TweenMax from "gsap";
 
 export default {
   name: "App",
@@ -30,7 +37,69 @@ export default {
     CheckpointEdit,
     ModalWindow
   },
+  data() {
+    return {
+      leave: 1000,
+      nextPath: null,
+      prevPath: null
+    };
+  },
   methods: {
+    beforeEnter: function(el) {
+      let delay = 0;
+      let duration = 1;
+
+      if (this.$route.path.includes("plans")) {
+        TweenMax.from(el, 0.8, {
+          opacity: 0,
+          y: "-100%",
+          delay: 0.2
+        });
+      }
+      if (this.$route.path.includes("about")) {
+        this.$nextTick(() => {
+          TweenMax.to(".about_wrapper", 1.5, {
+            backgroundColor: "rgb(191, 215, 206)",
+            delay: 0.5
+          });
+          TweenMax.to(".about", 2, {
+            webkitClipPath: 'circle(100% at center)',
+            delay: 2
+          });
+        });
+      } else {
+        TweenMax.from(el, 1, {
+          opacity: 0,
+          y: "-100%"
+        });
+      }
+    },
+    beforeLeave: function(el) {
+      if (this.$route.path.includes("about")) {
+        if (this.prevPath.includes("plan")) {
+          TweenMax.to(".plan_info", 1, {
+            opacity: 0,
+            x: "-100%",
+            ease: Power3.easeInOut,
+            delay: 0.2
+          });
+          TweenMax.to(".plan_map", 1, {
+            opacity: 0,
+            x: "100%",
+            ease: Power3.easeInOut,
+            delay: 0.7
+          });
+        }
+      } else {
+        TweenMax.to(el, 1, {
+          opacity: 0,
+          y: "100%",
+          ease: Power3.easeOut
+        });
+      }
+
+      this.leave = 1000;
+    },
     ...mapActions([
       "toggleMainCheckpointModal",
       "toggleNewCheckpointModal",
@@ -41,31 +110,24 @@ export default {
   mounted() {
     this.updateCurrentLocation();
   },
+  watch: {
+    $route(next, prev) {
+      if (next.path.includes("about")) this.leave = 2000;
+      this.nextPath = next.path;
+      this.prevPath = prev.path;
+    }
+  },
   computed: {
-    ...mapGetters(["mainCheckpointModalDisplay", "newCheckpointModalDisplay", "editCheckpointModalDisplay"])
+    ...mapGetters([
+      "mainCheckpointModalDisplay",
+      "newCheckpointModalDisplay",
+      "editCheckpointModalDisplay"
+    ])
   }
 };
 </script>
 
 <style lang="scss">
-.router-anim-enter-active,
-.router-anim-leave-active {
-  transition: all .6s;
-}
-
-.router-anim-enter {
-  transform: translateY(-100%);
-}
-
-.router-anim-leave-to {
-  transform: translateY(100%);
-}
-
-.router-anim-enter, 
-.router-anim-leave-to {
-  opacity: 0;
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.3s;
@@ -80,28 +142,26 @@ export default {
   background-color: white;
 }
 .router_content {
-  margin: 0 auto;
-  max-width: 1250px;
-  padding: 20px 0;
+
 }
 
 * {
   box-sizing: border-box;
 }
 
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 4px rgba(145, 145, 145, 0.3);
-    background-color: #f5f5f5;
-  }
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 4px rgba(145, 145, 145, 0.3);
+  background-color: #f5f5f5;
+}
 
-  ::-webkit-scrollbar {
-    width: 4px;
-    background-color: #f5f5f5;
-  }
+::-webkit-scrollbar {
+  width: 4px;
+  background-color: #f5f5f5;
+}
 
-  ::-webkit-scrollbar-thumb {
-    background-color: #14e71e5e;
-  }
+::-webkit-scrollbar-thumb {
+  background-color: #14e71e5e;
+}
 
 /* VUETIFY STYLES FIX */
 
