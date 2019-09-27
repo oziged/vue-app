@@ -9,17 +9,23 @@
 
 <script>
 import * as PIXI from "pixi.js";
-
+import fragShader from '../components/test.glsl'
 export default {
   mounted() {
-    const app = new PIXI.Application({width: 1000, height: 1000, transparent: true});
- 
-    // The application will create a canvas element for you that you
-    // can then insert into the DOM.
+    // let fragShader = require('../components/test.glsl')
+    // console.log(test);
+    const app = new PIXI.Application({width: 1000, height: 1000});
     document.querySelector(".canvas").appendChild(app.view);
-    let container = new PIXI.container();
-    app.stage.addChild(container);
-    let bg = PIXI.Sprite.fromImage()
+    let image = PIXI.Sprite.from('defaultImage.jpg');
+    app.stage.addChild(image);
+    let filter = new PIXI.Filter(null, fragShader);
+    app.stage.filters = [filter];
+    // let container = new PIXI.container();
+    // app.stage.addChild(container);
+    // let bg = PIXI.Sprite.fromImage('./assets/test.jpg')
+    app.ticker.add(() => {
+      // app.stage.rotation += .1;
+    })
  }
 };
 </script>
