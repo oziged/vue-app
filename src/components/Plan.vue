@@ -3,9 +3,8 @@
     <!-- MODAL WINDOW TO MOVE CHECKPOINTS -->
     <modal-window
       v-model="displayMoveModal"
-      :width="'600px'"
-      :height="'auto'"
-      :overflowY="overflowY"
+      :width="'100vw'"
+      :height="'100vh'"
     >
       <div class="move_modal_wrapper">
         <div class="plan_title">{{ title }}</div>
@@ -152,7 +151,6 @@ export default {
           subMenu.style.top = `-${160 + 5}px`;
         }
         setTimeout(() => {
-          // modal.style.overflow = "auto";
         }, 500);
       });
     },

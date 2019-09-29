@@ -53,24 +53,28 @@ export default {
         TweenMax.from(el, 0.8, {
           opacity: 0,
           y: "-100%",
-          delay: 0.2
+          delay: 0.2,
+          clearProps:"scale"
         });
       }
       if (this.$route.path.includes("about")) {
         this.$nextTick(() => {
           TweenMax.to(".about_wrapper", 1.5, {
             backgroundColor: "rgb(191, 215, 206)",
-            delay: 0.5
+            delay: 0.5,
+            clearProps:"scale"
           });
           TweenMax.to(".about", 2, {
             webkitClipPath: 'circle(100% at center)',
-            delay: 2
+            delay: 2,
+            clearProps:"scale"
           });
         });
       } else {
         TweenMax.from(el, 1, {
           opacity: 0,
-          y: "-100%"
+          y: "-100%",
+          clearProps:"scale"
         });
       }
     },
@@ -81,20 +85,23 @@ export default {
             opacity: 0,
             x: "-100%",
             ease: Power3.easeInOut,
-            delay: 0.2
+            delay: 0.2,
+            clearProps:"scale"
           });
           TweenMax.to(".plan_map", 1, {
             opacity: 0,
             x: "100%",
             ease: Power3.easeInOut,
-            delay: 0.7
+            delay: 0.7,
+            clearProps:"scale"
           });
         }
       } else {
         TweenMax.to(el, 1, {
           opacity: 0,
           y: "100%",
-          ease: Power3.easeOut
+          ease: Power3.easeOut,
+          clearProps:"scale"
         });
       }
 
