@@ -14,7 +14,13 @@ export default {
     },
     toggleEditCheckpointModal({ commit }) {
       commit("toggleEditCheckpointModal");
-    }
+    },
+    toggleEditPlanModal({ commit }) {
+      commit("toggleEditPlanModal");
+    },
+    setEditPlanModalId({ commit }, id) {
+      commit("setEditPlanModalId", id);
+    },
   },
   mutations: {
     setMainCheckpointModalId(state, id) {
@@ -31,6 +37,13 @@ export default {
     },
     setEditCheckpointModalId(state, id) {
       state.edit_checkpoint_modal_id = id;
+    },
+    toggleEditPlanModal(state) {
+      console.log('q');
+      state.edit_plan_modal_display = !state.edit_plan_modal_display;
+    },
+    setEditPlanModalId(state, id) {
+      state.edit_plan_modal_id = id;
     }
   },
   state: {
@@ -113,7 +126,9 @@ export default {
     main_checkpoint_modal_display: false,
     edit_checkpoint_modal_id: null,
     edit_checkpoint_modal_display: false,
-    new_checkpoint_modal_display: false
+    new_checkpoint_modal_display: false,
+    edit_plan_modal_id: null,
+    edit_plan_modal_display: false
   },
   getters: {
     allCheckpoints(state) {
@@ -152,6 +167,12 @@ export default {
     },
     newCheckpointModalDisplay(state) {
       return state.new_checkpoint_modal_display;
+    },
+    editPlanModalDisplay(state) {
+      return state.edit_plan_modal_display;
+    },
+    editPlanModalId(state) {
+      return state.edit_plan_modal_id;
     }
   }
 };

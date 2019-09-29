@@ -1,66 +1,11 @@
 <template>
   <div>
-    <!-- MODAL WINDOW TO MOVE CHECKPOINTS -->
-    <modal-window
-      v-model="displayMoveModal"
-      :width="'100vw'"
-      :height="'100vh'"
-    >
-      <div class="move_modal_wrapper">
-        <div class="plan_title">{{ title }}</div>
-        <vue-nestable v-model="data" :childrenProp="'nested'" class="nested">
-          <vue-nestable-handle slot-scope="{ item }" :item="item" class="nested_item">
-            {{ item.item.title }}
-            <div
-              @click="displayedSubMenu = item; setSubMenuDirection();"
-              class="edit_checkpoint_icon"
-            ></div>
-            <transition name="fade">
-              <div
-                v-if="displayedSubMenu == item"
-                v-click-outside="closeDisplayedSubMenu"
-                class="edit_checkpoint_sub_menu"
-              >
-                <v-card max-width="400">
-                  <v-list>
-                    <v-list-item
-                      @mousedown.prevent
-                      @click.stop="displayMoveModal = false; closeDisplayedSubMenu(); setEditCheckpointModalId(item.item.id); toggleEditCheckpointModal()"
-                    >
-                      <v-list-item-content>
-                        <v-list-item-title>Edit checkpoint</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item
-                      @mousedown.prevent
-                      @click.stop="displayMoveModal = false; closeDisplayedSubMenu(); toggleNewCheckpointModal()"
-                    >
-                      <v-list-item-content>
-                        <v-list-item-title>Add subCheckpoint</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item @mousedown.stop.prevent @click.stop>
-                      <v-list-item-content>
-                        <v-list-item-title>Delete Checkpoint</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list>
-                </v-card>
-              </div>
-            </transition>
-          </vue-nestable-handle>
-        </vue-nestable>
-        <v-btn class="save_checkpoint" color="success" dark>update checkpoints</v-btn>
-      </div>
-    </modal-window>
-
     <!-- DISPLAY PLAN'S CHECKPOINTS -->
-
     <div class="plan">
       <div class="plan_info">
         <div class="plan_title">
           <h1 @click="showPlanSubCheckpoints">{{ title }}</h1>
-          <div class="moveModalIcon" @click="displayMoveModal=true"></div>
+          <div class="moveModalIcon" @click="toggleEditPlanModal(); setEditPlanModalId(id)"></div>
         </div>
         <p class="plan_description">{{ description }}</p>
         <div v-if="display" class="checkpoint_list_wrapper">
@@ -118,14 +63,17 @@ export default {
     displayedItemType: "Plan",
     displayMoveModal: false,
     data: [],
-    overflowY: "visible"
+    overflowY: "visible",
+    plan: null
   }),
   methods: {
     ...mapActions([
       "updateMapPlaces",
       "setEditCheckpointModalId",
       "toggleEditCheckpointModal",
-      "toggleNewCheckpointModal"
+      "toggleNewCheckpointModal",
+      "toggleEditPlanModal",
+      "setEditPlanModalId"
     ]),
     showPlanSubCheckpoints() {
       this.displayedItemId = this.id;
@@ -234,8 +182,10 @@ export default {
     window.get = id => {
       return this.getDeepObject(this.data, id);
     };
+    this.plan = this.getPlan(this.id);
     let plan = this.getPlan(this.id);
     this.title = plan.title;
+    console.log(plan);
     this.description = plan.description;
 
     this.$gmapApiPromiseLazy().then(() => {
