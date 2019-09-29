@@ -1,12 +1,10 @@
 <template>
-  <div style="padding-top: 20px;     margin: 0 auto;
+  <div style="padding-top: 20px; margin: 0 auto;
     max-width: 1250px;">
     <filter-sort-header class="filter_sort_header"/>
-    <!-- <div class="plans_list"> -->
     <magic-grid class="plans_list" :gap="10" :maxColWidth="9999">
       <plan-preview v-for="(item, index) in allPlans" :key="index" :plan="item" />
     </magic-grid>
-    <!-- </div> -->
   </div>
 </template>
 <script>

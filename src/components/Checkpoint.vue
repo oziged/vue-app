@@ -5,7 +5,7 @@
     :style="{marginLeft: nestedLvl == 1  ? '0px' : '31.5px'}"
     class="checkpoint_full"
     :data-id="checkpoint.id"
-  > 
+  >
     <v-expansion-panel-header style="position: relative" @click="setCheckpointId(checkpoint.id)">
       <template v-slot:actions>
         <v-icon color="no-icon"></v-icon>
@@ -18,12 +18,6 @@
         class="checkpoint_title"
         :class="{ 'subcheckpoint': nestedLvl > 1, 'plan_checkpoint' : nestedLvl==1 }"
       >
-        <transition name="click">
-        <div v-if="displayMoreButton" @click.stop="prepareMoveUp" class="move_up"></div>
-        </transition>
-        <transition name="click">
-        <div v-if="displayMoreButton" @click.stop="prepareMoveDown" class="move_down"></div>
-        </transition>
         <transition name="click">
           <div v-if="displayMoreButton" class="click" @click.stop="setAndOpenModal(checkpoint.id)"></div>
         </transition>
@@ -46,13 +40,13 @@
         v-if="nested.length>0"
         accordion
       >
-            <checkpoint
-              v-for="(item,i) in nested"
-              :key="i"
-              :nested="item.nested"
-              :nestedLvl="nestedLvl+1"
-              :checkpoint="item.item"
-            />
+        <checkpoint
+          v-for="(item,i) in nested"
+          :key="i"
+          :nested="item.nested"
+          :nestedLvl="nestedLvl+1"
+          :checkpoint="item.item"
+        />
       </v-expansion-panels>
     </v-expansion-panel-content>
   </v-expansion-panel>

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Plan from "../components/Plan";
+import Plan from "../components/PlanShow/Plan";
 
 export default {
   components: {

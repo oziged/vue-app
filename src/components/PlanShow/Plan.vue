@@ -1,14 +1,13 @@
 <template>
   <div>
-    <!-- DISPLAY PLAN'S CHECKPOINTS -->
     <div class="plan">
       <div class="plan_info">
         <div class="plan_title">
-          <h1 @click="showPlanSubCheckpoints">{{ title }}</h1>
+          <h1 @click="showPlanSubCheckpoints">{{ plan.title }}</h1>
           <div class="moveModalIcon" @click="toggleEditPlanModal(); setEditPlanModalId(id)"></div>
         </div>
-        <p class="plan_description">{{ description }}</p>
-        <div v-if="display" class="checkpoint_list_wrapper">
+        <p class="plan_description">{{ plan.description }}</p>
+        <div class="checkpoint_list_wrapper">
           <div class="checkpoints_list">
             <v-expansion-panels accordion style="width: calc(100% - 15px);">
               <checkpoint
@@ -29,19 +28,17 @@
         :displayedItemType="displayedItemType"
       />
     </div>
-
-    <!--  -->
   </div>
 </template>
 
 <script>
 import { BadgerAccordion, BadgerAccordionItem } from "vue-badger-accordion";
 import { mapGetters, mapActions } from "vuex";
-import AppMap from "./AppMap";
-import Checkpoint from "./Checkpoint";
+import AppMap from "../AppMap";
+import Checkpoint from "../Checkpoint";
 import draggable from "vuedraggable";
 import nestedDraggable from "vuedraggable";
-import ModalWindow from "./ModalWindow";
+import ModalWindow from "../ModalWindow";
 
 export default {
   props: ["id"],
@@ -55,16 +52,15 @@ export default {
     ModalWindow
   },
   data: () => ({
-    display: true,
-    title: "",
-    description: "",
+    plan: {
+      title: "",
+      description: ""
+    },
     displayedSubMenu: null,
     displayedItemId: null,
     displayedItemType: "Plan",
     displayMoveModal: false,
     data: [],
-    overflowY: "visible",
-    plan: null
   }),
   methods: {
     ...mapActions([
@@ -83,46 +79,24 @@ export default {
       this.displayedItemId = id;
       this.displayedItemType = "Checkpoint";
     },
-    console(e) {
-      console.log(e);
-    },
-    setSubMenuDirection(e) {
-      let modal = document.querySelector(".move_modal_wrapper");
-      // modal.style.overflow = "hidden";
-      this.$nextTick(() => {
-        let subMenu = document.querySelectorAll(".edit_checkpoint_sub_menu");
-        subMenu = subMenu[subMenu.length - 1];
-        if (
-          modal.getBoundingClientRect().bottom <
-          subMenu.getBoundingClientRect().bottom
-        ) {
-          subMenu.style.top = `-${160 + 5}px`;
-        }
-        setTimeout(() => {
-        }, 500);
-      });
-    },
-    closeDisplayedSubMenu() {
-      this.displayedSubMenu = null;
-    },
-    getDeepObject(data, searchId) {
-      data == null ? (data = this.data) : "";
-      let returnedObj = null;
-      search(data, searchId);
-      function search(start, searchId) {
-        start.some((item, index) => {
-          if (item.id != searchId && item.nested.length > 0) {
-            search(item.nested, searchId);
-          } else {
-            if (item.id == searchId) {
-              returnedObj = { item, parent: data };
-            }
-            return false;
-          }
-        });
-      }
-      return returnedObj;
-    },
+    // getDeepObject(data, searchId) {
+    //   data == null ? (data = this.data) : "";
+    //   let returnedObj = null;
+    //   search(data, searchId);
+    //   function search(start, searchId) {
+    //     start.some((item, index) => {
+    //       if (item.id != searchId && item.nested.length > 0) {
+    //         search(item.nested, searchId);
+    //       } else {
+    //         if (item.id == searchId) {
+    //           returnedObj = { item, parent: data };
+    //         }
+    //         return false;
+    //       }
+    //     });
+    //   }
+    //   return returnedObj;
+    // },
     setCheckpointsData(id, type) {
       let res = [];
       let self = this;
@@ -172,22 +146,8 @@ export default {
     }
   },
   mounted() {
-    window.data = () => {
-      return this.data;
-    };
     this.setCheckpointsData(this.id, "Plan");
-    window.modal = () => {
-      return this.displayMoveModal;
-    };
-    window.get = id => {
-      return this.getDeepObject(this.data, id);
-    };
     this.plan = this.getPlan(this.id);
-    let plan = this.getPlan(this.id);
-    this.title = plan.title;
-    console.log(plan);
-    this.description = plan.description;
-
     this.$gmapApiPromiseLazy().then(() => {
       this.displayedItemId = this.id;
     });
@@ -202,7 +162,7 @@ export default {
       "getCheckpoint",
       "getSubCheckpoints",
       "getPlan",
-      "getPlanMainCheckpointId",
+      "getPlanMainCheckpointId"
     ])
   }
 };
