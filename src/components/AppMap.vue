@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="map_wrapper" ref="map_wrapper">
     <GmapMap
       ref="gmap"
       class="map"
@@ -93,6 +93,7 @@ export default {
     },
     displayMapPlaces() {
       setTimeout(() => {
+        this.updateMapDivSize();
         this.$nextTick(() => {
           this.$refs.gmap.$mapObject.panTo({ lat: 0, lng: 0 });
           let checkpoints = this.getSubCheckpoints(
@@ -155,6 +156,14 @@ export default {
           )
         };
       });
+    },
+    updateMapDivSize() {
+      let map = this.$refs.map_wrapper;
+      let height = map.style.height;
+      map.style.height = `calc(${height} - 1px)`;
+      setTimeout(() => {
+        map.style.height = height;
+      }, 100);
     }
   },
   watch: {
@@ -164,6 +173,7 @@ export default {
   },
   mounted() {
     this.displayMapPlaces();
+    window.go = () => {};
   },
   computed: {
     ...mapGetters(["allPlaces", "getPlace", "getSubCheckpoints"])
