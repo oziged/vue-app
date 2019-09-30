@@ -141,7 +141,7 @@ export default {
       width: 300px;
       height: 500px;
       position: absolute;
-      top: 90px;
+      top: 80px;
       left: 0;
       z-index: 100;
       background-color: #fff;

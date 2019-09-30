@@ -6,6 +6,7 @@ import checkpoint from './modules/checkpoint'
 import place from './modules/place'
 import map from './modules/map'
 import geolocation from './modules/geolocation'
+import window_variables from './modules/window_variables'
 
 Vue.use(Vuex)
 
@@ -25,6 +26,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    user, plan, checkpoint, place, map, geolocation
+    user, plan, checkpoint, place, map, geolocation, window_variables
   }
 })

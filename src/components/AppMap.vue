@@ -91,50 +91,60 @@ export default {
         </div>
       </div>`;
     },
-    displayMapPlaces(places) {
-      if (places.length == 1) {
-        // display 1 marker on the map for checkpoint
-        this.markersList = places;
-        this.zoom = 0;
-        if (this.renderer != null) {
-          this.renderer.setMap(null);
-        }
+    displayMapPlaces() {
+      setTimeout(() => {
         this.$nextTick(() => {
-          this.$refs.gmap.$mapObject.panTo(places[0].position);
-          this.zoom = 15;
-        });
-      } else if (places.length > 1) {
-        // display route for few subcheckpoints
-        this.markersList = [];
-        let _self = this;
-        if (this.service == null)
-          this.service = new google.maps.DirectionsService();
-        if (this.renderer == null)
-          this.renderer = new google.maps.DirectionsRenderer();
-
-        this.renderer.setOptions({ map: this.$refs.gmap.$mapObject });
-        this.service.route(
-          {
-            origin: new google.maps.LatLng(
-              places[0].position.lat,
-              places[0].position.lng
-            ),
-            waypoints: this.generateWaypoints(places),
-            destination: new google.maps.LatLng(
-              places.slice(-1)[0].position.lat,
-              places.slice(-1)[0].position.lng
-            ),
-            travelMode: "DRIVING"
-          },
-          function(response, status) {
-            if (status === "OK") {
-              _self.renderer.setDirections(response);
-            } else {
-              window.alert("Directions request failed due to " + status);
+          this.$refs.gmap.$mapObject.panTo({ lat: 0, lng: 0 });
+          let checkpoints = this.getSubCheckpoints(
+            this.displayedItemId,
+            this.displayedItemType
+          );
+          let places = checkpoints.map(item => this.getPlace(item.place_id));
+          if (places.length == 1) {
+            // display 1 marker on the map for checkpoint
+            this.markersList = places;
+            this.zoom = 0;
+            if (this.renderer != null) {
+              this.renderer.setMap(null);
             }
+            this.$nextTick(() => {
+              this.$refs.gmap.$mapObject.panTo(places[0].position);
+              this.zoom = 15;
+            });
+          } else if (places.length > 1) {
+            // display route for few subcheckpoints
+            this.markersList = [];
+            let _self = this;
+            if (this.service == null)
+              this.service = new google.maps.DirectionsService();
+            if (this.renderer == null)
+              this.renderer = new google.maps.DirectionsRenderer();
+
+            this.renderer.setOptions({ map: this.$refs.gmap.$mapObject });
+            this.service.route(
+              {
+                origin: new google.maps.LatLng(
+                  places[0].position.lat,
+                  places[0].position.lng
+                ),
+                waypoints: this.generateWaypoints(places),
+                destination: new google.maps.LatLng(
+                  places.slice(-1)[0].position.lat,
+                  places.slice(-1)[0].position.lng
+                ),
+                travelMode: "DRIVING"
+              },
+              function(response, status) {
+                if (status === "OK") {
+                  _self.renderer.setDirections(response);
+                } else {
+                  window.alert("Directions request failed due to " + status);
+                }
+              }
+            );
           }
-        );
-      }
+        });
+      }, 1000);
     },
     generateWaypoints(places) {
       return places.slice(1, -1).map(place => {
@@ -149,26 +159,14 @@ export default {
   },
   watch: {
     displayedItemId() {
-      let checkpoints = this.getSubCheckpoints(
-        this.displayedItemId,
-        this.displayedItemType
-      );
-      let places = checkpoints.map(item => this.getPlace(item.place_id));
-      setTimeout(() => {
-        this.$nextTick(() => {
-          this.$refs.gmap.$mapObject.panTo({lat: 0, lng: 0});
-          this.displayMapPlaces(places);
-        });
-      }, 1000);
+      this.displayMapPlaces();
     }
   },
-  mounted() {},
+  mounted() {
+    this.displayMapPlaces();
+  },
   computed: {
-    ...mapGetters([
-      "allPlaces",
-      "getPlace",
-      "getSubCheckpoints"
-    ])
+    ...mapGetters(["allPlaces", "getPlace", "getSubCheckpoints"])
   }
 };
 </script>

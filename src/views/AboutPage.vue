@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import fragShader from '../components/test.glsl'
 export default {
   mounted() {
  }
@@ -30,7 +29,6 @@ export default {
 }
 
 .about_wrapper {
-  //   height: 100%;
   width: 100%;
 }
 

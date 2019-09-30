@@ -160,9 +160,6 @@ export default {
     };
   },
   mounted() {
-    window.modal = () => {
-      return this.data;
-    }
   },
   watch: {
     mainCheckpointModalId(newValue) {

@@ -19,7 +19,10 @@
         :class="{ 'subcheckpoint': nestedLvl > 1, 'plan_checkpoint' : nestedLvl==1 }"
       >
         <transition name="click">
-          <div v-if="displayMoreButton" class="click" @click.stop="setAndOpenModal(checkpoint.id)"></div>
+          <div v-if="displayMoreButton" class="interaction_buttons">
+            <div class="click" @click.stop="setAndOpenModal(checkpoint.id)"></div>
+            <div v-if="windowWidth < 800" class="mobile_map_button" @click.stop="toggleMobileMap"></div>
+          </div>
         </transition>
         {{ checkpoint.title }}
       </div>
@@ -62,10 +65,10 @@ import draggable from "vuedraggable";
 export default {
   name: "Checkpoint",
   props: ["checkpoint", "nestedLvl", "nested"],
-  inject: ["setCheckpointId"],
+  inject: ["setCheckpointId", "toggleMobileMap"],
   data() {
     return {
-      displayMoreButton: false
+      displayMoreButton: false,
     };
   },
   components: {
@@ -124,10 +127,12 @@ export default {
       "getCheckpoint",
       "mainCheckpointModalDisplay",
       "nestedColors",
-      "mainCheckpointModalId"
+      "mainCheckpointModalId",
+      "windowWidth"
     ])
   },
-  mounted() {}
+  mounted() {
+  }
 };
 </script>
 
@@ -153,6 +158,17 @@ export default {
     background-size: cover;
     position: absolute;
     right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .mobile_map_button {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url("../assets/Checkpoint/navigator.png") no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    right: 40px;
     top: 50%;
     transform: translateY(-50%);
   }

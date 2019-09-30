@@ -15,7 +15,7 @@
     <checkpoint-modal-show :value="mainCheckpointModalDisplay" @input="toggleMainCheckpointModal" />
     <checkpoint-new :value="newCheckpointModalDisplay" @input="toggleNewCheckpointModal" />
     <checkpoint-edit :value="editCheckpointModalDisplay" @input="toggleEditCheckpointModal" />
-    <plan-modal-edit :value="editPlanModalDisplay" @input="toggleEditPlanModal"/>
+    <plan-modal-edit :value="editPlanModalDisplay" @input="toggleEditPlanModal" />
     <notifications style="bottom: 30px;" position="center bottom" group="foo" />
   </v-app>
 </template>
@@ -25,7 +25,7 @@ import AppHeader from "./components/AppHeader";
 import CheckpointModalShow from "./components/CheckpointModalShow";
 import CheckpointNew from "./components/CheckpointNew";
 import CheckpointEdit from "./components/CheckpointEdit";
-import PlanModalEdit from './components/PlanModalEdit';
+import PlanModalEdit from "./components/PlanModalEdit";
 import { mapGetters, mapActions } from "vuex";
 import ModalWindow from "./components/ModalWindow";
 import TweenMax from "gsap";
@@ -57,7 +57,7 @@ export default {
           opacity: 0,
           y: "-100%",
           delay: 0.2,
-          clearProps:"scale"
+          clearProps: "scale"
         });
       }
       if (this.$route.path.includes("about")) {
@@ -65,19 +65,19 @@ export default {
           TweenMax.to(".about_wrapper", 1.5, {
             backgroundColor: "rgb(191, 215, 206)",
             delay: 0.5,
-            clearProps:"scale"
+            clearProps: "scale"
           });
           TweenMax.to(".about", 2, {
-            webkitClipPath: 'circle(100% at center)',
+            webkitClipPath: "circle(100% at center)",
             delay: 2,
-            clearProps:"scale"
+            clearProps: "scale"
           });
         });
       } else {
         TweenMax.from(el, 1, {
           opacity: 0,
           y: "-100%",
-          clearProps:"scale"
+          clearProps: "scale"
         });
       }
     },
@@ -89,14 +89,14 @@ export default {
             x: "-100%",
             ease: Power3.easeInOut,
             delay: 0.2,
-            clearProps:"scale"
+            clearProps: "scale"
           });
           TweenMax.to(".plan_map", 1, {
             opacity: 0,
             x: "100%",
             ease: Power3.easeInOut,
             delay: 0.7,
-            clearProps:"scale"
+            clearProps: "scale"
           });
         }
       } else {
@@ -104,7 +104,7 @@ export default {
           opacity: 0,
           y: "100%",
           ease: Power3.easeOut,
-          clearProps:"scale"
+          clearProps: "scale"
         });
       }
 
@@ -115,11 +115,16 @@ export default {
       "toggleNewCheckpointModal",
       "updateCurrentLocation",
       "toggleEditCheckpointModal",
-      "toggleEditPlanModal"
+      "toggleEditPlanModal",
+      "setWindowWidth"
     ])
   },
   mounted() {
     this.updateCurrentLocation();
+    this.setWindowWidth();
+    window.addEventListener("resize", () => {
+      this.setWindowWidth();
+    });
   },
   watch: {
     $route(next, prev) {
@@ -133,7 +138,8 @@ export default {
       "mainCheckpointModalDisplay",
       "newCheckpointModalDisplay",
       "editCheckpointModalDisplay",
-      "editPlanModalDisplay"
+      "editPlanModalDisplay",
+      "windowWidth"
     ])
   }
 };
@@ -152,9 +158,6 @@ export default {
 
 #app {
   background-color: white;
-}
-.router_content {
-
 }
 
 * {

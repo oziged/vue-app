@@ -1,33 +1,38 @@
 <template>
-  <div>
-    <div class="plan">
-      <div class="plan_info">
-        <div class="plan_title">
-          <h1 @click="showPlanSubCheckpoints">{{ plan.title }}</h1>
-          <div class="moveModalIcon" @click="toggleEditPlanModal(); setEditPlanModalId(id)"></div>
-        </div>
-        <p class="plan_description">{{ plan.description }}</p>
-        <div class="checkpoint_list_wrapper">
-          <div class="checkpoints_list">
-            <v-expansion-panels accordion style="width: calc(100% - 15px);">
-              <checkpoint
-                v-for="(checkpoint,i) in data"
-                :key="i"
-                :nestedLvl="1"
-                :checkpoint="checkpoint.item"
-                :nested="checkpoint.nested"
-                :style="{paddingTop: i == 0 ? '10px' : '10px', marginBottom: '10px'}"
-              ></checkpoint>
-            </v-expansion-panels>
-          </div>
+  <div class="plan">
+    <div class="plan_info">
+      <div class="plan_title">
+        <h1 @click="showPlanSubCheckpoints">{{ plan.title }}</h1>
+        <div class="moveModalIcon" @click="toggleEditPlanModal(); setEditPlanModalId(id)"></div>
+      </div>
+      <p class="plan_description">{{ plan.description }}</p>
+      <div class="checkpoint_list_wrapper">
+        <div class="checkpoints_list">
+          <v-expansion-panels accordion style="width: calc(100% - 15px);">
+            <checkpoint
+              v-for="(checkpoint,i) in data"
+              :key="i"
+              :nestedLvl="1"
+              :checkpoint="checkpoint.item"
+              :nested="checkpoint.nested"
+              :style="{paddingTop: i == 0 ? '10px' : '10px', marginBottom: '10px'}"
+            ></checkpoint>
+          </v-expansion-panels>
         </div>
       </div>
+    </div>
+    <app-map
+      class="plan_map"
+      :displayedItemId="displayedItemId"
+      :displayedItemType="displayedItemType"
+    />
+    <modal-window :value="displayMobileMap">
       <app-map
-        class="plan_map"
+        style="height: 100%; width: 100%;"
         :displayedItemId="displayedItemId"
         :displayedItemType="displayedItemType"
       />
-    </div>
+    </modal-window>
   </div>
 </template>
 
@@ -59,8 +64,8 @@ export default {
     displayedSubMenu: null,
     displayedItemId: null,
     displayedItemType: "Plan",
-    displayMoveModal: false,
-    data: [],
+    displayMobileMap: false,
+    data: []
   }),
   methods: {
     ...mapActions([
@@ -124,11 +129,15 @@ export default {
         res.push(obj);
       });
       this.data = res;
+    },
+    toggleMobileMap() {
+      this.displayMobileMap = !this.displayMobileMap;
     }
   },
   provide() {
     return {
-      setCheckpointId: this.setCheckpointId
+      setCheckpointId: this.setCheckpointId,
+      toggleMobileMap: this.toggleMobileMap
     };
   },
   watch: {
