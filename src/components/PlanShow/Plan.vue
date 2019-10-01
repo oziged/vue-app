@@ -262,6 +262,20 @@ export default {
     height: 600px;
   }
 }
+
+@media (max-width: 800px) {
+  .plan {
+    flex-direction: column;
+  }
+  .plan_map {
+    display: none;
+  }
+  .plan {
+    .plan_info {
+      width: 100%;
+    }
+  }
+}
 </style>
 
 <style>
