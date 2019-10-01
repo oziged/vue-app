@@ -169,19 +169,19 @@ export default {
   box-sizing: border-box;
 }
 
-::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 4px rgba(145, 145, 145, 0.3);
-  background-color: #f5f5f5;
-}
+// ::-webkit-scrollbar-track {
+//   -webkit-box-shadow: inset 0 0 4px rgba(145, 145, 145, 0.3);
+//   background-color: #f5f5f5;
+// }
 
-::-webkit-scrollbar {
-  width: 4px;
-  background-color: #f5f5f5;
-}
+// ::-webkit-scrollbar {
+//   width: 4px;
+//   background-color: #f5f5f5;
+// }
 
-::-webkit-scrollbar-thumb {
-  background-color: #14e71e5e;
-}
+// ::-webkit-scrollbar-thumb {
+//   background-color: #14e71e5e;
+// }
 
 /* VUETIFY STYLES FIX */
 

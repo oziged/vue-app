@@ -1,6 +1,6 @@
 <template>
   <modal-window :value="value" @input="input">
-    <div class="checkpoint_modal"> 
+    <div class="checkpoint_modal">
       <div class="prev_next_checkpoint_small">
         <v-btn text icon color="black">
           <v-icon>mdi-arrow-left-thick</v-icon>
@@ -10,26 +10,25 @@
           <v-icon>mdi-arrow-right-thick</v-icon>
         </v-btn>
       </div>
-
-      <div class="left_block">
-        <div class="current_checkpoint_title">{{ currentCheckpoint.title }}</div>
-        <div class="current_checkpoint_description">{{ currentCheckpoint.description }}</div>
-        <div class="checkpoint_list_wrapper">
-          <div class="checkpoints_list">
-            <v-expansion-panels
-              accordion
-            >
-              <checkpoint
-                v-for="(chekpoint,i) in data"
-                :key="i"
-                :nestedLvl="1"
-                :checkpoint="chekpoint.item"
-                :nested="chekpoint.nested"
-              />
-            </v-expansion-panels>
+      <vue-scroll class="left_block_wrapper" :ops="scrollOptions">
+        <div class="left_block">
+          <div class="current_checkpoint_title">{{ currentCheckpoint.title }}</div>
+          <div class="current_checkpoint_description">{{ currentCheckpoint.description }}</div>
+          <div class="checkpoint_list_wrapper">
+            <div class="checkpoints_list">
+              <v-expansion-panels accordion>
+                <checkpoint
+                  v-for="(chekpoint,i) in data"
+                  :key="i"
+                  :nestedLvl="1"
+                  :checkpoint="chekpoint.item"
+                  :nested="chekpoint.nested"
+                />
+              </v-expansion-panels>
+            </div>
           </div>
         </div>
-      </div>
+      </vue-scroll>
       <div class="right_block">
         <slider
           :displayedItemId="displayedItemId"
@@ -51,6 +50,7 @@ import ModalWindow from "./ModalWindow";
 import Slider from "./Slider";
 import Slick from "vue-slick";
 import "slick-carousel/slick/slick.css";
+import { nextTick } from "q";
 
 export default {
   components: {
@@ -66,6 +66,30 @@ export default {
       displayedItemId: null,
       displayedItemType: "Checkpoint",
       data: [],
+      scrollOptions: {
+        vuescroll: {},
+        scrollPanel: {},
+        rail: {
+          background: "rgb(129, 209, 121)",
+          opacity: 0.2,
+          size: "6px",
+          specifyBorderRadius: true,
+          gutterOfSide: "0px",
+          keepShow: true
+        },
+        bar: {
+          showDelay: 500,
+          onlyShowBarOnScroll: false,
+          keepShow: false,
+          background: "rgb(129, 209, 121)",
+          opacity: 1,
+          hoverStyle: false,
+          specifyBorderRadius: false,
+          minSize: 0,
+          size: "6px",
+          disable: false
+        }
+      },
       slickOptionsMain: {
         initialSlide: 0,
         slidesToShow: 1,
@@ -107,10 +131,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      "updateMapPlaces",
-      "setMainCheckpointModalId"
-    ]),
+    ...mapActions(["updateMapPlaces", "setMainCheckpointModalId"]),
     input(e) {
       this.$emit("input");
     },
@@ -159,9 +180,16 @@ export default {
       setCheckpointId: this.setCheckpointId
     };
   },
-  mounted() {
-  },
+  mounted() {},
   watch: {
+    value(newValue) {
+      if (newValue) {
+        this.$nextTick(() => {
+          document.querySelector(".__rail-is-vertical").style.height = "100%"; // setup left block scroll bar full height
+          document.querySelector(".__rail-is-horizontal").style.display = "none"; // remove horizontal scroll bar
+        });
+      }
+    },
     mainCheckpointModalId(newValue) {
       this.displayedItemId = null;
       this.$nextTick(() => {
@@ -201,12 +229,11 @@ export default {
   height: 90vh;
   overflow: hidden;
   .left_block {
-    width: 30%;
-    padding: 20px 20px 0 20px;
-    margin-bottom: 60px;
+    width: 100%;
+    padding: 20px 20px 60px 20px;
     position: relative;
-    overflow-y: scroll;
-    box-shadow: -3px 3px 6px 0px #0000000d;
+    // overflow-y: scroll;
+    // box-shadow: -3px 3px 6px 0px #0000000d;
     overflow-x: hidden;
     .checkpoint_list_wrapper {
       margin-left: 10px;
@@ -230,11 +257,11 @@ export default {
     justify-content: center;
     align-items: center;
     position: absolute;
-    border-right: 4px solid rgba(145, 145, 145, 0.2);
+    // border-right: 4px solid rgba(145, 145, 145, 0.2);
     z-index: 99;
-    width: 30%;
+    width: calc(30% - 8px);
     height: 60px;
-    // background-color: red;
+    background-color: white;
     bottom: 0;
     left: 0;
     img {
@@ -244,19 +271,19 @@ export default {
     }
   }
 
-  .left_block::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 4px rgba(145, 145, 145, 0.3);
-    background-color: #f5f5f5;
-  }
+  // .left_block::-webkit-scrollbar-track {
+  //   -webkit-box-shadow: inset 0 0 4px rgba(145, 145, 145, 0.3);
+  //   background-color: #f5f5f5;
+  // }
 
-  .left_block::-webkit-scrollbar {
-    width: 4px;
-    background-color: #f5f5f5;
-  }
+  // .left_block::-webkit-scrollbar {
+  //   width: 4px;
+  //   background-color: #f5f5f5;
+  // }
 
-  .left_block::-webkit-scrollbar-thumb {
-    background-color: #14e71e5e;
-  }
+  // .left_block::-webkit-scrollbar-thumb {
+  //   background-color: #14e71e5e;
+  // }
   .right_block {
     width: 70%;
     // padding: 20px;
@@ -304,6 +331,19 @@ export default {
   //     height: 100%;
   //   }
   // }
+}
+
+@media (max-width: 800px) {
+  .checkpoint_modal {
+    flex-direction: column;
+    .left_block_wrapper {
+      height: auto;
+      max-height: 300px;
+      .left_block {
+        padding-bottom: 0;
+      }
+    }
+  }
 }
 </style>
 

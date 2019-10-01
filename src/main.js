@@ -13,9 +13,12 @@ import vClickOutside from 'v-click-outside'
 import Notifications from 'vue-notification'
 import VueNestable from 'vue-nestable'
 import VueTour from 'vue-tour'
+import vuescroll from 'vuescroll';
+
 
 require('vue-tour/dist/vue-tour.css')
 
+Vue.use(vuescroll);
 Vue.use(VueTour)
 Vue.use(VueNestable)
 Vue.use(Notifications)
