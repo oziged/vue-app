@@ -123,7 +123,9 @@ export default {
         checkable_id: 2
       },
       {
-        id: 8,
+        id: 8,    toggleEditPlanModal({ commit }) {
+          commit("toggleEditPlanModal");
+        },
         place_id: 8,
         title: "City 1 Place 3 subPlace 1",
         description: "City 1 Place 3 subPlace 1",

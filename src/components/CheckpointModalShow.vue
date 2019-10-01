@@ -337,11 +337,25 @@ export default {
   .checkpoint_modal {
     flex-direction: column;
     .left_block_wrapper {
-      height: auto;
+      height: auto!important;
+      min-height: 100px;
       max-height: 300px;
       .left_block {
         padding-bottom: 0;
       }
+    }
+    .right_block {
+      min-height: 400px;
+      flex-grow: 1;
+      width: 100%;
+      padding-bottom: 60px;
+    }
+    .prev_next_checkpoint_small {
+      left: 50%;
+      transform: translateX(-50%)
+    }
+    .slider {
+      padding-bottom: 0;
     }
   }
 }

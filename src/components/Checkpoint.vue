@@ -80,12 +80,12 @@ export default {
     setAndOpenModal(id) {
       if (id == this.mainCheckpointModalId) return;
       if (this.$el.closest(".modal_window")) {
-        TweenMax.to(".__vuescroll, .prev_next_checkpoint_small", 0.5, {
+        TweenMax.to(".left_block_wrapper, .prev_next_checkpoint_small", 0.5, {
           opacity: 0,
           x: "-100%",
           ease: Power3.easeOut
         });
-        TweenMax.to(".__vuescroll, .prev_next_checkpoint_small", 0.5, {
+        TweenMax.to(".left_block_wrapper, .prev_next_checkpoint_small", 0.5, {
           opacity: 1,
           x: "0%",
           ease: Power3.easeOut,

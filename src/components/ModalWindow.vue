@@ -1,4 +1,5 @@
 <template>
+    <!-- <vue-scroll :style="{width: value == true ? 'auto' : 0}"> this style added to save smooth animation open/close modal -->
   <transition name="zoom-in">
     <div v-if="value" class="modal_bg">
       <div class="modal_window" :style="{width: width, height: height, overflowX: overflowX, overflowY: overflowY}" v-click-outside="input">
@@ -8,6 +9,7 @@
       </div>
     </div>
   </transition>
+    <!-- </vue-scroll> -->
 </template>
 
 <script>
