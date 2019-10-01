@@ -21,7 +21,7 @@
         <transition name="click">
           <div v-if="displayMoreButton" class="interaction_buttons">
             <div class="click" @click.stop="setAndOpenModal(checkpoint.id)"></div>
-            <div v-if="windowWidth < 800" class="mobile_map_button" @click.stop="toggleMobileMap"></div>
+            <div v-if="windowWidth < 800" class="mobile_map_button" @click.stop="setMobileMapModalItemId(checkpoint.id); setMobileMapModalItemType('Checkpoint'); toggleMobileMapModal()"></div>
           </div>
         </transition>
         {{ checkpoint.title }}
@@ -68,7 +68,7 @@ export default {
   inject: ["setCheckpointId", "toggleMobileMap"],
   data() {
     return {
-      displayMoreButton: false,
+      displayMoreButton: false
     };
   },
   components: {
@@ -118,7 +118,10 @@ export default {
     ...mapActions([
       "updateMapPlaces",
       "setMainCheckpointModalId",
-      "toggleMainCheckpointModal"
+      "toggleMainCheckpointModal",
+      "setMobileMapModalItemId",
+      "setMobileMapModalItemType",
+      "toggleMobileMapModal"
     ])
   },
   computed: {
@@ -128,11 +131,12 @@ export default {
       "mainCheckpointModalDisplay",
       "nestedColors",
       "mainCheckpointModalId",
-      "windowWidth"
+      "windowWidth",
+      "mobileMapModalItemId",
+      "mobileMapModalItemType"
     ])
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
 
@@ -165,7 +169,8 @@ export default {
     display: block;
     width: 20px;
     height: 20px;
-    background: url("../assets/Checkpoint/navigator.png") no-repeat center center;
+    background: url("../assets/Checkpoint/navigator.png") no-repeat center
+      center;
     background-size: cover;
     position: absolute;
     right: 40px;

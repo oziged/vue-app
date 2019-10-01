@@ -16,6 +16,7 @@
     <checkpoint-new :value="newCheckpointModalDisplay" @input="toggleNewCheckpointModal" />
     <checkpoint-edit :value="editCheckpointModalDisplay" @input="toggleEditCheckpointModal" />
     <plan-modal-edit :value="editPlanModalDisplay" @input="toggleEditPlanModal" />
+    <mobile-map-modal :value="mobileMapModalDisplay" @input="toggleMobileMapModal" />
     <notifications style="bottom: 30px;" position="center bottom" group="foo" />
   </v-app>
 </template>
@@ -26,6 +27,7 @@ import CheckpointModalShow from "./components/CheckpointModalShow";
 import CheckpointNew from "./components/CheckpointNew";
 import CheckpointEdit from "./components/CheckpointEdit";
 import PlanModalEdit from "./components/PlanModalEdit";
+import MobileMapModal from "./components/MobileMapModal";
 import { mapGetters, mapActions } from "vuex";
 import ModalWindow from "./components/ModalWindow";
 import TweenMax from "gsap";
@@ -38,6 +40,7 @@ export default {
     CheckpointNew,
     CheckpointEdit,
     PlanModalEdit,
+    MobileMapModal,
     ModalWindow
   },
   data() {
@@ -116,7 +119,8 @@ export default {
       "updateCurrentLocation",
       "toggleEditCheckpointModal",
       "toggleEditPlanModal",
-      "setWindowWidth"
+      "setWindowWidth",
+      "toggleMobileMapModal"
     ])
   },
   mounted() {
@@ -139,7 +143,8 @@ export default {
       "newCheckpointModalDisplay",
       "editCheckpointModalDisplay",
       "editPlanModalDisplay",
-      "windowWidth"
+      "windowWidth",
+      "mobileMapModalDisplay"
     ])
   }
 };

@@ -21,6 +21,15 @@ export default {
     setEditPlanModalId({ commit }, id) {
       commit("setEditPlanModalId", id);
     },
+    toggleMobileMapModal({ commit }) {
+      commit("toggleMobileMapModal");
+    },
+    setMobileMapModalItemId({ commit }, id) {
+      commit("setMobileMapModalItemId", id);
+    },
+    setMobileMapModalItemType({ commit }, type) {
+      commit("setMobileMapModalItemType", type);
+    },
   },
   mutations: {
     setMainCheckpointModalId(state, id) {
@@ -39,11 +48,19 @@ export default {
       state.edit_checkpoint_modal_id = id;
     },
     toggleEditPlanModal(state) {
-      console.log('q');
       state.edit_plan_modal_display = !state.edit_plan_modal_display;
     },
     setEditPlanModalId(state, id) {
       state.edit_plan_modal_id = id;
+    },
+    toggleMobileMapModal(state) {
+      state.mobile_map_modal_display = !state.mobile_map_modal_display;
+    },
+    setMobileMapModalItemId(state, id) {
+      state.mobile_map_modal_item_id = id;
+    },
+    setMobileMapModalItemType(state, type) {
+      state.mobile_map_modal_item_type = type;
     }
   },
   state: {
@@ -128,7 +145,10 @@ export default {
     edit_checkpoint_modal_display: false,
     new_checkpoint_modal_display: false,
     edit_plan_modal_id: null,
-    edit_plan_modal_display: false
+    edit_plan_modal_display: false,
+    mobile_map_modal_display: false,
+    mobile_map_modal_item_id: null,
+    mobile_map_modal_item_type: null
   },
   getters: {
     allCheckpoints(state) {
@@ -173,6 +193,15 @@ export default {
     },
     editPlanModalId(state) {
       return state.edit_plan_modal_id;
+    },
+    mobileMapModalDisplay(state) {
+      return state.mobile_map_modal_display;
+    },
+    mobileMapModalItemId(state) {
+      return state.mobile_map_modal_item_id;
+    },
+    mobileMapModalItemType(state) {
+      return state.mobile_map_modal_item_type
     }
   }
 };
