@@ -1,15 +1,6 @@
 <template>
   <modal-window :value="value" @input="input">
     <div class="checkpoint_modal">
-      <div class="prev_next_checkpoint_small">
-        <v-btn text icon color="black">
-          <v-icon>mdi-arrow-left-thick</v-icon>
-        </v-btn>
-        <img src="@/assets/CheckpointModalShow/gps_place.png" alt />
-        <v-btn text icon color="black">
-          <v-icon>mdi-arrow-right-thick</v-icon>
-        </v-btn>
-      </div>
       <vue-scroll class="left_block_wrapper" :ops="scrollOptions">
         <div class="left_block">
           <div class="current_checkpoint_title">{{ currentCheckpoint.title }}</div>
@@ -37,6 +28,15 @@
           :slickOptionsSub="slickOptionsSub"
           :images="['http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg']"
         />
+      </div>
+      <div class="prev_next_checkpoint_small">
+        <v-btn text icon color="black">
+          <v-icon>mdi-arrow-left-thick</v-icon>
+        </v-btn>
+        <img src="@/assets/CheckpointModalShow/gps_place.png" alt />
+        <v-btn text icon color="black">
+          <v-icon>mdi-arrow-right-thick</v-icon>
+        </v-btn>
       </div>
     </div>
   </modal-window>
@@ -66,30 +66,6 @@ export default {
       displayedItemId: null,
       displayedItemType: "Checkpoint",
       data: [],
-      scrollOptions: {
-        vuescroll: {},
-        scrollPanel: {},
-        rail: {
-          background: "rgb(129, 209, 121)",
-          opacity: 0.2,
-          size: "6px",
-          specifyBorderRadius: true,
-          gutterOfSide: "0px",
-          keepShow: true
-        },
-        bar: {
-          showDelay: 500,
-          onlyShowBarOnScroll: false,
-          keepShow: false,
-          background: "rgb(129, 209, 121)",
-          opacity: 1,
-          hoverStyle: false,
-          specifyBorderRadius: false,
-          minSize: 0,
-          size: "6px",
-          disable: false
-        }
-      },
       slickOptionsMain: {
         initialSlide: 0,
         slidesToShow: 1,
@@ -186,7 +162,8 @@ export default {
       if (newValue) {
         this.$nextTick(() => {
           document.querySelector(".__rail-is-vertical").style.height = "100%"; // setup left block scroll bar full height
-          document.querySelector(".__rail-is-horizontal").style.display = "none"; // remove horizontal scroll bar
+          document.querySelector(".__rail-is-horizontal").style.display =
+            "none"; // remove horizontal scroll bar
         });
       }
     },
@@ -203,6 +180,32 @@ export default {
     }
   },
   computed: {
+    scrollOptions() {
+      return {
+        vuescroll: {},
+        scrollPanel: {},
+        rail: {
+          background: "rgb(129, 209, 121)",
+          opacity: this.windowWidth > 800 ? '.2' : '0',
+          size: "6px",
+          specifyBorderRadius: true,
+          gutterOfSide: "0px",
+          keepShow: true
+        },
+        bar: {
+          showDelay: 500,
+          onlyShowBarOnScroll: false,
+          keepShow: false,
+          background: "rgb(129, 209, 121)",
+          opacity: this.windowWidth > 800 ? '1' : '0',
+          hoverStyle: false,
+          specifyBorderRadius: false,
+          minSize: 0,
+          size: "6px",
+          disable: false
+        }
+      };
+    },
     currentCheckpoint() {
       let temp = this.getCheckpoint(this.mainCheckpointModalId);
       if (!!temp == false) {
@@ -217,7 +220,8 @@ export default {
       "getSubCheckpoints",
       "getCheckpoint",
       "mainCheckpointModalId",
-      "mainCheckpointModalDisplay"
+      "mainCheckpointModalDisplay",
+      "windowWidth"
     ])
   }
 };
@@ -227,13 +231,11 @@ export default {
 .checkpoint_modal {
   display: flex;
   height: 90vh;
-  overflow: hidden;
+  overflow-x: hidden;
   .left_block {
     width: 100%;
     padding: 20px 20px 60px 20px;
     position: relative;
-    // overflow-y: scroll;
-    // box-shadow: -3px 3px 6px 0px #0000000d;
     overflow-x: hidden;
     .checkpoint_list_wrapper {
       margin-left: 10px;
@@ -257,7 +259,6 @@ export default {
     justify-content: center;
     align-items: center;
     position: absolute;
-    // border-right: 4px solid rgba(145, 145, 145, 0.2);
     z-index: 99;
     width: calc(30% - 8px);
     height: 60px;
@@ -271,74 +272,17 @@ export default {
     }
   }
 
-  // .left_block::-webkit-scrollbar-track {
-  //   -webkit-box-shadow: inset 0 0 4px rgba(145, 145, 145, 0.3);
-  //   background-color: #f5f5f5;
-  // }
-
-  // .left_block::-webkit-scrollbar {
-  //   width: 4px;
-  //   background-color: #f5f5f5;
-  // }
-
-  // .left_block::-webkit-scrollbar-thumb {
-  //   background-color: #14e71e5e;
-  // }
   .right_block {
     width: 70%;
-    // padding: 20px;
-    // display: flex;
-    // overflow-y: scroll;
-    // overflow-x: hidden;
-    // flex-direction: column;
-    // justify-content: space-between;
   }
-
-  // .main_slider {
-  //   width: 100%;
-  //   height: calc(100% - 120px);
-  //   border-radius: 10px;
-  //   overflow: hidden;
-  //   box-shadow: 0 0 4px 0px rgba((0), 0, 0, 0.1);
-  // }
-
-  // .slick_active {
-  // }
-
-  // .sub_slider {
-  //   height: 100px;
-  //   overflow: hidden;
-  //   .sub_slide {
-  //     transition: 1s;
-  //     border: 5px solid rgb(221, 237, 214);
-  //   }
-  //   .slick-current .sub_slide {
-  //     transition: 1s;
-  //     border: 5px solid rgb(138, 210, 116);
-  //   }
-  // }
-
-  // .slide {
-  //   width: 100%;
-  //   height: 100%;
-  // }
-
-  // .sub_slide_wrapper {
-  //   width: 100%;
-  //   height: 100px;
-  //   .sub_slide {
-  //     width: calc(100% - 5px);
-  //     height: 100%;
-  //   }
-  // }
 }
 
 @media (max-width: 800px) {
   .checkpoint_modal {
     flex-direction: column;
     .left_block_wrapper {
-      height: auto!important;
-      min-height: 100px;
+      height: auto !important;
+      min-height: 200px;
       max-height: 300px;
       .left_block {
         padding-bottom: 0;
@@ -348,11 +292,12 @@ export default {
       min-height: 400px;
       flex-grow: 1;
       width: 100%;
-      padding-bottom: 60px;
     }
     .prev_next_checkpoint_small {
+      position: relative;
       left: 50%;
-      transform: translateX(-50%)
+      transform: translateX(-50%);
+      margin: 15px 0;
     }
     .slider {
       padding-bottom: 0;

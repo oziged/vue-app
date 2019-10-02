@@ -163,6 +163,7 @@ export default {
 
 #app {
   background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 * {

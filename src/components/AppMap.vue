@@ -92,8 +92,8 @@ export default {
       </div>`;
     },
     displayMapPlaces() {
+      this.updateMapDivSize(500);
       setTimeout(() => {
-        this.updateMapDivSize();
         this.$nextTick(() => {
           this.$refs.gmap.$mapObject.panTo({ lat: 0, lng: 0 });
           let checkpoints = this.getSubCheckpoints(
@@ -157,13 +157,13 @@ export default {
         };
       });
     },
-    updateMapDivSize() {
+    updateMapDivSize(timeout) {
       let map = this.$refs.map_wrapper;
       let height = map.style.height;
       map.style.height = `calc(${height} - 1px)`;
       setTimeout(() => {
         map.style.height = height;
-      }, 100);
+      }, timeout);
     }
   },
   watch: {
