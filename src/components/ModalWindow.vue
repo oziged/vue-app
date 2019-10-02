@@ -1,9 +1,14 @@
 <template>
   <transition name="zoom-in">
     <div v-if="value" class="modal_bg">
-      <div class="modal_window" :style="{width: width, height: height, overflowX: overflowX, overflowY: overflowY}" v-click-outside="input">
+      <div
+        ref="modal_window"
+        class="modal_window"
+        :style="{width: width, height: height, overflowX: overflowX, overflowY: overflowY}"
+        v-click-outside="input"
+      >
         <div style="position: relative; width: 100%; height: 100%">
-        <slot></slot>
+          <slot></slot>
         </div>
       </div>
     </div>
@@ -17,7 +22,10 @@ export default {
   methods: {
     input(e) {
       if (e.target.className == "gm-ui-hover-effect") return;
-      this.$emit("input", false);
+      let modals = document.querySelectorAll(".modal_window");
+      if (this.$refs.modal_window == modals[modals.length - 1]) {
+        this.$emit("input", false);
+      }
     }
   }
 };
@@ -40,7 +48,7 @@ export default {
   /* left: 50%; */
   /* top: 50%; */
   /* transform: translate(-50%, -50%); */
-  
+
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);

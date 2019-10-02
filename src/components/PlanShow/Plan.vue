@@ -26,13 +26,6 @@
       :displayedItemId="displayedItemId"
       :displayedItemType="displayedItemType"
     />
-    <modal-window :value="displayMobileMap">
-      <app-map
-        style="height: 100%; width: 100%;"
-        :displayedItemId="displayedItemId"
-        :displayedItemType="displayedItemType"
-      />
-    </modal-window>
   </div>
 </template>
 
@@ -64,7 +57,6 @@ export default {
     displayedSubMenu: null,
     displayedItemId: null,
     displayedItemType: "Plan",
-    displayMobileMap: false,
     data: []
   }),
   methods: {
@@ -130,9 +122,6 @@ export default {
       });
       this.data = res;
     },
-    toggleMobileMap() {
-      this.displayMobileMap = !this.displayMobileMap;
-    }
   },
   provide() {
     return {

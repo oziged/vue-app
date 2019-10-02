@@ -65,7 +65,7 @@ import draggable from "vuedraggable";
 export default {
   name: "Checkpoint",
   props: ["checkpoint", "nestedLvl", "nested"],
-  inject: ["setCheckpointId", "toggleMobileMap"],
+  inject: ["setCheckpointId"],
   data() {
     return {
       displayMoreButton: false
