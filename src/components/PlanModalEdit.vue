@@ -22,7 +22,6 @@
         >
           {{ item.item.title }}
           <div
-            v-if="windowWidth > 800"
             @click="displayedSubMenu = item; setSubMenuDirection();"
             class="edit_checkpoint_icon"
           ></div>
