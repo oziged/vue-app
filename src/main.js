@@ -11,6 +11,7 @@ import {VueMasonryPlugin} from 'vue-masonry';
 import MagicGrid from 'vue-magic-grid'
 import vClickOutside from 'v-click-outside'
 import Notifications from 'vue-notification'
+// import VueNestable from '../vue-nestable'
 import VueNestable from 'vue-nestable'
 import VueTour from 'vue-tour'
 import vuescroll from 'vuescroll';

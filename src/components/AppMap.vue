@@ -92,7 +92,6 @@ export default {
       </div>`;
     },
     displayMapPlaces() {
-      this.updateMapDivSize(500);
       setTimeout(() => {
         this.$nextTick(() => {
           this.$refs.gmap.$mapObject.panTo({ lat: 0, lng: 0 });
@@ -172,8 +171,8 @@ export default {
     }
   },
   mounted() {
+    this.updateMapDivSize(500);
     this.displayMapPlaces();
-    window.go = () => {};
   },
   computed: {
     ...mapGetters(["allPlaces", "getPlace", "getSubCheckpoints"])

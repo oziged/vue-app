@@ -8,10 +8,21 @@
   >
     <div class="move_modal_wrapper">
       <div class="plan_title">{{ plan.title }}</div>
-      <vue-nestable v-model="data" :childrenProp="'nested'" class="nested">
-        <vue-nestable-handle slot-scope="{ item }" :item="item" class="nested_item">
+      <vue-nestable
+        @change="openSubMenuModal"
+        v-model="data"
+        :childrenProp="'nested'"
+        class="nested"
+      >
+        <vue-nestable-handle
+          slot-scope="{ item }"
+          :item="item"
+          class="nested_item"
+          @touchstart.native="onTouchStart"
+        >
           {{ item.item.title }}
           <div
+            v-if="windowWidth > 800"
             @click="displayedSubMenu = item; setSubMenuDirection();"
             class="edit_checkpoint_icon"
           ></div>
@@ -25,6 +36,9 @@
                 <v-list>
                   <v-list-item
                     @click.stop="closeDisplayedSubMenu(); setEditCheckpointModalId(item.item.id); toggleEditPlanModal(); toggleEditCheckpointModal()"
+                    @touchend.stop="closeDisplayedSubMenu(); setEditCheckpointModalId(item.item.id); toggleEditPlanModal(); toggleEditCheckpointModal()"
+                    @touchstart.stop
+                    @touchmove.stop
                   >
                     <v-list-item-content>
                       <v-list-item-title>Edit checkpoint</v-list-item-title>
@@ -49,6 +63,39 @@
         </vue-nestable-handle>
       </vue-nestable>
       <v-btn class="save_checkpoint" color="success" dark>update checkpoints</v-btn>
+      <modal-window
+        :value="displayEditedItemModal"
+        @input="displayEditedItemModal = false"
+        :width="'auto'"
+        :height="'auto'"
+      >
+        <v-card max-width="400">
+          <v-list>
+            <v-list-item
+              @click.stop="displayEditedItemModal=false; closeDisplayedSubMenu(); setEditCheckpointModalId(editedItemId); toggleEditPlanModal(); toggleEditCheckpointModal()"
+              @touchend.stop="displayEditedItemModal=false; closeDisplayedSubMenu(); setEditCheckpointModalId(editedItemId); toggleEditPlanModal(); toggleEditCheckpointModal()"
+              @touchstart.stop
+              @touchmove.stop
+            >
+              <v-list-item-content>
+                <v-list-item-title>Edit checkpoint</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              @click.stop="closeDisplayedSubMenu(); toggleEditPlanModal(); toggleNewCheckpointModal()"
+            >
+              <v-list-item-content>
+                <v-list-item-title>Add subCheckpoint</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item @mousedown.stop.prevent @click.stop>
+              <v-list-item-content>
+                <v-list-item-title>Delete Checkpoint</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </modal-window>
     </div>
   </modal-window>
 </template>
@@ -66,13 +113,38 @@ export default {
     return {
       data: [],
       plan: null,
+      editedItemId: null,
+      displayEditedItemModal: false,
+      nestableInputTime: 0,
       displayedSubMenu: null
     };
   },
   computed: {
-    ...mapGetters(["editPlanModalId", "getSubCheckpoints", "getPlan"])
+    ...mapGetters([
+      "editPlanModalId",
+      "getSubCheckpoints",
+      "getPlan",
+      "windowWidth"
+    ])
   },
   methods: {
+    onTouchStart(e) {
+      let coord = e.target.getBoundingClientRect();
+      let layer = document.querySelector(".nestable-drag-layer");
+      layer.style.left = coord.x - 1 + "px";
+      layer.style.top = coord.y - 1 + "px";
+      this.nestableInputTime = new Date();
+    },
+    openSubMenuModal(item, options) {
+      let timeToClick = new Date() - this.nestableInputTime;
+      if (
+        timeToClick < 500 &&
+        (options.pathTo == null || options.pathTo == undefined)
+      ) {
+        this.editedItemId = item.id;
+        this.displayEditedItemModal = true;
+      }
+    },
     setCheckpointsData(id, type) {
       let res = [];
       let self = this;
@@ -117,20 +189,31 @@ export default {
     closeDisplayedSubMenu() {
       this.displayedSubMenu = null;
     },
-     ...mapActions([
+    ...mapActions([
       "setEditCheckpointModalId",
       "toggleEditCheckpointModal",
       "toggleNewCheckpointModal",
       "toggleEditPlanModal",
       "setEditPlanModalId"
-    ]),
+    ])
   },
   watch: {
+    value(newValue) {
+      if (newValue) {
+        setTimeout(() => {
+          let modal = document.querySelector(".move_modal_wrapper");
+          let wrapper = document.querySelector(".modal_window");
+          if (wrapper.clientHeight < modal.clientHeight)
+            wrapper.style.overflowY = "scroll";
+        }, 0);
+      }
+    },
     editPlanModalId(newValue) {
       this.plan = this.getPlan(newValue);
       this.setCheckpointsData(newValue, "Plan");
     }
   },
+  mounted() {}
 };
 </script>
 
@@ -181,4 +264,14 @@ export default {
     margin: 20px auto 0px auto;
   }
 }
+</style>
+
+<style lang="scss">
+// .nestable-drag-layer {
+//   position: absolute !important;
+//   top: 10px;
+//   left: 0;
+//   z-index: 100;
+//   pointer-events: none;
+// }
 </style>

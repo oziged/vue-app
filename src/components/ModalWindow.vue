@@ -52,8 +52,8 @@ export default {
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  height: 90%;
+  width: 90vw;
+  height: 90vh;
   max-height: 90%;
   max-width: 90%;
   overflow-y: auto;
