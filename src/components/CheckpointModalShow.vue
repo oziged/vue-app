@@ -281,7 +281,6 @@ export default {
   .checkpoint_modal {
     flex-direction: column;
     .left_block_wrapper {
-      // height: auto !important;
       min-height: 200px;
       max-height: 300px;
       .left_block {
@@ -289,14 +288,14 @@ export default {
       }
     }
     .right_block {
-      min-height: 400px;
-      flex-grow: 1;
+      height: 100%;
+      min-height: 350px;
+      max-height: 500px;
       width: 100%;
     }
     .prev_next_checkpoint_small {
       position: relative;
-      left: 50%;
-      transform: translateX(-50%);
+      width: 100%;
       margin: 15px 0;
     }
     .slider {
