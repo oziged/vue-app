@@ -4,9 +4,9 @@
       <app-header ref="header" />
       <transition
         appear
-        :duration="{leave}"
-        v-on:before-enter="beforeEnter"
-        v-on:before-leave="beforeLeave"
+        :duration="{leave: isMobile ? 0 : leave}"
+        @before-enter="beforeEnter"
+        @before-leave="beforeLeave"
         mode="out-in"
       >
         <router-view class="router_content" :key="$route.fullPath"></router-view>
@@ -52,6 +52,7 @@ export default {
   },
   methods: {
     beforeEnter: function(el) {
+      if (this.isMobile) return;
       let delay = 0;
       let duration = 1;
 
@@ -85,6 +86,7 @@ export default {
       }
     },
     beforeLeave: function(el) {
+      if (this.isMobile) return;
       if (this.$route.path.includes("about")) {
         if (this.prevPath.includes("plan")) {
           TweenMax.to(".plan_info", 1, {
@@ -144,7 +146,8 @@ export default {
       "editCheckpointModalDisplay",
       "editPlanModalDisplay",
       "windowWidth",
-      "mobileMapModalDisplay"
+      "mobileMapModalDisplay",
+      "isMobile"
     ])
   }
 };

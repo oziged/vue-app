@@ -7,6 +7,8 @@ import place from './modules/place'
 import map from './modules/map'
 import geolocation from './modules/geolocation'
 import window_variables from './modules/window_variables'
+import { isMobile } from 'mobile-device-detect';
+
 
 Vue.use(Vuex)
 
@@ -18,11 +20,15 @@ export default new Vuex.Store({
 
   },
   state: {
-    nested_colors: ['reserv', '#00572b', '#009e4e', '#00d96b', 'red']
+    nested_colors: ['reserv', '#00572b', '#009e4e', '#00d96b', 'red'],
+    // isMobile: isMobile,
   },
   getters: {
     nestedColors(state) {
       return state.nested_colors;
+    },
+    isMobile() {
+      return isMobile;
     }
   },
   modules: {

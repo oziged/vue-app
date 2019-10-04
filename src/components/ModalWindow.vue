@@ -1,5 +1,5 @@
 <template>
-  <transition name="zoom-in">
+  <transition :name="isMobile ? '' : 'zoom-in'">
     <div v-if="value" class="modal_bg">
       <div
         ref="modal_window"
@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   props: ["value", "width", "height", "overflowX", "overflowY"],
   mounted() {},
@@ -27,6 +29,9 @@ export default {
         this.$emit("input", false);
       }
     }
+  },
+  computed: {
+    ...mapGetters(["isMobile"])
   }
 };
 </script>
@@ -43,12 +48,7 @@ export default {
   opacity: 0;
 }
 .modal_window {
-  /* position: fixed; */
   z-index: 100;
-  /* left: 50%; */
-  /* top: 50%; */
-  /* transform: translate(-50%, -50%); */
-
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
