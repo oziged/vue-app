@@ -22,6 +22,7 @@
         >
           {{ item.item.title }}
           <div
+            v-if="!isMobile"
             @click="displayedSubMenu = item; setSubMenuDirection();"
             class="edit_checkpoint_icon"
           ></div>
@@ -123,7 +124,8 @@ export default {
       "editPlanModalId",
       "getSubCheckpoints",
       "getPlan",
-      "windowWidth"
+      "windowWidth",
+      "isMobile"
     ])
   },
   methods: {
