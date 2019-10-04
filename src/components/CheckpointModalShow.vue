@@ -281,7 +281,7 @@ export default {
   .checkpoint_modal {
     flex-direction: column;
     .left_block_wrapper {
-      height: auto !important;
+      // height: auto !important;
       min-height: 200px;
       max-height: 300px;
       .left_block {
