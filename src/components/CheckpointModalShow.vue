@@ -29,7 +29,8 @@
           :images="['http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg']"
         />
       </div>
-      <div class="prev_next_checkpoint_small">
+      <div class="checkpoint_nav_wrapper"> <!-- wrapper needed for safari -->
+      <div class="checkpoint_nav">
         <v-btn text icon color="black">
           <v-icon>mdi-arrow-left-thick</v-icon>
         </v-btn>
@@ -38,6 +39,8 @@
           <v-icon>mdi-arrow-right-thick</v-icon>
         </v-btn>
       </div>
+      </div>
+
     </div>
   </modal-window>
 </template>
@@ -254,7 +257,7 @@ export default {
     }
   }
 
-  .prev_next_checkpoint_small {
+  .checkpoint_nav {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -293,10 +296,9 @@ export default {
       max-height: 500px;
       width: 100%;
     }
-    .prev_next_checkpoint_small {
+    .checkpoint_nav {
       position: relative;
       width: 100%;
-      margin: 15px 0;
     }
     .slider {
       padding-bottom: 0;
