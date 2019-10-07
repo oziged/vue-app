@@ -79,7 +79,9 @@ export default {
   height: calc(100% - 120px);
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 0 4px 0px rgba((0), 0, 0, 0.1);
+  .slide {
+    box-shadow: inset 0 0 9px #00000021;
+  }
 }
 
 .slick_active {

@@ -80,7 +80,17 @@
       <div class="preview">
         <div class="left_block">
           <div class="checkpoint_title">{{ title || 'Title' }}</div>
-          <div class="checkpoint_description">{{ description || 'Description' }}</div>
+          <div
+            v-if="windowWidth > 800"
+            class="checkpoint_description"
+          >{{ description || 'Description' }}</div>
+          <vue-scroll
+            v-else
+            class="checkpoint_description_wrapper"
+            style="height: 200px; "
+          >
+            <div class="checkpoint_description">{{ description || 'Description' }}</div>
+          </vue-scroll>
         </div>
         <div class="right_block">
           <transition name="fade">
@@ -126,10 +136,7 @@ export default {
         types: ["image/png", "image/jpg", "image/jpeg"]
       },
       images: [
-        "https://cdn.dribbble.com/users/479289/screenshots/4521207/plexus_bg_2.gif",
-        "https://cdn.dribbble.com/users/479289/screenshots/4521207/plexus_bg_2.gif",
-        "https://cdn.dribbble.com/users/479289/screenshots/4521207/plexus_bg_2.gif",
-        "https://cdn.dribbble.com/users/479289/screenshots/4521207/plexus_bg_2.gif"
+        "https://cdn130.picsart.com/260610862010202.jpg?r1024x1024",
       ],
       center: {
         lat: 12,
@@ -226,7 +233,7 @@ export default {
       }
     },
     input(e) {
-      if (e.target.className.includes('pac-item')) return; // fix for mobile devices on touch event on pac div
+      if (e.target.className.includes("pac-item")) return; // fix for mobile devices on touch event on pac div
       this.$emit("input");
     },
     validateFiles() {
@@ -248,7 +255,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["currentLocation"])
+    ...mapGetters(["currentLocation", "windowWidth"])
   },
   watch: {
     value() {
@@ -338,5 +345,34 @@ export default {
 .save_checkpoint {
   display: block;
   margin: 40px auto 0 auto;
+}
+
+@media (max-width: 800px) {
+  .checkpoint_new_modal {
+    padding: 20px;
+    .preview {
+      flex-direction: column;
+      .left_block {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+      .right_block {
+        height: 50vh;
+        width: 100%;
+      }
+      .slider {
+        padding: 0;
+      }
+    }
+    .checkpoint_description_wrapper {
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 4px 0px;
+      .checkpoint_description {
+        padding: 10px;
+      }
+    }
+    .save_checkpoint {
+      margin-top: 16px;
+    }
+  }
 }
 </style>
