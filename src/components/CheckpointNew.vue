@@ -14,7 +14,6 @@
           label="Description"
           v-model="description"
           :rules="descriptionRules"
-          auto-grow
           rows="4"
           row-height="25"
           color="green"
