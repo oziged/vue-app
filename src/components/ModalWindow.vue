@@ -5,10 +5,10 @@
         ref="modal_window"
         class="modal_window"
         :style="{width: width, height: height, overflowX: overflowX, overflowY: overflowY}"
-        v-click-outside="input"
+        v-click-outside="inputConfig"
       >
         <div style="position: relative; width: 100%; height: 100%">
-        <slot></slot>
+          <slot></slot>
         </div>
       </div>
     </div>
@@ -20,14 +20,25 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   props: ["value", "width", "height", "overflowX", "overflowY"],
+  data() {
+    return {
+      inputConfig: {
+        handler: this.inputHandler,
+        middleware: this.inputMiddleware,
+        events: ["click"]
+      }
+    };
+  },
   mounted() {},
   methods: {
-    input(e) {
-      if (e.type == 'touchstart') return; // prevent unnecessary click on touch event
+    inputHandler(e) {
+      this.$emit("input", e);
+    },
+    inputMiddleware(e) {
       if (e.target.className == "gm-ui-hover-effect") return;
       let modals = document.querySelectorAll(".modal_window");
       if (this.$refs.modal_window == modals[modals.length - 1]) {
-        this.$emit("input", e);
+        return true;
       }
     }
   },

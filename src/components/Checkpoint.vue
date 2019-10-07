@@ -19,7 +19,7 @@
         :class="{ 'subcheckpoint': nestedLvl > 1, 'plan_checkpoint' : nestedLvl==1 }"
       >
         <transition name="click">
-          <div v-if="displayMoreButton" class="interaction_buttons">
+          <div v-if="displayMoreButton || isMobile" class="interaction_buttons">
             <div class="click" @click.stop="setAndOpenModal(checkpoint.id)"></div>
             <div
               v-if="windowWidth < 800"
@@ -116,9 +116,6 @@ export default {
           : "";
       }
     },
-    console(e) {
-      console.log(e);
-    },
     ...mapActions([
       "updateMapPlaces",
       "setMainCheckpointModalId",
@@ -137,7 +134,8 @@ export default {
       "mainCheckpointModalId",
       "windowWidth",
       "mobileMapModalItemId",
-      "mobileMapModalItemType"
+      "mobileMapModalItemType",
+      "isMobile"
     ])
   },
   mounted() {}
