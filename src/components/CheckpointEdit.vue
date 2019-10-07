@@ -250,7 +250,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["currentLocation", "getCheckpoint", "editCheckpointModalId"])
+    ...mapGetters(["currentLocation", "getCheckpoint", "editCheckpointModalId", "windowWidth"])
   },
   watch: {
     editCheckpointModalId(newValue) {

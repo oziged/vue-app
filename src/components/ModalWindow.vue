@@ -8,7 +8,7 @@
         v-click-outside="input"
       >
         <div style="position: relative; width: 100%; height: 100%">
-          <slot></slot>
+        <slot></slot>
         </div>
       </div>
     </div>
@@ -23,6 +23,7 @@ export default {
   mounted() {},
   methods: {
     input(e) {
+      if (e.type == 'touchstart') return; // prevent unnecessary click on touch event
       if (e.target.className == "gm-ui-hover-effect") return;
       let modals = document.querySelectorAll(".modal_window");
       if (this.$refs.modal_window == modals[modals.length - 1]) {
