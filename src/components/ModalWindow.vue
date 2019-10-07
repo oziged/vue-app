@@ -26,7 +26,7 @@ export default {
       if (e.target.className == "gm-ui-hover-effect") return;
       let modals = document.querySelectorAll(".modal_window");
       if (this.$refs.modal_window == modals[modals.length - 1]) {
-        this.$emit("input", false);
+        this.$emit("input", e);
       }
     }
   },

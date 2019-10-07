@@ -220,12 +220,12 @@ export default {
     },
     submit() {
       if (this.$refs.form.validate()) {
-        console.log("checkpoint created");
         this.toggleNewCheckpointModal();
         this.$forceUpdate();
       }
     },
-    input() {
+    input(e) {
+      if (e.target.className.includes('pac-item')) return; // fix for mobile devices on touch event on pac div
       this.$emit("input");
     },
     validateFiles() {

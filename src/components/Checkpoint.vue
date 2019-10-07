@@ -21,7 +21,11 @@
         <transition name="click">
           <div v-if="displayMoreButton" class="interaction_buttons">
             <div class="click" @click.stop="setAndOpenModal(checkpoint.id)"></div>
-            <div v-if="windowWidth < 800" class="mobile_map_button" @click.stop="setMobileMapModalItemId(checkpoint.id); setMobileMapModalItemType('Checkpoint'); toggleMobileMapModal()"></div>
+            <div
+              v-if="windowWidth < 800"
+              class="mobile_map_button"
+              @click.stop="setMobileMapModalItemId(checkpoint.id); setMobileMapModalItemType('Checkpoint'); toggleMobileMapModal()"
+            ></div>
           </div>
         </transition>
         {{ checkpoint.title }}
