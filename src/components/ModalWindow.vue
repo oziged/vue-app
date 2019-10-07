@@ -56,7 +56,7 @@ export default {
   width: 90vw;
   height: 90vh;
   max-height: 90%;
-  max-width: 90%;
+  max-width: 1250px;
   overflow-y: auto;
 }
 
@@ -72,5 +72,11 @@ export default {
   overflow: hidden;
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 1250px) {
+  .modal_window {
+    max-width: 90%;
+  }
 }
 </style>
