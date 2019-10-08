@@ -1,18 +1,22 @@
 <template>
   <header>
     <div class="nav_list">
-      <router-link class="nav_item_logo" to="/">
-        <img src="../assets/logo.png" alt />
-      </router-link>
-      <router-link class="nav_item" to="/plans">
-        <span>Plans</span>
-      </router-link>
-      <router-link class="nav_item" to="/plan/1">
-        <span>Plan1</span>
-      </router-link>
-      <router-link class="nav_item" to="/plan/2">
-        <span>Plan2</span>
-      </router-link>
+      <div class="left_block">
+        <router-link class="nav_item_logo" to="/">
+          <span>travel.</span>
+        </router-link>
+      </div>
+      <div class="right_block">
+        <router-link class="nav_item" to="/plans">
+          <span>Plans</span>
+        </router-link>
+        <router-link class="nav_item" to="/plan/1">
+          <span>Plan1</span>
+        </router-link>
+        <router-link class="nav_item" to="/plan/2">
+          <span>Plan2</span>
+        </router-link>
+      </div>
     </div>
   </header>
 </template>
@@ -39,6 +43,11 @@ header {
     max-width: 1250px;
     margin: 0 auto;
     display: flex;
+    justify-content: space-between;
+  }
+
+  .left_block, .right_block {
+    display: flex;
   }
 
   .nav_item {
@@ -50,9 +59,15 @@ header {
     align-items: center;
     &_logo {
       display: flex;
+      justify-content: center;
       align-items: center;
+      font-family: Montserrat;
+      font-size: 30px;
+      font-weight: 700;
+      color: black;
+      text-decoration: none;
       img {
-        height: 70px;
+        // height: 70px;
       }
     }
     span {

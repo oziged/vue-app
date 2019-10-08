@@ -5,7 +5,13 @@
       <p
         class="home_title_desc"
       >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur, minus nesciunt! Consequuntur, autem aut eius reiciendis quia rerum tenetur earum porro deserunt eligendi tempore, sequi quidem quasi nam. Aliquam, rerum!</p>
-      <GmapMap class="home_map" ref="gmap" :center="currentLocation" :zoom="5" map-type-id="terrain">
+      <GmapMap
+        class="home_map"
+        ref="gmap"
+        :center="currentLocation"
+        :zoom="5"
+        map-type-id="terrain"
+      >
         <GmapMarker
           :key="index"
           v-for="(m, index) in allPlaces"
@@ -32,19 +38,19 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["allPlaces", "currentLocation"]),
+    ...mapGetters(["allPlaces", "currentLocation"])
   },
   methods: {},
   watch: {
     currentLocation() {
-      this.center = this.currentLocation || {lat: 0, lng: 0};
+      this.center = this.currentLocation || { lat: 0, lng: 0 };
     }
   },
   mounted() {
     window.loc = () => {
       return this.currentLocation;
-    }
-    TweenMax.to(".home_title, .home_title_desc", 1, { opacity: 1, delay: .5 });
+    };
+    TweenMax.to(".home_title, .home_title_desc", 1, { opacity: 1, delay: 0.5 });
     TweenMax.to(".home_map", 1, { opacity: 1, y: 0, delay: 1 });
     this.$gmapApiPromiseLazy().then(() => {
       setTimeout(() => {
