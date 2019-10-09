@@ -80,7 +80,41 @@
         </div>
       </div>
     </div>
-    <h2 class="home_page_title">most popular plans</h2>
+    <h2 class="home_page_title">trending countries</h2>
+    <magic-grid class="countries_list" :gap="10" :maxColWidth="9999" style="margin-bottom: 50px">
+      <div class="country">
+        <img src="https://cdn.tourradar.com/s3/content-pages/16/1024x768/gxvKGa.jpg" alt />
+      </div>
+      <div class="country">
+        <img src="https://www.planetware.com/photos-large/USNY/usa-best-places-new-york.jpg" alt />
+        <div class="country_desc">
+          <h3>USA</h3>
+          <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+        </div>
+        <div class="hover_bg"></div>
+      </div>
+      <div class="country">
+        <img
+          src="https://handluggageonly.co.uk/wp-content/uploads/2018/02/Hand-Luggage-Only-8-5.jpg"
+          alt
+        />
+      </div>
+      <div class="country">
+        <img
+          src="https://www.ktchnrebel.com/wp-content/uploads/2019/03/Working-in-Mexico-City-KTCHNrebel-copyright-Fotolia-javarman.jpg"
+          alt
+        />
+      </div>
+      <div class="country">
+        <img src="https://d36tnp772eyphs.cloudfront.net/blogs/1/2011/05/thailand-1200x819.jpg" alt />
+      </div>
+      <div class="country">
+        <img
+          src="https://afar-production.imgix.net/uploads/syndication/holland_americas/images/h9B977Yqvt/original_ESY-013403436.Berlin.Hero.AGE.crop.jpg?w=750&h=563&fit=crop"
+          alt
+        />
+      </div>
+    </magic-grid>
   </div>
 </template>
 
@@ -91,8 +125,7 @@ export default {
   components: {
     HomePageSlider
   },
-  mounted() {
-  },
+  mounted() {}
 };
 </script>
 
@@ -143,20 +176,24 @@ export default {
         order: -1;
       }
     }
+    &:last-child {
+      margin-bottom: 0;
+    }
     .img_block_wrapper {
       width: calc(50% - 20px);
       margin-right: 20px;
       height: 500px;
-      perspective: 1000px;
+      background-color: rgba(0, 0, 0, 0.05);
     }
     .img_block {
       width: 100%;
       height: 100%;
-      // width: calc(50% - 20px);
-      // margin-right: 20px;
-      // height: 500px;
       background: url("https://www.sassyhongkong.com/wp-content/uploads/2018/07/travel-lessons-learned-minimalist-1.jpg")
         no-repeat center center/cover;
+      transition: 0.5s ease-out;
+      &:hover {
+        transform: scale(0.97);
+      }
     }
     .desc_block {
       width: calc(50% - 50px);
@@ -164,9 +201,13 @@ export default {
       font-size: 30px;
       font-weight: 300;
       margin-left: 50px;
+      line-height: 0;
       &:hover {
         .separator {
           width: 90px;
+        }
+        p {
+          background-position: -100% 0;
         }
       }
       h5 {
@@ -193,7 +234,91 @@ export default {
         font-size: 18px;
         font-weight: 300;
         line-height: 27px;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0) 50%,
+          rgba(236, 236, 236, 0.466) 50%
+        );
+        background-size: 200%;
+        background-position: 0 0;
+        display: inline;
+        transition: 0.5s ease-in-out;
       }
+    }
+  }
+}
+
+.countries_list {
+  max-width: 1250px;
+  margin: 0 auto;
+  .country {
+    width: calc((100% - 30px) / 3);
+    overflow: hidden;
+    &:nth-child(odd) {
+      height: 364px;
+    }
+    &:nth-child(even) {
+      height: 590px;
+    }
+    &:nth-child(3n + 1) {
+      left: 0 !important;
+    }
+    &:nth-child(3n) {
+      left: auto !important;
+      right: 0 !important;
+    }
+    &:hover {
+      .country_desc {
+        opacity: 1;
+        h3 {
+          left: 0;
+        }
+        span {
+          bottom: 0;
+        }
+      }
+      .hover_bg {
+        opacity: 1;
+      }
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .country_desc {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      padding-right: 20px;
+      z-index: 10;
+      color: white;
+      position: absolute;
+      font-family: Montserrat;
+      opacity: 0;
+      transition: .3s;
+      h3 {
+        position: relative;
+        left: -110px;
+        font-size: 40px;
+        transition: .3s ease-in-out;
+      }
+      span {
+        position: relative;
+        bottom: -100px;
+        font-weight: 500;
+        transition: .3s ease-in-out;
+      }
+    }
+    .hover_bg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      transition: .5s;
+      background-color: rgba(0, 0, 0, 0.5);
     }
   }
 }
