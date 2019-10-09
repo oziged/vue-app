@@ -84,11 +84,18 @@
     <magic-grid class="countries_list" :gap="10" :maxColWidth="9999" style="margin-bottom: 50px">
       <div class="country">
         <img src="https://cdn.tourradar.com/s3/content-pages/16/1024x768/gxvKGa.jpg" alt />
+        <div class="country_desc">
+          <h3>USA</h3>
+          <country-flag country="usa" size="big" style="display: block;" />
+          <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+        </div>
+        <div class="hover_bg"></div>
       </div>
       <div class="country">
         <img src="https://www.planetware.com/photos-large/USNY/usa-best-places-new-york.jpg" alt />
         <div class="country_desc">
           <h3>USA</h3>
+          <country-flag country="usa" size="big" style="display: block;" />
           <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
         </div>
         <div class="hover_bg"></div>
@@ -98,21 +105,45 @@
           src="https://handluggageonly.co.uk/wp-content/uploads/2018/02/Hand-Luggage-Only-8-5.jpg"
           alt
         />
+        <div class="country_desc">
+          <h3>USA</h3>
+          <country-flag country="usa" size="big" style="display: block;" />
+          <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+        </div>
+        <div class="hover_bg"></div>
       </div>
       <div class="country">
         <img
           src="https://www.ktchnrebel.com/wp-content/uploads/2019/03/Working-in-Mexico-City-KTCHNrebel-copyright-Fotolia-javarman.jpg"
           alt
         />
+        <div class="country_desc">
+          <h3>USA</h3>
+          <country-flag country="usa" size="big" style="display: block;" />
+          <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+        </div>
+        <div class="hover_bg"></div>
       </div>
       <div class="country">
         <img src="https://d36tnp772eyphs.cloudfront.net/blogs/1/2011/05/thailand-1200x819.jpg" alt />
+        <div class="country_desc">
+          <h3>USA</h3>
+          <country-flag country="usa" size="big" style="display: block;" />
+          <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+        </div>
+        <div class="hover_bg"></div>
       </div>
       <div class="country">
         <img
           src="https://afar-production.imgix.net/uploads/syndication/holland_americas/images/h9B977Yqvt/original_ESY-013403436.Berlin.Hero.AGE.crop.jpg?w=750&h=563&fit=crop"
           alt
         />
+        <div class="country_desc">
+          <h3>USA</h3>
+          <country-flag country="usa" size="big" style="display: block;" />
+          <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+        </div>
+        <div class="hover_bg"></div>
       </div>
     </magic-grid>
   </div>
@@ -254,6 +285,7 @@ export default {
   .country {
     width: calc((100% - 30px) / 3);
     overflow: hidden;
+    cursor: pointer;
     &:nth-child(odd) {
       height: 364px;
     }
@@ -296,18 +328,19 @@ export default {
       position: absolute;
       font-family: Montserrat;
       opacity: 0;
-      transition: .3s;
+      transition: 0.3s;
       h3 {
         position: relative;
         left: -110px;
         font-size: 40px;
-        transition: .3s ease-in-out;
+        transition: 0.3s ease-in-out;
+        line-height: 40px;
       }
       span {
         position: relative;
         bottom: -100px;
         font-weight: 500;
-        transition: .3s ease-in-out;
+        transition: 0.3s ease-in-out;
       }
     }
     .hover_bg {
@@ -317,7 +350,7 @@ export default {
       height: 100%;
       width: 100%;
       opacity: 0;
-      transition: .5s;
+      transition: 0.5s;
       background-color: rgba(0, 0, 0, 0.5);
     }
   }

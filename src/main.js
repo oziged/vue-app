@@ -18,7 +18,9 @@ import vuescroll from 'vuescroll';
 
 
 require('vue-tour/dist/vue-tour.css')
-
+import CountryFlag from 'vue-country-flag'
+ 
+Vue.component('country-flag', CountryFlag)
 Vue.use(vuescroll);
 Vue.use(VueTour)
 Vue.use(VueNestable)
