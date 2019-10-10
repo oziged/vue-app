@@ -173,6 +173,10 @@ export default {
   box-sizing: border-box;
 }
 
+input[type="submit"]{
+   outline:none;
+}
+
 // ::-webkit-scrollbar-track {
 //   -webkit-box-shadow: inset 0 0 4px rgba(145, 145, 145, 0.3);
 //   background-color: #f5f5f5;

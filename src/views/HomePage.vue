@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="font-family: Montserrat;">
     <home-page-slider class="home_page_slider">
       <div
         class="home_page_slide slide1"
@@ -146,6 +146,38 @@
         <div class="hover_bg"></div>
       </div>
     </magic-grid>
+    <section class="feedback_section">
+      <div class="feedback_form">
+        <div class="feedback_form_title">get in touch</div>
+        <div class="left_block">
+          <div class="address">
+            <img src="@/assets/HomePage/Pin.png" alt />
+            23 Mulholland Drive, Suite 721. Los Angeles 10010
+            100 S. Main Street. Los Angeles 90012
+          </div>
+          <div class="number">
+            <img src="@/assets/HomePage/iPhone.png" alt />
+            +1-670-567-5590
+          </div>
+          <div class="email">
+            <img src="@/assets/HomePage/Envelope.png" alt />
+            hello@clemocreative.com
+          </div>
+          <div class="social"></div>
+        </div>
+        <div class="right_block">
+          <div class="input-box">
+            <input type="text" name required />
+            <label for>Username</label>
+          </div>
+          <div class="input-box">
+            <input type="password" name required />
+            <label for>Password</label>
+          </div>
+          <input type="submit" value="Submit" />
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -356,6 +388,75 @@ export default {
   }
 }
 
+.feedback_section {
+  background-color: black;
+  width: 100%;
+  height: 100%;
+}
+
+.feedback_form {
+  max-width: 1250px;
+  margin: 0 auto;
+  height: 550px;
+  color: white;
+  .feedback_form_title {
+    padding-top: 90px;
+    padding-bottom: 75px;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 60px;
+    line-height: 48px;
+  }
+  .left_block {
+    width: 50%;
+    display: inline-block;
+    .address,
+    .number,
+    .email {
+      margin-bottom: 35px;
+    }
+  }
+  .right_block {
+    width: 50%;
+    display: inline-block;
+    .input-box {
+      position: relative;
+      input {
+        border-style: none;
+        background: transparent;
+        border-bottom: 1px solid white;
+        width: calc(100% - 100px);
+        position: relative;
+        outline: none;
+        padding: 10px 0;
+        color: white;
+        font-size: 18px;
+        margin-bottom: 30px;
+        &:focus ~ label,
+        &:valid ~ label {
+          top: -25px;
+        }
+      }
+      label {
+        color: white;
+        position: absolute;
+        padding: 10px 0;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        transition: 0.5s;
+      }
+    }
+    input[type="submit"] {
+      background-color: white;
+      padding: 10px 40px;
+      color: black;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+  }
+}
+
 .slide1 {
   display: flex;
   align-items: center;
@@ -366,7 +467,6 @@ export default {
     align-items: center;
     h2 {
       color: #000000;
-      font-family: Montserrat;
       font-size: 48px;
       font-weight: 700;
       line-height: 50px;
@@ -380,7 +480,6 @@ export default {
     }
     h4 {
       text-align: center;
-      font-family: Montserrat;
       font-size: 24px;
       font-weight: 300;
       line-height: 32px;
@@ -392,7 +491,6 @@ export default {
       border-radius: 25px;
       background-color: #000000;
       color: white;
-      font-family: Montserrat;
     }
   }
 }
