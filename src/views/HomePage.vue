@@ -151,19 +151,38 @@
         <div class="feedback_form_title">get in touch</div>
         <div class="left_block">
           <div class="address">
-            <img src="@/assets/HomePage/Pin.png" alt />
-            23 Mulholland Drive, Suite 721. Los Angeles 10010
-            100 S. Main Street. Los Angeles 90012
+            <div class="img_block">
+              <img src="@/assets/HomePage/Pin.png" alt />
+            </div>23 Mulholland Drive, Suite 721. Los Angeles 10010
+            <br />100 S. Main Street. Los Angeles 90012
           </div>
           <div class="number">
-            <img src="@/assets/HomePage/iPhone.png" alt />
-            +1-670-567-5590
+            <div class="img_block">
+              <img src="@/assets/HomePage/iPhone.png" alt />
+            </div>+1-670-567-5590
           </div>
           <div class="email">
-            <img src="@/assets/HomePage/Envelope.png" alt />
-            hello@clemocreative.com
+            <div class="img_block">
+              <img src="@/assets/HomePage/Envelope.png" alt />
+            </div>hello@clemocreative.com
           </div>
-          <div class="social"></div>
+          <div class="social_networks">
+            <a href="#" class="circle">
+              <img src="@/assets/HomePage/facebook.png" alt />
+            </a>
+            <a href="#" class="circle">
+              <img src="@/assets/HomePage/google_plus.png" alt />
+            </a>
+            <a href="#" class="circle">
+              <img src="@/assets/HomePage/Instagram.png" alt />
+            </a>
+            <a href="#" class="circle">
+              <img src="@/assets/HomePage/pinterest.png" alt />
+            </a>
+            <a href="#" class="circle">
+              <img src="@/assets/HomePage/twitter.png" alt />
+            </a>
+          </div>
         </div>
         <div class="right_block">
           <div class="input-box">
@@ -413,7 +432,53 @@ export default {
     .address,
     .number,
     .email {
+      display: flex;
       margin-bottom: 35px;
+      .img_block {
+        margin-right: 20px;
+        img {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+    .address {
+      .img_block {
+        height: 16px;
+        margin-top: 2px;
+      }
+    }
+    .number {
+      .img_block {
+        height: 14px;
+        margin-top: 1px;
+      }
+    }
+    .email {
+      .img_block {
+        height: 10px;
+      }
+    }
+    .social_networks {
+      display: flex;
+      .circle {
+        display: block;
+        position: relative;
+        margin: 0 5px;
+        border-radius: 50%;
+        background-color: white;
+        width: 40px;
+        height: 40px;
+        &:first-child {
+          margin-left: 0;
+        }
+        img {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%)
+        }
+      }
     }
   }
   .right_block {
