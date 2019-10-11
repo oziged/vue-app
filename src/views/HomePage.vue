@@ -86,7 +86,7 @@
     </section>
     <section class="countries_section">
       <h2 class="home_page_title">trending countries</h2>
-      <magic-grid class="countries_list" :gap="10" :maxColWidth="9999" style="margin-bottom: 50px">
+      <magic-grid class="countries_list" :gap="10" :maxColWidth="9999">
         <div class="country">
           <img src="https://cdn.tourradar.com/s3/content-pages/16/1024x768/gxvKGa.jpg" alt />
           <div class="country_desc">
@@ -346,6 +346,7 @@ section, footer {
 .countries_list {
   max-width: 1250px;
   margin: 0 auto;
+  margin-bottom: 100px;
   .country {
     width: calc((100% - 30px) / 3);
     overflow: hidden;
@@ -584,4 +585,5 @@ footer {
     }
   }
 }
+
 </style>
