@@ -348,7 +348,7 @@ section, footer {
   margin: 0 auto;
   margin-bottom: 100px;
   .country {
-    width: calc((100% - 30px) / 3);
+    width: calc((100% - 31px) / 3);
     overflow: hidden;
     cursor: pointer;
     &:nth-child(odd) {
