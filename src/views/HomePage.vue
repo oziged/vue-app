@@ -158,43 +158,45 @@
     <section class="feedback_section">
       <div class="feedback_form">
         <div class="feedback_form_title">get in touch</div>
-        <div class="left_block">
-          <div class="address">
-            <div class="img_block">
-              <img src="@/assets/HomePage/Pin.png" alt />
-            </div>23 Mulholland Drive, Suite 721. Los Angeles 10010
-            <br />100 S. Main Street. Los Angeles 90012
+        <div class="feedback_content_wrapper">
+          <div class="left_block">
+            <div class="address">
+              <div class="img_block">
+                <img src="@/assets/HomePage/Pin.png" alt />
+              </div>23 Mulholland Drive, Suite 721. Los Angeles 10010
+              <br />100 S. Main Street. Los Angeles 90012
+            </div>
+            <div class="number">
+              <div class="img_block">
+                <img src="@/assets/HomePage/iPhone.png" alt />
+              </div>+1-670-567-5590
+            </div>
+            <div class="email">
+              <div class="img_block">
+                <img src="@/assets/HomePage/Envelope.png" alt />
+              </div>hello@clemocreative.com
+            </div>
+            <div class="social_networks">
+              <a href="#" class="circle">
+                <img src="@/assets/HomePage/facebook.png" alt />
+              </a>
+              <a href="#" class="circle">
+                <img src="@/assets/HomePage/google_plus.png" alt />
+              </a>
+              <a href="#" class="circle">
+                <img src="@/assets/HomePage/Instagram.png" alt />
+              </a>
+              <a href="#" class="circle">
+                <img src="@/assets/HomePage/pinterest.png" alt />
+              </a>
+              <a href="#" class="circle">
+                <img src="@/assets/HomePage/twitter.png" alt />
+              </a>
+            </div>
           </div>
-          <div class="number">
-            <div class="img_block">
-              <img src="@/assets/HomePage/iPhone.png" alt />
-            </div>+1-670-567-5590
+          <div class="right_block">
+            <feed-back-form />
           </div>
-          <div class="email">
-            <div class="img_block">
-              <img src="@/assets/HomePage/Envelope.png" alt />
-            </div>hello@clemocreative.com
-          </div>
-          <div class="social_networks">
-            <a href="#" class="circle">
-              <img src="@/assets/HomePage/facebook.png" alt />
-            </a>
-            <a href="#" class="circle">
-              <img src="@/assets/HomePage/google_plus.png" alt />
-            </a>
-            <a href="#" class="circle">
-              <img src="@/assets/HomePage/Instagram.png" alt />
-            </a>
-            <a href="#" class="circle">
-              <img src="@/assets/HomePage/pinterest.png" alt />
-            </a>
-            <a href="#" class="circle">
-              <img src="@/assets/HomePage/twitter.png" alt />
-            </a>
-          </div>
-        </div>
-        <div class="right_block">
-          <feed-back-form />
         </div>
       </div>
     </section>
@@ -214,14 +216,14 @@ export default {
     HomePageSlider,
     FeedBackForm
   },
-  methods: {
-  },
+  methods: {},
   mounted() {}
 };
 </script>
 
 <style lang="scss" scoped>
-section, footer {
+section,
+footer {
   font-family: Montserrat;
 }
 
@@ -238,6 +240,7 @@ section, footer {
   font-size: 50px;
   font-weight: 400;
   line-height: 48px;
+  text-align: center;
   margin: 80px auto;
   width: fit-content;
 }
@@ -439,9 +442,11 @@ section, footer {
     font-size: 60px;
     line-height: 48px;
   }
+  .feedback_content_wrapper {
+    display: flex;
+  }
   .left_block {
     width: 50%;
-    display: inline-block;
     .address,
     .number,
     .email {
@@ -450,8 +455,8 @@ section, footer {
       .img_block {
         margin-right: 20px;
         img {
-          height: 100%;
-          width: 100%;
+          // height: 100%;
+          // width: 100%;
         }
       }
     }
@@ -496,43 +501,6 @@ section, footer {
   }
   .right_block {
     width: 50%;
-    display: inline-block;
-    vertical-align: top;
-    .input-box {
-      position: relative;
-      input {
-        border-style: none;
-        background: transparent;
-        border-bottom: 1px solid white;
-        width: calc(100% - 100px);
-        position: relative;
-        outline: none;
-        padding: 10px 0;
-        color: white;
-        font-size: 18px;
-        margin-bottom: 30px;
-        &:focus ~ label,
-        &:valid ~ label {
-          top: -25px;
-        }
-      }
-      label {
-        color: white;
-        position: absolute;
-        padding: 10px 0;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        transition: 0.5s;
-      }
-    }
-    input[type="submit"] {
-      background-color: white;
-      padding: 10px 40px;
-      color: black;
-      border-radius: 30px;
-      cursor: pointer;
-    }
   }
 }
 
@@ -557,6 +525,7 @@ footer {
     flex-direction: column;
     align-items: center;
     h2 {
+      text-align: center;
       color: #000000;
       font-size: 48px;
       font-weight: 700;
@@ -586,4 +555,106 @@ footer {
   }
 }
 
+@media (max-width: 1300px) {
+  section {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .countries_list {
+    .country {
+      width: calc((100% - 21px) / 2);
+      overflow: hidden;
+      cursor: pointer;
+      &:nth-child(even),
+      &:nth-child(odd) {
+        height: 345px;
+      }
+      &:nth-child(3n + 2) {
+        height: 700px;
+      }
+      &:nth-child(2n + 1) {
+        left: 0 !important;
+      }
+      &:nth-child(2n) {
+        left: auto !important;
+        right: 0 !important;
+      }
+    }
+  }
+  .feedback_section .feedback_form .feedback_content_wrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .right_block {
+      width: 95%;
+      order: -1;
+      margin-bottom: 30px;
+    }
+    .left_block {
+      width: 95%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .address {
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .abilities_section .abilities_list {
+    .ability {
+      margin-bottom: 30px;
+      .img_block_wrapper {
+        display: none;
+      }
+      .desc_block {
+        width: 100%;
+        margin: 0;
+        &:hover p {
+          background-position: 0 0;
+        }
+        .separator {
+          display: none;
+        }
+        .desc_block_title {
+          margin: 0 auto;
+          padding-bottom: 10px;
+          text-align: center;
+          width: fit-content;
+          border-bottom: 3px solid rgba(0, 0, 0, 0.418);
+          margin-bottom: 10px;
+        }
+        p {
+          display: block;
+          text-align: center;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  section {
+    padding: 0 15px;
+  }
+  
+  .home_page_slider {
+    margin: 15px auto 0 auto;
+  }
+
+  .countries_list {
+    .country {
+      width: 100%;
+      overflow: hidden;
+      cursor: pointer;
+      height: 400px !important;
+    }
+  }
+}
 </style>

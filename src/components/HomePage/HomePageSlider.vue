@@ -9,11 +9,11 @@
         v-for="(item, index) in $slots.default"
         :key="index"
         :class="{active_circle: index == currentSlide}"
-        @click="currentSlide = index"
+        @click="animating ? '' : currentSlide = index"
       ></div>
     </div>
     <div class="navigation_arrows">
-      <svg id="left" @click="changeSlideDown" viewBox="0 0 476.213 476.213">
+      <svg id="left" @click="animating ? '' : changeSlideDown()" viewBox="0 0 476.213 476.213">
         <polygon
           fill="inherit"
           points="347.5,324.393 253.353,418.541 253.353,0 223.353,0 223.353,419.033 128.713,324.393 107.5,345.607 
@@ -21,7 +21,7 @@
         />
       </svg>
       <div class="separator"></div>
-      <svg id="right" @click="changeSlideUp" viewBox="0 0 476.213 476.213">
+      <svg id="right" @click="animating ? '' : changeSlideUp()" viewBox="0 0 476.213 476.213">
         <polygon
           fill="inherit"
           points="347.5,324.393 253.353,418.541 253.353,0 223.353,0 223.353,419.033 128.713,324.393 107.5,345.607 
@@ -72,7 +72,7 @@ export default {
       this.animating = true;
       setTimeout(() => {
         this.animating = false;
-      }, duration * 500);
+      }, duration * 500 * 2);
       TweenMax.to(this.$slots.default[this.prevSlide].elm, duration, {
         opacity: 0,
         zIndex: 1
@@ -159,6 +159,16 @@ export default {
     width: 3px;
     background-color: rgba(0, 0, 0, 0.336);
     margin: 0 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .navigation_circles {
+    display: none;
+  }
+  .navigation_arrows {
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 </style>

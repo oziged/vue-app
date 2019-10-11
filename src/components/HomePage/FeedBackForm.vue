@@ -77,7 +77,8 @@ export default {
     border-style: none;
     background: transparent;
     border-bottom: 1px solid white;
-    width: calc(100% - 100px);
+    width: 100%;
+    max-width: 500px;
     position: relative;
     outline: none;
     padding: 10px 0;
@@ -96,7 +97,8 @@ export default {
     border-bottom: 1px solid white;
     resize: none;
     outline: none;
-    width: calc(100% - 100px);
+    width: 100%;
+    max-width: 500px;
     padding: 10px 0;
     margin-bottom: 30px;
     &:focus ~ label,
@@ -128,6 +130,13 @@ input[type="submit"] {
       font-size: 15px;
       color: rgba(255, 255, 255, 0.5);
     }
+  }
+}
+
+@media (max-width: 1000px) {
+  input[type="submit"] {
+    display: block;
+    margin: 0 auto;
   }
 }
 </style>
