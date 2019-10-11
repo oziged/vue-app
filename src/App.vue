@@ -156,7 +156,7 @@ export default {
 <style lang="scss">
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.3s;
+  transition: all .5s;
 }
 
 .fade-enter,

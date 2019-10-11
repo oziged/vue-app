@@ -1,151 +1,160 @@
 <template>
-  <div style="font-family: Montserrat;">
-    <home-page-slider class="home_page_slider">
-      <div
-        class="home_page_slide slide1"
-        style="background: url('http://www.dalenawatson.com/wp-content/uploads/2017/09/girl-sun-2.jpg') no-repeat center center/cover"
-      >
-        <div class="content">
-          <h2>we are travel.</h2>
-          <div class="separator"></div>
-          <h4>
-            proffesionals
-            <br />in create industries
-          </h4>
-          <button>get in touch</button>
-        </div>
-      </div>
-      <div
-        class="home_page_slide"
-        style="background: url('https://bigseventravel.com/wp-content/uploads/2019/08/Screenshot-2019-08-14-at-12.20.27.png') no-repeat center center/cover"
-      >
-        <p>here just PARAGRAPH</p>
-      </div>
-      <div
-        class="home_page_slide"
-        style="background: url('https://www.intrepidtravel.com/adventures/wp-content/uploads/2016/08/Solo-travel-Intrepid.jpg') no-repeat center center/cover"
-      ></div>
-    </home-page-slider>
-    <h2 class="home_page_title">what we do?</h2>
-    <div class="abilities_list">
-      <div class="ability">
-        <div class="img_block_wrapper">
-          <div class="img_block"></div>
-        </div>
-        <div class="desc_block">
-          <div class="desc_block_title">
-            <h5>creative</h5>
-            <h5>kitchen</h5>
+  <div>
+    <section>
+      <home-page-slider class="home_page_slider">
+        <div
+          class="home_page_slide slide1"
+          style="background: url('http://www.dalenawatson.com/wp-content/uploads/2017/09/girl-sun-2.jpg') no-repeat center center/cover"
+        >
+          <div class="content">
+            <h2>we are travel.</h2>
+            <div class="separator"></div>
+            <h4>
+              proffesionals
+              <br />in create industries
+            </h4>
+            <button>get in touch</button>
           </div>
-          <div class="separator"></div>
-          <p>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-            <br />
-            <br />Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-          </p>
         </div>
-      </div>
-      <div class="ability">
-        <div class="img_block_wrapper">
-          <div class="img_block"></div>
+        <div
+          class="home_page_slide"
+          style="background: url('https://bigseventravel.com/wp-content/uploads/2019/08/Screenshot-2019-08-14-at-12.20.27.png') no-repeat center center/cover"
+        >
+          <p>here just PARAGRAPH</p>
         </div>
-        <div class="desc_block">
-          <div class="desc_block_title">
-            <h5>creative</h5>
-            <h5>kitchen</h5>
+        <div
+          class="home_page_slide"
+          style="background: url('https://www.intrepidtravel.com/adventures/wp-content/uploads/2016/08/Solo-travel-Intrepid.jpg') no-repeat center center/cover"
+        ></div>
+      </home-page-slider>
+    </section>
+    <section class="abilities_section">
+      <h2 class="home_page_title">what we do?</h2>
+      <div class="abilities_list">
+        <div class="ability">
+          <div class="img_block_wrapper">
+            <div class="img_block"></div>
           </div>
-          <div class="separator"></div>
-          <p>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-            <br />
-            <br />Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-          </p>
-        </div>
-      </div>
-      <div class="ability">
-        <div class="img_block_wrapper">
-          <div class="img_block"></div>
-        </div>
-        <div class="desc_block">
-          <div class="desc_block_title">
-            <h5>creative</h5>
-            <h5>kitchen</h5>
+          <div class="desc_block">
+            <div class="desc_block_title">
+              <h5>creative</h5>
+              <h5>kitchen</h5>
+            </div>
+            <div class="separator"></div>
+            <p>
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+              <br />
+              <br />Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+            </p>
           </div>
-          <div class="separator"></div>
-          <p>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-            <br />
-            <br />Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-          </p>
+        </div>
+        <div class="ability">
+          <div class="img_block_wrapper">
+            <div class="img_block"></div>
+          </div>
+          <div class="desc_block">
+            <div class="desc_block_title">
+              <h5>creative</h5>
+              <h5>kitchen</h5>
+            </div>
+            <div class="separator"></div>
+            <p>
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+              <br />
+              <br />Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+            </p>
+          </div>
+        </div>
+        <div class="ability">
+          <div class="img_block_wrapper">
+            <div class="img_block"></div>
+          </div>
+          <div class="desc_block">
+            <div class="desc_block_title">
+              <h5>creative</h5>
+              <h5>kitchen</h5>
+            </div>
+            <div class="separator"></div>
+            <p>
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+              <br />
+              <br />Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-    <h2 class="home_page_title">trending countries</h2>
-    <magic-grid class="countries_list" :gap="10" :maxColWidth="9999" style="margin-bottom: 50px">
-      <div class="country">
-        <img src="https://cdn.tourradar.com/s3/content-pages/16/1024x768/gxvKGa.jpg" alt />
-        <div class="country_desc">
-          <h3>USA</h3>
-          <country-flag country="usa" size="big" style="display: block;" />
-          <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+    </section>
+    <section class="countries_section">
+      <h2 class="home_page_title">trending countries</h2>
+      <magic-grid class="countries_list" :gap="10" :maxColWidth="9999" style="margin-bottom: 50px">
+        <div class="country">
+          <img src="https://cdn.tourradar.com/s3/content-pages/16/1024x768/gxvKGa.jpg" alt />
+          <div class="country_desc">
+            <h3>USA</h3>
+            <country-flag country="usa" size="big" style="display: block;" />
+            <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+          </div>
+          <div class="hover_bg"></div>
         </div>
-        <div class="hover_bg"></div>
-      </div>
-      <div class="country">
-        <img src="https://www.planetware.com/photos-large/USNY/usa-best-places-new-york.jpg" alt />
-        <div class="country_desc">
-          <h3>USA</h3>
-          <country-flag country="usa" size="big" style="display: block;" />
-          <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+        <div class="country">
+          <img src="https://www.planetware.com/photos-large/USNY/usa-best-places-new-york.jpg" alt />
+          <div class="country_desc">
+            <h3>USA</h3>
+            <country-flag country="usa" size="big" style="display: block;" />
+            <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+          </div>
+          <div class="hover_bg"></div>
         </div>
-        <div class="hover_bg"></div>
-      </div>
-      <div class="country">
-        <img
-          src="https://handluggageonly.co.uk/wp-content/uploads/2018/02/Hand-Luggage-Only-8-5.jpg"
-          alt
-        />
-        <div class="country_desc">
-          <h3>USA</h3>
-          <country-flag country="usa" size="big" style="display: block;" />
-          <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+        <div class="country">
+          <img
+            src="https://handluggageonly.co.uk/wp-content/uploads/2018/02/Hand-Luggage-Only-8-5.jpg"
+            alt
+          />
+          <div class="country_desc">
+            <h3>USA</h3>
+            <country-flag country="usa" size="big" style="display: block;" />
+            <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+          </div>
+          <div class="hover_bg"></div>
         </div>
-        <div class="hover_bg"></div>
-      </div>
-      <div class="country">
-        <img
-          src="https://www.ktchnrebel.com/wp-content/uploads/2019/03/Working-in-Mexico-City-KTCHNrebel-copyright-Fotolia-javarman.jpg"
-          alt
-        />
-        <div class="country_desc">
-          <h3>USA</h3>
-          <country-flag country="usa" size="big" style="display: block;" />
-          <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+        <div class="country">
+          <img
+            src="https://www.ktchnrebel.com/wp-content/uploads/2019/03/Working-in-Mexico-City-KTCHNrebel-copyright-Fotolia-javarman.jpg"
+            alt
+          />
+          <div class="country_desc">
+            <h3>USA</h3>
+            <country-flag country="usa" size="big" style="display: block;" />
+            <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+          </div>
+          <div class="hover_bg"></div>
         </div>
-        <div class="hover_bg"></div>
-      </div>
-      <div class="country">
-        <img src="https://d36tnp772eyphs.cloudfront.net/blogs/1/2011/05/thailand-1200x819.jpg" alt />
-        <div class="country_desc">
-          <h3>USA</h3>
-          <country-flag country="usa" size="big" style="display: block;" />
-          <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+        <div class="country">
+          <img
+            src="https://d36tnp772eyphs.cloudfront.net/blogs/1/2011/05/thailand-1200x819.jpg"
+            alt
+          />
+          <div class="country_desc">
+            <h3>USA</h3>
+            <country-flag country="usa" size="big" style="display: block;" />
+            <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+          </div>
+          <div class="hover_bg"></div>
         </div>
-        <div class="hover_bg"></div>
-      </div>
-      <div class="country">
-        <img
-          src="https://afar-production.imgix.net/uploads/syndication/holland_americas/images/h9B977Yqvt/original_ESY-013403436.Berlin.Hero.AGE.crop.jpg?w=750&h=563&fit=crop"
-          alt
-        />
-        <div class="country_desc">
-          <h3>USA</h3>
-          <country-flag country="usa" size="big" style="display: block;" />
-          <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+        <div class="country">
+          <img
+            src="https://afar-production.imgix.net/uploads/syndication/holland_americas/images/h9B977Yqvt/original_ESY-013403436.Berlin.Hero.AGE.crop.jpg?w=750&h=563&fit=crop"
+            alt
+          />
+          <div class="country_desc">
+            <h3>USA</h3>
+            <country-flag country="usa" size="big" style="display: block;" />
+            <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+          </div>
+          <div class="hover_bg"></div>
         </div>
-        <div class="hover_bg"></div>
-      </div>
-    </magic-grid>
+      </magic-grid>
+    </section>
     <section class="feedback_section">
       <div class="feedback_form">
         <div class="feedback_form_title">get in touch</div>
@@ -185,33 +194,37 @@
           </div>
         </div>
         <div class="right_block">
-          <div class="input-box">
-            <input type="text" name required />
-            <label for>Username</label>
-          </div>
-          <div class="input-box">
-            <input type="password" name required />
-            <label for>Password</label>
-          </div>
-          <input type="submit" value="Submit" />
+          <feed-back-form />
         </div>
       </div>
     </section>
+    <footer>
+      <div class="year">2019 travel.</div>
+      <div class="rights">all right reserved</div>
+    </footer>
   </div>
 </template>
 
 <script>
-import HomeMap from "../components/HomePage/HomeMap";
 import HomePageSlider from "../components/HomePage/HomePageSlider";
+import FeedBackForm from "../components/HomePage/FeedBackForm";
+
 export default {
   components: {
-    HomePageSlider
+    HomePageSlider,
+    FeedBackForm
+  },
+  methods: {
   },
   mounted() {}
 };
 </script>
 
 <style lang="scss" scoped>
+section, footer {
+  font-family: Montserrat;
+}
+
 .home_page_slider {
   margin: 50px auto 0 auto;
   max-width: 1250px;
@@ -416,10 +429,9 @@ export default {
 .feedback_form {
   max-width: 1250px;
   margin: 0 auto;
-  height: 550px;
   color: white;
+  padding: 90px 0;
   .feedback_form_title {
-    padding-top: 90px;
     padding-bottom: 75px;
     text-align: center;
     font-family: "Montserrat";
@@ -476,7 +488,7 @@ export default {
           position: absolute;
           left: 50%;
           top: 50%;
-          transform: translate(-50%, -50%)
+          transform: translate(-50%, -50%);
         }
       }
     }
@@ -484,6 +496,7 @@ export default {
   .right_block {
     width: 50%;
     display: inline-block;
+    vertical-align: top;
     .input-box {
       position: relative;
       input {
@@ -519,6 +532,18 @@ export default {
       border-radius: 30px;
       cursor: pointer;
     }
+  }
+}
+
+footer {
+  height: 130px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .year {
+    font-weight: bold;
   }
 }
 
