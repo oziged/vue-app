@@ -49,9 +49,8 @@ header {
   top: 0;
   background: white;
   z-index: 101;
-  transition: 0.3s;
   box-shadow: 0 0 4px 0px #00000036;
-  transition: 0.5s;
+  transition: 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
   cursor: pointer;
   &:hover {
     background-color: #f8fff5;

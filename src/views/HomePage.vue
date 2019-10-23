@@ -228,7 +228,7 @@ footer {
 }
 
 .home_page_slider {
-  margin-top: 20px;
+  margin: 20px auto 0 auto;
   max-width: 1250px;
   height: 520px;
   width: 100%;

@@ -4,9 +4,10 @@
       <app-header ref="header" />
       <transition
         appear
-        :duration="{leave: isMobile ? 0 : leave}"
+        :duration="{leave: isMobile ? 0 : transitionDuration}"
         @before-enter="beforeEnter"
         @before-leave="beforeLeave"
+        @after-enter="afterEnter"
         mode="out-in"
       >
         <router-view class="router_content" :key="$route.fullPath"></router-view>
@@ -45,7 +46,7 @@ export default {
   },
   data() {
     return {
-      leave: 1000,
+      transitionDuration: 1000,
       nextPath: null,
       prevPath: null
     };
@@ -53,67 +54,38 @@ export default {
   methods: {
     beforeEnter: function(el) {
       if (this.isMobile) return;
-      let delay = 0;
-      let duration = 1;
 
       if (this.$route.path.includes("plans")) {
         TweenMax.from(el, 0.8, {
           opacity: 0,
-          x: "-100%",
+          x: "-300px",
           delay: 0.2,
           clearProps: "scale"
         });
       }
-      if (this.$route.path.includes("about")) {
-        this.$nextTick(() => {
-          TweenMax.to(".about_wrapper", 1.5, {
-            backgroundColor: "rgb(191, 215, 206)",
-            delay: 0.5,
-            clearProps: "scale"
-          });
-          TweenMax.to(".about", 2, {
-            webkitClipPath: "circle(100% at center)",
-            delay: 2,
-            clearProps: "scale"
-          });
-        });
-      } else {
-        TweenMax.from(el, 1, {
-          opacity: 0,
-          x: "-100%",
-          clearProps: "scale"
-        });
-      }
+
+      TweenMax.from(el, 1, {
+        opacity: 0,
+        x: "-300px",
+        clearProps: "scale"
+      });
     },
     beforeLeave: function(el) {
+      document.querySelector("#app").classList.add("before_leave"); // fix scrollbar during transition
       if (this.isMobile) return;
-      if (this.$route.path.includes("about")) {
-        if (this.prevPath.includes("plan")) {
-          TweenMax.to(".plan_info", 1, {
-            opacity: 0,
-            x: "-100%",
-            ease: Power3.easeInOut,
-            delay: 0.2,
-            clearProps: "scale"
-          });
-          TweenMax.to(".plan_map", 1, {
-            opacity: 0,
-            x: "100%",
-            ease: Power3.easeInOut,
-            delay: 0.7,
-            clearProps: "scale"
-          });
-        }
-      } else {
+      else {
         TweenMax.to(el, 1, {
           opacity: 0,
-          x: "100%",
+          x: "300px",
           ease: Power3.easeOut,
           clearProps: "scale"
         });
       }
-
-      this.leave = 1000;
+    },
+    afterEnter() {
+      setTimeout(() => {
+        document.querySelector("#app").classList.remove("before_leave"); // unfix scrollbar after transition
+      }, this.transitionDuration);
     },
     ...mapActions([
       "toggleMainCheckpointModal",
@@ -134,7 +106,6 @@ export default {
   },
   watch: {
     $route(next, prev) {
-      if (next.path.includes("about")) this.leave = 2000;
       this.nextPath = next.path;
       this.prevPath = prev.path;
     }
@@ -173,6 +144,7 @@ html {
   font-family: Arial, Helvetica, sans-serif;
   .router_content {
     margin-top: 100px;
+    margin: 100px auto 0 auto;
   }
 }
 
@@ -184,6 +156,10 @@ input[type="submit"] {
   outline: none;
 }
 
+.before_leave {
+  max-height: 100vh;
+  overflow: hidden;
+}
 /* VUETIFY STYLES FIX */
 
 .checkpoints_list {
