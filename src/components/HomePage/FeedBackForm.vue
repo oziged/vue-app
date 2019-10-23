@@ -71,14 +71,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .input-box {
   position: relative;
+  width: 100%;
   input {
     border-style: none;
     background: transparent;
     border-bottom: 1px solid white;
     width: 100%;
-    max-width: 500px;
     position: relative;
     outline: none;
     padding: 10px 0;
@@ -98,7 +103,6 @@ export default {
     resize: none;
     outline: none;
     width: 100%;
-    max-width: 500px;
     padding: 10px 0;
     margin-bottom: 30px;
     &:focus ~ label,
@@ -111,6 +115,7 @@ export default {
 input[type="submit"] {
   background-color: white;
   padding: 10px 40px;
+  width: 200px;
   color: black;
   border-radius: 30px;
   cursor: pointer;

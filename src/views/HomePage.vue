@@ -1,7 +1,7 @@
 <template>
   <div>
-    <section>
-      <home-page-slider class="home_page_slider">
+    <section class="home_page_slider">
+      <home-page-slider>
         <div
           class="home_page_slide slide1"
           style="background: url('http://www.dalenawatson.com/wp-content/uploads/2017/09/girl-sun-2.jpg') no-repeat center center/cover"
@@ -159,7 +159,10 @@
       <div class="feedback_form">
         <div class="feedback_form_title">get in touch</div>
         <div class="feedback_content_wrapper">
-          <div class="left_block">
+          <div class="top_block">
+            <feed-back-form />
+          </div>
+          <div class="bottom_block">
             <div class="address">
               <div class="img_block">
                 <img src="@/assets/HomePage/Pin.png" alt />
@@ -194,9 +197,6 @@
               </a>
             </div>
           </div>
-          <div class="right_block">
-            <feed-back-form />
-          </div>
         </div>
       </div>
     </section>
@@ -228,7 +228,7 @@ footer {
 }
 
 .home_page_slider {
-  margin: 50px auto 0 auto;
+  margin-top: 20px;
   max-width: 1250px;
   height: 520px;
   width: 100%;
@@ -444,9 +444,14 @@ footer {
   }
   .feedback_content_wrapper {
     display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  .left_block {
+  .bottom_block {
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     .address,
     .number,
     .email {
@@ -499,8 +504,10 @@ footer {
       }
     }
   }
-  .right_block {
+  .top_block {
     width: 50%;
+    max-width: 600px;
+    margin-bottom: 30px;
   }
 }
 
@@ -587,12 +594,11 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    .right_block {
+    .top_block {
       width: 95%;
-      order: -1;
       margin-bottom: 30px;
     }
-    .left_block {
+    .bottom_block {
       width: 95%;
       display: flex;
       flex-direction: column;
@@ -643,7 +649,7 @@ footer {
   section {
     padding: 0 15px;
   }
-  
+
   .home_page_slider {
     margin: 15px auto 0 auto;
   }

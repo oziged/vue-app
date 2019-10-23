@@ -22,18 +22,37 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    setHeaderAnimation() {
+      document.addEventListener("scroll", e => {
+        if (window.pageYOffset > 100) {
+          this.$el.style.height = "50px";
+        } else if (window.pageYOffset < 50) {
+          this.$el.style.height = "80px";
+        }
+      });
+    }
+  },
+  mounted() {
+    this.setHeaderAnimation();
+  }
+};
 </script>
 
 <style lang="scss" scoped>
 header {
   width: 100%;
   height: 80px;
-  position: relative;
+  position: fixed;
+  left: 0;
+  top: 0;
   background: white;
-  z-index: 10;
+  z-index: 101;
   transition: 0.3s;
   box-shadow: 0 0 4px 0px #00000036;
+  transition: 0.5s;
+  cursor: pointer;
   &:hover {
     background-color: #f8fff5;
   }
@@ -46,7 +65,8 @@ header {
     justify-content: space-between;
   }
 
-  .left_block, .right_block {
+  .left_block,
+  .right_block {
     display: flex;
   }
 
@@ -66,11 +86,9 @@ header {
       font-weight: 700;
       color: black;
       text-decoration: none;
-      img {
-        // height: 70px;
-      }
     }
     span {
+      padding-top: 4px;
       border-bottom: 2px solid rgba(11, 99, 61, 0);
       transition: 0.3s;
     }
@@ -84,7 +102,7 @@ header {
 
 @media (max-width: 1300px) {
   header .nav_list {
-    margin: 0 20px;
+    margin: 0 30px;
   }
 }
 </style>

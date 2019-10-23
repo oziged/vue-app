@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" style="padding-top: 20px; margin: 0 auto; max-width: 1250px;">
+  <div class="wrapper" style="max-width: 1250px;">
     <filter-sort-header class="filter_sort_header" />
     <magic-grid class="plans_list" :gap="10" :maxColWidth="9999">
       <plan-preview v-for="(item, index) in allPlans" :key="index" :plan="item" />

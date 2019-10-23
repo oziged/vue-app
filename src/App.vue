@@ -59,7 +59,7 @@ export default {
       if (this.$route.path.includes("plans")) {
         TweenMax.from(el, 0.8, {
           opacity: 0,
-          y: "-100%",
+          x: "-100%",
           delay: 0.2,
           clearProps: "scale"
         });
@@ -80,7 +80,7 @@ export default {
       } else {
         TweenMax.from(el, 1, {
           opacity: 0,
-          y: "-100%",
+          x: "-100%",
           clearProps: "scale"
         });
       }
@@ -107,7 +107,7 @@ export default {
       } else {
         TweenMax.to(el, 1, {
           opacity: 0,
-          y: "100%",
+          x: "100%",
           ease: Power3.easeOut,
           clearProps: "scale"
         });
@@ -154,9 +154,13 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+  scroll-behavior: smooth;
+}
+
 .fade-enter-active,
 .fade-leave-active {
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 .fade-enter,
@@ -167,29 +171,18 @@ export default {
 #app {
   background-color: white;
   font-family: Arial, Helvetica, sans-serif;
+  .router_content {
+    margin-top: 100px;
+  }
 }
 
 * {
   box-sizing: border-box;
 }
 
-input[type="submit"]{
-   outline:none;
+input[type="submit"] {
+  outline: none;
 }
-
-// ::-webkit-scrollbar-track {
-//   -webkit-box-shadow: inset 0 0 4px rgba(145, 145, 145, 0.3);
-//   background-color: #f5f5f5;
-// }
-
-// ::-webkit-scrollbar {
-//   width: 4px;
-//   background-color: #f5f5f5;
-// }
-
-// ::-webkit-scrollbar-thumb {
-//   background-color: #14e71e5e;
-// }
 
 /* VUETIFY STYLES FIX */
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" style="padding-top: 20px; margin: 0 auto; max-width: 1250px;">
+  <div class="wrapper" style="max-width: 1250px;">
     <plan :id="$route.params.id" />
   </div>
 </template>
