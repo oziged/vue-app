@@ -26,5 +26,5 @@ export default new Router({
       path: '/user/:id', 
       component: UserShow
     },
-  ]
+  ],
 })

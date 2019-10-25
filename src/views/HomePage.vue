@@ -4,7 +4,7 @@
       <home-page-slider>
         <div
           class="home_page_slide slide1"
-          style="background: url('http://www.dalenawatson.com/wp-content/uploads/2017/09/girl-sun-2.jpg') no-repeat center center/cover"
+          style="background: url('https://www.inctravelgroup.com/wp-content/uploads/2019/01/Green-Travel-2.jpg') no-repeat center center/cover"
         >
           <div class="content">
             <h2>we are travel.</h2>
@@ -17,15 +17,33 @@
           </div>
         </div>
         <div
-          class="home_page_slide"
-          style="background: url('https://bigseventravel.com/wp-content/uploads/2019/08/Screenshot-2019-08-14-at-12.20.27.png') no-repeat center center/cover"
+          class="home_page_slide slide1"
+          style="background: url('https://independenttravelcats.com/wp-content/uploads/2018/03/Destinations.jpg') no-repeat center center/cover"
         >
-          <p>here just PARAGRAPH</p>
+          <div class="content">
+            <h2>we are travel.</h2>
+            <div class="separator"></div>
+            <h4>
+              proffesionals
+              <br />in create industries
+            </h4>
+            <button>get in touch</button>
+          </div>
         </div>
         <div
-          class="home_page_slide"
-          style="background: url('https://www.intrepidtravel.com/adventures/wp-content/uploads/2016/08/Solo-travel-Intrepid.jpg') no-repeat center center/cover"
-        ></div>
+          class="home_page_slide slide1"
+          style="background: url('https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fcdn-image.travelandleisure.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F1600x1000%2Fpublic%2Fsolo-travel-women-lake-packsolo0717.jpg%3Fitok%3D4o68ByzL&q=85') no-repeat center center/cover"
+        >
+          <div class="content">
+            <h2>we are travel.</h2>
+            <div class="separator"></div>
+            <h4>
+              proffesionals
+              <br />in create industries
+            </h4>
+            <button>get in touch</button>
+          </div>
+        </div>
       </home-page-slider>
     </section>
     <section class="abilities_section">
@@ -253,7 +271,7 @@ footer {
   width: 100%;
   height: 100%;
   opacity: 0.8;
-  background-color: #ffe1bd;
+  background-color: #bdffc5cc;
 }
 
 .abilities_list {

@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <div>
-      <app-header ref="header"/>
+      <app-header ref="header" />
       <transition
         appear
         :duration="{leave: isMobile ? 0 : transitionDuration}"
@@ -45,35 +45,36 @@ export default {
   },
   data() {
     return {
-      transitionDuration: 1000,
+      transitionDuration: 1000
     };
   },
   methods: {
     beforeEnter(el) {
       if (this.isMobile) return;
+      document.querySelector("#app").classList.add("before_leave"); // fix scrollbar during transition
       setTimeout(() => {
         document.querySelector("#app").classList.remove("before_leave"); // unfix scrollbar after transition
       }, this.transitionDuration);
-      
-      let delay = this.$route.path.includes("plans") ? .3 : 0 // animation
-        TweenMax.from(el, 1-delay, {
-          opacity: 0,
-          x: "-300px",
-          delay: delay,
-          clearProps: "scale"
-        });
+
+      let delay = this.$route.path.includes("plans") ? 0.3 : 0;
+      // animation
+      TweenMax.from(el, 1 - delay, {
+        opacity: 0,
+        x: "-300px",
+        delay: delay,
+        clearProps: "scale"
+      });
     },
-    
+
     beforeLeave(el) {
       if (this.isMobile) return;
-      document.querySelector("#app").classList.add("before_leave"); // fix scrollbar during transition
-      
-        TweenMax.to(el, 1, { // animation
-          opacity: 0,
-          x: "300px",
-          ease: Power3.easeOut,
-          clearProps: "scale"
-        });
+      // animation
+      TweenMax.to(el, 1, {
+        opacity: 0,
+        x: "300px",
+        ease: Power3.easeOut,
+        clearProps: "scale"
+      });
     },
     ...mapActions([
       "toggleMainCheckpointModal",
@@ -83,7 +84,7 @@ export default {
       "toggleEditPlanModal",
       "setWindowWidth",
       "toggleMobileMapModal"
-    ]),
+    ])
   },
   mounted() {
     this.updateCurrentLocation();
