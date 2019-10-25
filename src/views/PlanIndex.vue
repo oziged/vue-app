@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" style="max-width: 1250px;">
+  <div class="wrapper">
     <filter-sort-header class="filter_sort_header" />
     <magic-grid class="plans_list" :gap="10" :maxColWidth="9999">
       <plan-preview v-for="(item, index) in allPlans" :key="index" :plan="item" />
@@ -30,6 +30,9 @@ export default {
 .plans_list {
   position: relative;
   margin: 0 0;
+}
+.wrapper {
+  max-width: 1250px;
 }
 
 @media (max-width: 1300px) {

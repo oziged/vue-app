@@ -1,13 +1,6 @@
 <template>
   <div class="map_wrapper" ref="map_wrapper">
-    <GmapMap
-      ref="gmap"
-      class="map"
-      :center="center"
-      :zoom="zoom"
-      map-type-id="terrain"
-      style="width: 100%; height: 100%"
-    >
+    <GmapMap ref="gmap" class="map" :center="center" :zoom="zoom" map-type-id="terrain">
       <GmapMarker
         :key="index"
         v-for="(m, index) in markersList"
@@ -181,4 +174,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.map {
+  width: 100%;
+  height: 100%;
+}
 </style>

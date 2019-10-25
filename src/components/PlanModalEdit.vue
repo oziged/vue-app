@@ -214,7 +214,9 @@ export default {
       this.setCheckpointsData(newValue, "Plan");
     }
   },
-  mounted() {}
+  mounted() {
+    window.data = () => this.data;
+  }
 };
 </script>
 

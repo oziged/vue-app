@@ -45,10 +45,10 @@
         </transition>
         <GmapMap
           ref="gmap"
+          class="gmap"
           :center="currentLocation || {lat: 0, lng: 0}"
           :zoom="zoom"
           map-type-id="terrain"
-          style="width: 100%; height: 100%"
         >
           <GmapMarker
             ref="marker"
@@ -307,6 +307,11 @@ export default {
   transition: 1s;
   margin-bottom: 0px;
   position: relative;
+}
+
+.gmap {
+  width: 100%;
+  height: 100%;
 }
 
 .save_map_place {

@@ -8,14 +8,14 @@
       <p class="plan_description">{{ plan.description }}</p>
       <div class="checkpoint_list_wrapper">
         <div class="checkpoints_list">
-          <v-expansion-panels accordion style="width: calc(100% - 15px);">
+          <v-expansion-panels accordion>
             <checkpoint
               v-for="(checkpoint,i) in data"
+              class="checkpoint"
               :key="i"
               :nestedLvl="1"
               :checkpoint="checkpoint.item"
               :nested="checkpoint.nested"
-              :style="{paddingTop: i == 0 ? '10px' : '10px', marginBottom: '10px'}"
             ></checkpoint>
           </v-expansion-panels>
         </div>
@@ -121,7 +121,7 @@ export default {
         res.push(obj);
       });
       this.data = res;
-    },
+    }
   },
   provide() {
     return {
@@ -227,7 +227,15 @@ export default {
       background-color: #fff;
     }
     .checkpoint_list_wrapper {
+      width: calc(100% - 23px);
       margin-left: 23px;
+      .checkpoints_list {
+        width: calc(100% - 15px);
+      }
+      .checkpoint {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
     }
     .plan_title {
       .moveModalIcon {

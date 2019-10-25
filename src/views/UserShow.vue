@@ -1,5 +1,5 @@
 <template>
-  <div style="max-width: 1250px;">
+  <div class="wrapper">
     <user-info :id="$route.params.id" />
   </div>
 </template>
@@ -14,5 +14,8 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style lang="scss" scoped>
+.wrapper {
+  max-width: 1250px;
+}
+</style>>

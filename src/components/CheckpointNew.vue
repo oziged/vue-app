@@ -45,10 +45,10 @@
         </transition>
         <GmapMap
           ref="gmap"
+          class="gmap"
           :center="currentLocation || {lat: 0, lng: 0}"
           :zoom="zoom"
           map-type-id="terrain"
-          style="width: 100%; height: 100%"
         >
           <GmapMarker
             ref="marker"
@@ -87,7 +87,6 @@
           <vue-scroll
             v-else
             class="checkpoint_description_wrapper"
-            style="height: 200px; "
           >
             <div class="checkpoint_description">{{ description || 'Description' }}</div>
           </vue-scroll>
@@ -305,6 +304,11 @@ export default {
   position: relative;
 }
 
+.gmap {
+  width: 100%;
+  height: 100%;
+}
+
 .save_map_place {
   position: absolute;
   bottom: 20px;
@@ -365,6 +369,7 @@ export default {
       }
     }
     .checkpoint_description_wrapper {
+      height: 200px;
       box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 4px 0px;
       .checkpoint_description {
         padding: 10px;

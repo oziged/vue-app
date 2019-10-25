@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" style="max-width: 1250px;">
+  <div class="wrapper">
     <plan :id="$route.params.id" />
   </div>
 </template>
@@ -15,6 +15,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wrapper {
+  max-width: 1250px;
+}
 @media (max-width: 1300px) {
   .wrapper {
     padding: 0 20px;

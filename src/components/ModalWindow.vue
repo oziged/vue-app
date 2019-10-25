@@ -7,7 +7,7 @@
         :style="{width: width, height: height, overflowX: overflowX, overflowY: overflowY}"
         v-click-outside="inputConfig"
       >
-        <div style="position: relative; width: 100%; height: 100%">
+        <div class="modal_content">
           <slot></slot>
         </div>
       </div>
@@ -69,6 +69,12 @@ export default {
   max-height: 90%;
   max-width: 1250px;
   overflow-y: auto;
+}
+
+.modal_content {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .modal_bg {

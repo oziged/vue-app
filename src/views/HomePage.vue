@@ -2,10 +2,12 @@
   <div>
     <section class="home_page_slider">
       <home-page-slider>
-        <div
-          class="home_page_slide slide1"
-          style="background: url('https://www.inctravelgroup.com/wp-content/uploads/2019/01/Green-Travel-2.jpg') no-repeat center center/cover"
-        >
+        <div class="home_page_slide slide1">
+          <img
+            class="home_page_slide_bg"
+            src="https://i.pinimg.com/originals/ae/37/e4/ae37e49bc7e9376089eb8f80f22b28f2.jpg"
+            alt
+          />
           <div class="content">
             <h2>we are travel.</h2>
             <div class="separator"></div>
@@ -16,10 +18,12 @@
             <button>get in touch</button>
           </div>
         </div>
-        <div
-          class="home_page_slide slide1"
-          style="background: url('https://independenttravelcats.com/wp-content/uploads/2018/03/Destinations.jpg') no-repeat center center/cover"
-        >
+        <div class="home_page_slide slide1">
+          <img
+            class="home_page_slide_bg"
+            src="https://independenttravelcats.com/wp-content/uploads/2018/03/Destinations.jpg"
+            alt
+          />
           <div class="content">
             <h2>we are travel.</h2>
             <div class="separator"></div>
@@ -30,10 +34,12 @@
             <button>get in touch</button>
           </div>
         </div>
-        <div
-          class="home_page_slide slide1"
-          style="background: url('https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fcdn-image.travelandleisure.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F1600x1000%2Fpublic%2Fsolo-travel-women-lake-packsolo0717.jpg%3Fitok%3D4o68ByzL&q=85') no-repeat center center/cover"
-        >
+        <div class="home_page_slide slide1">
+          <img
+            class="home_page_slide_bg"
+            src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fcdn-image.travelandleisure.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F1600x1000%2Fpublic%2Fsolo-travel-women-lake-packsolo0717.jpg%3Fitok%3D4o68ByzL&q=85"
+            alt
+          />
           <div class="content">
             <h2>we are travel.</h2>
             <div class="separator"></div>
@@ -109,7 +115,7 @@
           <img src="https://cdn.tourradar.com/s3/content-pages/16/1024x768/gxvKGa.jpg" alt />
           <div class="country_desc">
             <h3>USA</h3>
-            <country-flag country="usa" size="big" style="display: block;" />
+            <country-flag country="usa" size="big" />
             <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
           </div>
           <div class="hover_bg"></div>
@@ -118,7 +124,7 @@
           <img src="https://www.planetware.com/photos-large/USNY/usa-best-places-new-york.jpg" alt />
           <div class="country_desc">
             <h3>USA</h3>
-            <country-flag country="usa" size="big" style="display: block;" />
+            <country-flag country="usa" size="big" />
             <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
           </div>
           <div class="hover_bg"></div>
@@ -130,7 +136,7 @@
           />
           <div class="country_desc">
             <h3>USA</h3>
-            <country-flag country="usa" size="big" style="display: block;" />
+            <country-flag country="usa" size="big" />
             <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
           </div>
           <div class="hover_bg"></div>
@@ -142,7 +148,7 @@
           />
           <div class="country_desc">
             <h3>USA</h3>
-            <country-flag country="usa" size="big" style="display: block;" />
+            <country-flag country="usa" size="big" />
             <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
           </div>
           <div class="hover_bg"></div>
@@ -154,7 +160,7 @@
           />
           <div class="country_desc">
             <h3>USA</h3>
-            <country-flag country="usa" size="big" style="display: block;" />
+            <country-flag country="usa" size="big" />
             <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
           </div>
           <div class="hover_bg"></div>
@@ -166,7 +172,7 @@
           />
           <div class="country_desc">
             <h3>USA</h3>
-            <country-flag country="usa" size="big" style="display: block;" />
+            <country-flag country="usa" size="big" />
             <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
           </div>
           <div class="hover_bg"></div>
@@ -263,6 +269,22 @@ footer {
   width: fit-content;
 }
 
+.home_page_slide {
+  .content {
+    z-index: 5;
+  }
+}
+
+.home_page_slide_bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+
 .home_page_slide::before {
   content: "";
   position: absolute;
@@ -271,7 +293,7 @@ footer {
   width: 100%;
   height: 100%;
   opacity: 0.8;
-  background-color: #bdffc5cc;
+  background-color: #bddbffcc;
 }
 
 .abilities_list {
@@ -415,6 +437,9 @@ footer {
       font-family: Montserrat;
       opacity: 0;
       transition: 0.3s;
+      .flag {
+        display: block;
+      }
       h3 {
         position: relative;
         left: -110px;

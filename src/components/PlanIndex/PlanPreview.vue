@@ -1,7 +1,7 @@
 <template>
   <div class="plan_preview">
-    <router-link :to="`plan/${plan.id}`" style="display: block; width: fit-content">
-      <h3 style="display: block; width: fit-content">{{ plan.title }}</h3>
+    <router-link class="plan_link" :to="`plan/${plan.id}`">
+      <h3>{{ plan.title }}</h3>
     </router-link>
 
     <p
@@ -24,14 +24,13 @@
     <div class="plan_route_bottom_info">
       <div class="left_block">
         <v-rating v-model="fav" full-icon="mdi-heart" empty-icon="mdi-heart-outline" clearable length="1" background-color="green lighten-3" color="green"></v-rating>
-        <hr style="opacity: .2; margin: 10px 10px; height: 20px;" />
+        <hr class="hr" />
         <v-rating :value="plan.rating" readonly background-color="green lighten-3" color="green"></v-rating>
       </div>
       <div class="right_block">
         <span v-if="subCheckpoints">{{ subCheckpoints.length }}</span>
         <img
           class="circle"
-          style="margin: 0 5px;"
           src="@/assets/PlanIndex/PlanPreview/circle.svg"
           alt
         />
@@ -94,6 +93,10 @@ export default {
     background-color: #f9f9f9;
     cursor: pointer;
   }
+  .plan_link, h3 {
+    display: block; 
+    width: fit-content
+  }
 }
 
 .plan_description {
@@ -120,6 +123,11 @@ export default {
     .left_block {
       display: flex;
       align-items: center;
+      .hr {
+        opacity: .2; 
+        margin: 10px 10px; 
+        height: 20px;
+      }
     }
     .right_block {
       display: flex;
@@ -131,7 +139,7 @@ export default {
 .circle {
   width: 20px;
   height: 20px;
-  margin-right: 5px;
+  margin: 0 5px;
 }
 
 .arrow_right {

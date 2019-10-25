@@ -22,7 +22,7 @@
             background-color="white"
             color="green"
             label="Sort settings:"
-            style="margin-bottom: 5px;"
+            class="modal_select"
           ></v-select>
           <filter-div v-for="(item, index) in filters" v-model="filters[index]" :key="index" />
         </div>
@@ -154,6 +154,9 @@ export default {
         margin: 0;
         font-weight: 400;
         border-bottom: 1px solid #e5e5e5;
+      }
+      .modal_select {
+        margin-bottom: 5px;
       }
     }
     .filter_sort_modal_img {

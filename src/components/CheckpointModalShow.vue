@@ -26,7 +26,7 @@
           :displayedItemType="displayedItemType"
           :slickOptionsMain="slickOptionsMain"
           :slickOptionsSub="slickOptionsSub"
-          :images="['http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg']"
+          :images="['https://dmgupcwbwy0wl.cloudfront.net/system/images/000/246/682/ed874e40d99b69d1290e99871730b861/original/Astro-Photography-Mumbai.jpeg?1549938752', 'http://tico.ca/blog/wp-content/uploads/2016/10/pexels-photo-24860.jpg']"
         />
       </div>
       <div class="checkpoint_nav_wrapper"> <!-- wrapper needed for safari -->

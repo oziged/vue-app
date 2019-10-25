@@ -49,9 +49,6 @@ export default {
   mounted() {
     this.$slots.default.forEach((item, index) => {
       item.elm.classList.add("slide");
-      item.elm.childNodes.forEach(item => {
-        item.style.position = "relative";
-      });
     });
     this.$slots.default[0].elm.style.zIndex = 5;
     this.$slots.default[0].elm.style.opacity = 1;

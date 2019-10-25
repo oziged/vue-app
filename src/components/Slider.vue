@@ -1,34 +1,32 @@
 <template>
   <div class="slider">
     <slick class="main_slider" ref="slickMain" :options="slickOptionsMain">
-      <div v-if="!disableMap" class="slide">
+      <div v-if="!disableMap" class="main_slide">
         <app-map
           ref="map"
-          style="width: 100%; height: 100%"
+          class="map"
           :displayedItemId="displayedItemId"
           :displayedItemType="displayedItemType"
         />
       </div>
-      <div
-        v-for="(item, index) in images"
-        :key="index"
-        class="slide"
-        :style="{background: `url('${item}') no-repeat center center/cover`}"
-      ></div>
+      <div v-for="(item, index) in images" :key="index" class="main_slide">
+        <img :src="item" alt />
+      </div>
     </slick>
 
     <slick class="sub_slider" ref="slickSub" :options="slickOptionsSub">
       <div v-if="!disableMap" class="sub_slide_wrapper">
-        <div
-          class="sub_slide"
-          style="background: url('http://1001idea.info/wp-content/uploads/2018/02/spring-travel.jpg') no-repeat center center"
-        ></div>
+        <div class="sub_slide">
+          <img
+            src="https://previews.123rf.com/images/microone/microone1710/microone171000578/88774135-prospettiva-3d-mappa-della-citt%C3%A0-con-puntatori-pin-concetto-di-vettore-di-navigazione-gps-abstarct-ill.jpg"
+            alt
+          />
+        </div>
       </div>
       <div class="sub_slide_wrapper" v-for="(item, index) in images" :key="index">
-        <div
-          class="sub_slide"
-          :style="{background: `url('${item}') no-repeat center center/cover`}"
-        >{{ index }}</div>
+        <div class="sub_slide">
+          <img :src="item" alt />
+        </div>
       </div>
     </slick>
   </div>
@@ -54,7 +52,7 @@ export default {
   },
   methods: {},
   mounted() {
-    document.querySelectorAll(".slide").forEach(item => {
+    document.querySelectorAll(".main_slide").forEach(item => {
       item.parentElement.style.height = "100%";
       item.parentElement.style.width = "100%";
     });
@@ -79,8 +77,17 @@ export default {
   height: calc(100% - 120px);
   border-radius: 10px;
   overflow: hidden;
-  .slide {
+  .map {
+    width: 100%;
+    height: 100%;
+  }
+  .main_slide {
     box-shadow: inset 0 0 9px #00000021;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 }
 
@@ -93,6 +100,11 @@ export default {
   .sub_slide {
     transition: 1s;
     border: 5px solid rgb(221, 237, 214);
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
   .slick-current .sub_slide {
     transition: 1s;
@@ -100,7 +112,7 @@ export default {
   }
 }
 
-.slide {
+.main_slide {
   width: 100%;
   height: 100%;
 }
