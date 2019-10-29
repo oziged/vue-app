@@ -87,6 +87,11 @@ export default {
     ])
   },
   mounted() {
+    let path = localStorage.getItem('path');
+    if (path) {
+      this.$router.push(path);
+      localStorage.removeItem('path');
+    }
     this.updateCurrentLocation();
     this.setWindowWidth();
     window.addEventListener("resize", () => {
