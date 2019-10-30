@@ -17,21 +17,61 @@
           <span>Plan2</span>
         </router-link>
       </div>
+      <div
+        class="mobile_burger"
+        :class="{burger_is_opened: burgerIsOpened}"
+        @click="burgerIsOpened = !burgerIsOpened"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <transition name="fade">
+        <div
+          class="mobile_menu_list"
+          ref="mobileMenu"
+          :style="{top: `${offsetY}px`}"
+          v-if="burgerIsOpened"
+          v-click-outside="closeBurger"
+        >
+          <router-link class="nav_item" to="/plans" @click.native="closeBurger">
+            <span>Plans</span>
+          </router-link>
+          <router-link class="nav_item" to="/plan/1" @click.native="closeBurger">
+            <span>Plan1</span>
+          </router-link>
+          <router-link class="nav_item" to="/plan/2" @click.native="closeBurger">
+            <span>Plan2</span>
+          </router-link>
+        </div>
+      </transition>
     </div>
   </header>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      burgerIsOpened: false,
+      offsetY: 80
+    };
+  },
   methods: {
     setHeaderAnimation() {
       document.addEventListener("scroll", e => {
         if (window.pageYOffset > 100) {
           this.$el.style.height = "50px";
+          this.offsetY = 50;
         } else if (window.pageYOffset < 50) {
           this.$el.style.height = "80px";
+          this.offsetY = 80;
         }
       });
+    },
+    closeBurger(e) {
+      if (e.target.closest('.mobile_burger')) return;
+      this.burgerIsOpened = false;
     }
   },
   mounted() {
@@ -62,6 +102,7 @@ header {
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   .left_block,
@@ -97,11 +138,76 @@ header {
       }
     }
   }
+
+  .mobile_burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    span {
+      transition: 0.3s;
+      display: block;
+      width: 30px;
+      height: 5px;
+      background-color: black;
+      margin-bottom: 5px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      &:nth-child(2) {
+        transition: 0.2s;
+      }
+    }
+  }
+
+  .mobile_menu_list {
+    position: absolute;
+    left: 0;
+    top: 80px;
+    width: 100%;
+    box-shadow: 0 0 4px 0px #00000036;
+    transition: 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+    .nav_item {
+      background-color: #ffffff;
+      border-bottom: 2px solid #10101009;
+      &:last-child {
+        border-bottom: none;
+      }
+      span {
+        display: block;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .burger_is_opened {
+    span {
+      &:first-child {
+        transform: translateY(10px) rotate(45deg);
+      }
+      &:nth-child(2) {
+        opacity: 0;
+      }
+      &:last-child {
+        transform: translateY(-10px) rotate(-45deg);
+      }
+    }
+  }
 }
 
 @media (max-width: 1300px) {
   header .nav_list {
     margin: 0 30px;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav_list .right_block {
+    display: none;
+  }
+
+  .nav_list .mobile_burger {
+    display: flex;
   }
 }
 </style>
