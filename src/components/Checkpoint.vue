@@ -215,6 +215,8 @@ export default {
 
 .subcheckpoint {
   position: relative;
+  padding: 10px 0;
+  padding-right: 55px;
 }
 
 .subcheckpoint::before {

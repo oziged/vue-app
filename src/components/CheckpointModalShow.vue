@@ -29,18 +29,18 @@
           :images="['https://dmgupcwbwy0wl.cloudfront.net/system/images/000/246/682/ed874e40d99b69d1290e99871730b861/original/Astro-Photography-Mumbai.jpeg?1549938752', 'http://tico.ca/blog/wp-content/uploads/2016/10/pexels-photo-24860.jpg']"
         />
       </div>
-      <div class="checkpoint_nav_wrapper"> <!-- wrapper needed for safari -->
-      <div class="checkpoint_nav">
-        <v-btn text icon color="black">
-          <v-icon>mdi-arrow-left-thick</v-icon>
-        </v-btn>
-        <img src="@/assets/CheckpointModalShow/gps_place.png" alt />
-        <v-btn text icon color="black">
-          <v-icon>mdi-arrow-right-thick</v-icon>
-        </v-btn>
+      <div class="checkpoint_nav_wrapper">
+        <!-- wrapper needed for safari -->
+        <div class="checkpoint_nav">
+          <v-btn text icon color="black">
+            <v-icon>mdi-arrow-left-thick</v-icon>
+          </v-btn>
+          <img src="@/assets/CheckpointModalShow/gps_place.png" alt />
+          <v-btn text icon color="black">
+            <v-icon>mdi-arrow-right-thick</v-icon>
+          </v-btn>
+        </div>
       </div>
-      </div>
-
     </div>
   </modal-window>
 </template>
@@ -103,6 +103,12 @@ export default {
             breakpoint: 900,
             settings: {
               slidesToShow: 3
+            }
+          },
+          {
+            breakpoint: 500,
+            settings: {
+              slidesToShow: 2
             }
           }
         ]
@@ -189,7 +195,7 @@ export default {
         scrollPanel: {},
         rail: {
           background: "rgb(129, 209, 121)",
-          opacity: this.windowWidth > 800 ? '.2' : '0',
+          opacity: this.windowWidth > 800 ? ".2" : "0",
           size: "6px",
           specifyBorderRadius: true,
           gutterOfSide: "0px",
@@ -200,7 +206,7 @@ export default {
           onlyShowBarOnScroll: false,
           keepShow: false,
           background: "rgb(129, 209, 121)",
-          opacity: this.windowWidth > 800 ? '1' : '0',
+          opacity: this.windowWidth > 800 ? "1" : "0",
           hoverStyle: false,
           specifyBorderRadius: false,
           minSize: 0,
@@ -277,6 +283,17 @@ export default {
 
   .right_block {
     width: 70%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .checkpoint_modal {
+    .right_block {
+      width: 60%;
+    }
+    .checkpoint_nav {
+      width: calc(40% - 8px);
+    }
   }
 }
 

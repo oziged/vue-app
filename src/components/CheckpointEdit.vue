@@ -131,9 +131,7 @@ export default {
         size: 5,
         types: ["image/png", "image/jpg", "image/jpeg"]
       },
-      images: [
-        "https://cdn130.picsart.com/260610862010202.jpg?r1024x1024",
-      ],
+      images: ["https://cdn130.picsart.com/260610862010202.jpg?r1024x1024"],
       center: {
         lat: 12,
         lng: 12
@@ -184,6 +182,12 @@ export default {
             breakpoint: 900,
             settings: {
               slidesToShow: 3
+            }
+          },
+          {
+            breakpoint: 500,
+            settings: {
+              slidesToShow: 2
             }
           }
         ]
@@ -250,7 +254,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["currentLocation", "getCheckpoint", "editCheckpointModalId", "windowWidth"])
+    ...mapGetters([
+      "currentLocation",
+      "getCheckpoint",
+      "editCheckpointModalId",
+      "windowWidth"
+    ])
   },
   watch: {
     editCheckpointModalId(newValue) {

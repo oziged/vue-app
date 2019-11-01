@@ -1,9 +1,23 @@
 export default {
-  actions: {},
-  mutations: {},
+  actions: {
+    addPlace({commit, rootGetters}, payload) {
+      return new Promise(resolve => {
+        let places = rootGetters.allPlaces;
+        let id = places[places.length-1].id+1;
+        payload = {id, ...payload}
+        commit("addPlace", payload);
+        resolve(payload);
+      })
+
+    },
+  },
+  mutations: {
+    addPlace(state, payload) {
+      state.places.push(payload);
+    }
+  },
   state: {
-    places: [
-      {
+    places: [{
         id: 1,
         user_id: 1,
         title: "City1",

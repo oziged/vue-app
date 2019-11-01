@@ -84,10 +84,7 @@
             v-if="windowWidth > 800"
             class="checkpoint_description"
           >{{ description || 'Description' }}</div>
-          <vue-scroll
-            v-else
-            class="checkpoint_description_wrapper"
-          >
+          <vue-scroll v-else class="checkpoint_description_wrapper">
             <div class="checkpoint_description">{{ description || 'Description' }}</div>
           </vue-scroll>
         </div>
@@ -134,9 +131,7 @@ export default {
         size: 5,
         types: ["image/png", "image/jpg", "image/jpeg"]
       },
-      images: [
-        "https://cdn130.picsart.com/260610862010202.jpg?r1024x1024",
-      ],
+      images: ["https://cdn130.picsart.com/260610862010202.jpg?r1024x1024"],
       center: {
         lat: 12,
         lng: 12
@@ -188,13 +183,19 @@ export default {
             settings: {
               slidesToShow: 3
             }
+          },
+          {
+            breakpoint: 500,
+            settings: {
+              slidesToShow: 2
+            }
           }
         ]
       }
     };
   },
   methods: {
-    ...mapActions(["toggleNewCheckpointModal"]),
+    ...mapActions(["toggleNewCheckpointModal", "addPlan"]),
     openMap() {
       this.$refs.map.style.height = "500px";
       this.$refs.map.style.marginBottom = "20px";
@@ -227,6 +228,7 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         console.log("checkpoint created");
+        this.addPlan({ title: this.title, description: this.description,  });
         this.toggleNewCheckpointModal();
         this.$forceUpdate();
       }
@@ -288,7 +290,8 @@ export default {
       }
     }
   },
-  mounted() {}
+  mounted() {
+  }
 };
 </script>
 

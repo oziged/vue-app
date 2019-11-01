@@ -83,7 +83,8 @@ export default {
       "toggleEditCheckpointModal",
       "toggleEditPlanModal",
       "setWindowWidth",
-      "toggleMobileMapModal"
+      "toggleMobileMapModal",
+      "addPlace"
     ])
   },
   mounted() {
@@ -97,6 +98,8 @@ export default {
     window.addEventListener("resize", () => {
       this.setWindowWidth();
     });
+    window.add = this.addPlace;
+    window.places = this.allPlaces;
   },
   computed: {
     ...mapGetters([
@@ -106,7 +109,8 @@ export default {
       "editPlanModalDisplay",
       "windowWidth",
       "mobileMapModalDisplay",
-      "isMobile"
+      "isMobile",
+      "allPlaces"
     ])
   }
 };

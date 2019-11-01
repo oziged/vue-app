@@ -226,6 +226,12 @@ export default {
       margin-bottom: 10px;
       background-color: #fff;
     }
+    .plan_title {
+      padding-right: 20px;
+      h1 {
+        line-height: 30px;
+      }
+    }
     .checkpoint_list_wrapper {
       width: calc(100% - 23px);
       margin-left: 23px;

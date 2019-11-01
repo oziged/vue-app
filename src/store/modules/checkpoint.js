@@ -1,5 +1,14 @@
 export default {
   actions: {
+    addCheckpoint({ commit, dispatch, rootGetters }, payload) {
+      return new Promise(async resolve => {
+        let place = await dispatch('addPlace', {position: payload.position});
+        let checkpoints = rootGetters.allCheckpoints;
+        let id = checkpoints[checkpoints.length-1].id+1;
+        payload = {id, ...payload}
+        commit("addCheckpoint", payload);
+      })
+    },
     setMainCheckpointModalId({ commit }, id) {
       commit("setMainCheckpointModalId", id);
     },
@@ -32,6 +41,9 @@ export default {
     },
   },
   mutations: {
+    createCheckpoint(state, payload) {
+      state.checkpoints.push(payload);
+    },
     setMainCheckpointModalId(state, id) {
       state.main_checkpoint_modal_id = id;
     },
