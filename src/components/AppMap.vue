@@ -93,6 +93,10 @@ export default {
             this.displayedItemType
           );
           let places = checkpoints.map(item => this.getPlace(item.place_id));
+          places.forEach(item => {
+            item.position.lat = +item.position.lat;
+            item.position.lng = +item.position.lng;
+          })
           if (places.length == 1) {
             // display 1 marker on the map for checkpoint
             this.markersList = places;

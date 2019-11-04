@@ -7,6 +7,9 @@ import place from './modules/place'
 import map from './modules/map'
 import geolocation from './modules/geolocation'
 import window_variables from './modules/window_variables'
+import checkpoint_db from './modules/fake_db/checkpoint_db'
+import place_db from './modules/fake_db/place_db'
+import plan_db from './modules/fake_db/plan_db'
 import { isMobile } from 'mobile-device-detect';
 
 
@@ -32,6 +35,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    user, plan, checkpoint, place, map, geolocation, window_variables
+    user, plan, checkpoint, place, map, geolocation, window_variables, checkpoint_db, place_db, plan_db
   }
 })

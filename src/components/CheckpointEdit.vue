@@ -91,7 +91,7 @@
         <div class="right_block">
           <transition name="fade">
             <slider
-              v-if="displaySlider"
+              v-if="displaySlider && images.length"
               ref="slider"
               :disableMap="true"
               :images="images"
@@ -131,7 +131,7 @@ export default {
         size: 5,
         types: ["image/png", "image/jpg", "image/jpeg"]
       },
-      images: ["https://cdn130.picsart.com/260610862010202.jpg?r1024x1024"],
+      images: [],
       center: {
         lat: 12,
         lng: 12
@@ -195,7 +195,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["toggleEditCheckpointModal"]),
+    ...mapActions(["toggleEditCheckpointModal", "updateCheckpoint", "setEditPlanModalId"]),
     openMap() {
       this.$refs.map.style.height = "500px";
       this.$refs.map.style.marginBottom = "20px";
@@ -229,6 +229,17 @@ export default {
       if (this.$refs.form.validate()) {
         this.toggleEditCheckpointModal();
         this.$forceUpdate();
+        this.updateCheckpoint({
+          title: this.title,
+          description: this.description,
+          position: {
+            lat: this.mapPlace.lat(),
+            lng: this.mapPlace.lng()
+            },
+        })
+        let temp = this.editPlanModalId;
+        this.setEditPlanModalId(0);
+        this.setEditPlanModalId(temp);
       }
     },
     input(e) {
@@ -258,14 +269,21 @@ export default {
       "currentLocation",
       "getCheckpoint",
       "editCheckpointModalId",
-      "windowWidth"
+      "windowWidth",
+      "getPlace",
+      "editPlanModalId"
     ])
   },
   watch: {
     editCheckpointModalId(newValue) {
       let checkpoint = this.getCheckpoint(newValue);
+      let place = this.getPlace(checkpoint.place_id);
+
       this.title = checkpoint.title;
       this.description = checkpoint.description;
+      // this.mapPlace.lat = () => +place.position.lat;
+      // this.mapPlace.lng = () => +place.position.lng;
+      this.mapPlaceInput = `Map position: (${place.position.lat}, ${place.position.lng})`;
     },
     value() {
       if (this.value == true) {
@@ -299,9 +317,6 @@ export default {
     }
   },
   mounted() {
-    window.lol = () => {
-      return this.title;
-    };
   }
 };
 </script>
@@ -353,9 +368,8 @@ export default {
 
 .right_block {
   width: 70%;
-  min-height: 400px;
-  max-height: 600px;
   .slider {
+    height: 400px;
     padding: 0 0 0 20px;
   }
 }
@@ -375,7 +389,6 @@ export default {
         margin-bottom: 15px;
       }
       .right_block {
-        height: 50vh;
         width: 100%;
       }
       .slider {

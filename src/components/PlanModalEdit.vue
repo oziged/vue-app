@@ -45,7 +45,7 @@
                     </v-list-item-content>
                   </v-list-item>
                   <v-list-item
-                    @click.stop="closeDisplayedSubMenu(); toggleEditPlanModal(); toggleNewCheckpointModal()"
+                    @click.stop="closeDisplayedSubMenu(); toggleEditPlanModal(); setParentCheckpointId(item.item.id); toggleNewCheckpointModal()"
                   >
                     <v-list-item-content>
                       <v-list-item-title>Add subCheckpoint</v-list-item-title>
@@ -195,7 +195,8 @@ export default {
       "toggleEditCheckpointModal",
       "toggleNewCheckpointModal",
       "toggleEditPlanModal",
-      "setEditPlanModalId"
+      "setEditPlanModalId",
+      "setParentCheckpointId"
     ])
   },
   watch: {

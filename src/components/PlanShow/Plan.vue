@@ -5,7 +5,7 @@
         <h1 @click="showPlanSubCheckpoints">{{ plan.title }}</h1>
         <div class="moveModalIcon" @click="toggleEditPlanModal(); setEditPlanModalId(id)"></div>
       </div>
-      <p class="plan_description">{{ plan.description }}</p>
+      <p class="plan_description">{{ plan.description | truncate(20)}}</p>
       <div class="checkpoint_list_wrapper">
         <div class="checkpoints_list">
           <v-expansion-panels accordion>
@@ -57,7 +57,7 @@ export default {
     displayedSubMenu: null,
     displayedItemId: null,
     displayedItemType: "Plan",
-    data: []
+    // data: []
   }),
   methods: {
     ...mapActions([
@@ -66,7 +66,8 @@ export default {
       "toggleEditCheckpointModal",
       "toggleNewCheckpointModal",
       "toggleEditPlanModal",
-      "setEditPlanModalId"
+      "setEditPlanModalId",
+      "setCurrentPlan"
     ]),
     showPlanSubCheckpoints() {
       this.displayedItemId = this.id;
@@ -144,13 +145,17 @@ export default {
     }
   },
   mounted() {
-    this.setCheckpointsData(this.id, "Plan");
+    this.setCurrentPlan(this.id);
     this.plan = this.getPlan(this.id);
     this.$gmapApiPromiseLazy().then(() => {
       this.displayedItemId = this.id;
     });
   },
   computed: {
+    data() {
+      // return {}
+      return this.currentPlanCheckpoints;
+    },
     ...mapGetters([
       "allUsers",
       "allPlans",
@@ -160,7 +165,8 @@ export default {
       "getCheckpoint",
       "getSubCheckpoints",
       "getPlan",
-      "getPlanMainCheckpointId"
+      "getPlanMainCheckpointId",
+      "currentPlanCheckpoints"
     ])
   }
 };

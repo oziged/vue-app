@@ -89,9 +89,10 @@
           </vue-scroll>
         </div>
         <div class="right_block">
+          <div class="if_no_images">NO IMAGES</div>
           <transition name="fade">
             <slider
-              v-if="displaySlider"
+              v-if="displaySlider && images.length"
               ref="slider"
               :disableMap="true"
               :images="images"
@@ -131,7 +132,7 @@ export default {
         size: 5,
         types: ["image/png", "image/jpg", "image/jpeg"]
       },
-      images: ["https://cdn130.picsart.com/260610862010202.jpg?r1024x1024"],
+      images: [],
       center: {
         lat: 12,
         lng: 12
@@ -195,7 +196,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["toggleNewCheckpointModal", "addPlan"]),
+    ...mapActions(["toggleNewCheckpointModal", "addPlan", "addCheckpoint", "setEditPlanModalId"]),
     openMap() {
       this.$refs.map.style.height = "500px";
       this.$refs.map.style.marginBottom = "20px";
@@ -228,9 +229,19 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         console.log("checkpoint created");
-        this.addPlan({ title: this.title, description: this.description,  });
         this.toggleNewCheckpointModal();
         this.$forceUpdate();
+        this.addCheckpoint({
+          title: this.title,
+          description: this.description,
+          position: {
+            lat: this.mapPlace.lat(),
+            lng: this.mapPlace.lng()
+            },
+        })
+        let temp = this.editPlanModalId;
+        this.setEditPlanModalId(0);
+        this.setEditPlanModalId(temp);
       }
     },
     input(e) {
@@ -256,7 +267,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["currentLocation", "windowWidth"])
+    ...mapGetters(["currentLocation", "windowWidth", "editPlanModalId"])
   },
   watch: {
     value() {
@@ -342,9 +353,11 @@ export default {
 
 .right_block {
   width: 70%;
-  min-height: 400px;
-  max-height: 600px;
+  .if_no_images {
+    height: 400px;
+  }
   .slider {
+    height: 400px;
     padding: 0 0 0 20px;
   }
 }
@@ -364,7 +377,6 @@ export default {
         margin-bottom: 15px;
       }
       .right_block {
-        height: 50vh;
         width: 100%;
       }
       .slider {
