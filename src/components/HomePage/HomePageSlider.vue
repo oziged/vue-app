@@ -121,7 +121,7 @@ export default {
     margin: 15px 0;
     border: 1px solid black;
     transition: 0.3s;
-    cursor: pointer;
+    // cursor: pointer;
   }
   .active_circle {
     background-color: black;
@@ -136,7 +136,7 @@ export default {
   bottom: 30px;
   z-index: 10;
   svg {
-    cursor: pointer;
+    // cursor: pointer;
     width: 20px;
     height: 20px;
     opacity: 0.5;

@@ -228,20 +228,35 @@
       <div class="year">2019 travel.</div>
       <div class="rights">all right reserved</div>
     </footer>
+  <div class="cursor">
+    <div class="default_circle"></div>
+    <div class="bg_circle"></div>
+    <div class="arrow"></div>
+  </div>
   </div>
 </template>
 
 <script>
 import HomePageSlider from "../components/HomePage/HomePageSlider";
 import FeedBackForm from "../components/HomePage/FeedBackForm";
+import CursorLogic from '../cursorHelper';
 
 export default {
   components: {
     HomePageSlider,
     FeedBackForm
   },
+  data() {
+    return {
+      cursorLogic: null,
+    }
+  },
   methods: {},
-  mounted() {}
+  mounted() {
+    this.cursorLogic = new CursorLogic();
+    this.cursorLogic.setup();
+    this.cursorLogic.startAnimation();
+  }
 };
 </script>
 
@@ -393,7 +408,7 @@ footer {
   .country {
     width: calc((100% - 31px) / 3);
     overflow: hidden;
-    cursor: pointer;
+    // cursor: pointer;
     &:nth-child(odd) {
       height: 364px;
     }
@@ -605,6 +620,65 @@ footer {
   }
 }
 
+// // // // CURSOR STYLES  // // // // // // 
+
+.default_circle {
+  width: 7px;
+  height: 7px;
+  position: fixed;
+  z-index: 9999;
+  border-radius: 50%;
+  background-color: black;
+  pointer-events: none;
+  transition: .5s;
+  transition-property: background-color;
+}
+
+.bg_circle {
+  width: 30px;
+  height: 30px;
+  position: fixed;
+  z-index: 9999;
+  border: 3px solid rgba(0, 0, 0, .3);
+  border-radius: 50%;
+  background-color: transparent;
+  pointer-events: none;
+  transition: .5s;
+  transition-property: width, height, border-style, opacity, background-color, border-color;
+}
+
+.arrow {
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  z-index: 9999;
+  border: 20px solid;
+  border-color: black transparent transparent black;
+}
+
+.feedback_section_cursor {
+  .default_circle {
+    background-color: white;
+  }
+  .bg_circle {
+    border-color: white;
+  }
+}
+
+// .bg_circle_header_anim {
+//   width: 40px;
+//   height: 40px;
+//   border: 3px dotted rgba(0, 0, 0, .3);
+//   animation: bgheader  4s infinite;
+// }
+
+// @keyframes bgheader {
+//   from {transform: rotate(0deg)}
+//   to {transform: rotate(180deg)}
+// }
+
+// // // // // // // // // // // // // // 
+
 @media (max-width: 1300px) {
   section {
     padding: 0 30px;
@@ -616,7 +690,7 @@ footer {
     .country {
       width: calc((100% - 21px) / 2);
       overflow: hidden;
-      cursor: pointer;
+      // cursor: pointer;
       &:nth-child(even),
       &:nth-child(odd) {
         height: 345px;
@@ -701,7 +775,7 @@ footer {
     .country {
       width: 100%;
       overflow: hidden;
-      cursor: pointer;
+      // cursor: pointer;
       height: 400px !important;
     }
   }

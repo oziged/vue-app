@@ -91,7 +91,7 @@ header {
   z-index: 101;
   box-shadow: 0 0 4px 0px #00000036;
   transition: 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
-  cursor: pointer;
+  // cursor: pointer;
   &:hover {
     background-color: #f8fff5;
   }
@@ -143,7 +143,7 @@ header {
     display: none;
     flex-direction: column;
     justify-content: center;
-    cursor: pointer;
+    // cursor: pointer;
     span {
       transition: 0.3s;
       display: block;

@@ -179,6 +179,10 @@ input[type="submit"] {
   }
 }
 
+.v-application a {
+  cursor: none!important;
+}
+
 .v-file-input .v-input__slot {
   margin-left: -32px;
   width: calc(100% + 32px);
