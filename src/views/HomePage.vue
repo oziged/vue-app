@@ -15,7 +15,7 @@
               proffesionals
               <br />in create industries
             </h4>
-            <button>get in touch</button>
+            <!-- <button>get in touch</button> -->
           </div>
         </div>
         <div class="home_page_slide slide1">
@@ -31,7 +31,7 @@
               proffesionals
               <br />in create industries
             </h4>
-            <button>get in touch</button>
+            <!-- <button>get in touch</button> -->
           </div>
         </div>
         <div class="home_page_slide slide1">
@@ -47,7 +47,7 @@
               proffesionals
               <br />in create industries
             </h4>
-            <button>get in touch</button>
+            <!-- <button>get in touch</button> -->
           </div>
         </div>
       </home-page-slider>
@@ -111,7 +111,7 @@
     <section class="countries_section">
       <h2 class="home_page_title">trending countries</h2>
       <magic-grid class="countries_list" :gap="10" :maxColWidth="9999">
-        <div class="country">
+        <div class="country" @click="enableCountryModal">
           <img src="https://cdn.tourradar.com/s3/content-pages/16/1024x768/gxvKGa.jpg" alt />
           <div class="country_desc">
             <h3>USA</h3>
@@ -120,7 +120,7 @@
           </div>
           <div class="hover_bg"></div>
         </div>
-        <div class="country">
+        <div class="country" @click="enableCountryModal">
           <img src="https://www.planetware.com/photos-large/USNY/usa-best-places-new-york.jpg" alt />
           <div class="country_desc">
             <h3>USA</h3>
@@ -129,7 +129,7 @@
           </div>
           <div class="hover_bg"></div>
         </div>
-        <div class="country">
+        <div class="country" @click="enableCountryModal">
           <img
             src="https://handluggageonly.co.uk/wp-content/uploads/2018/02/Hand-Luggage-Only-8-5.jpg"
             alt
@@ -141,7 +141,7 @@
           </div>
           <div class="hover_bg"></div>
         </div>
-        <div class="country">
+        <div class="country" @click="enableCountryModal">
           <img
             src="https://www.ktchnrebel.com/wp-content/uploads/2019/03/Working-in-Mexico-City-KTCHNrebel-copyright-Fotolia-javarman.jpg"
             alt
@@ -153,7 +153,7 @@
           </div>
           <div class="hover_bg"></div>
         </div>
-        <div class="country">
+        <div class="country" @click="enableCountryModal">
           <img
             src="https://d36tnp772eyphs.cloudfront.net/blogs/1/2011/05/thailand-1200x819.jpg"
             alt
@@ -165,7 +165,7 @@
           </div>
           <div class="hover_bg"></div>
         </div>
-        <div class="country">
+        <div class="country" @click="enableCountryModal">
           <img
             src="https://afar-production.imgix.net/uploads/syndication/holland_americas/images/h9B977Yqvt/original_ESY-013403436.Berlin.Hero.AGE.crop.jpg?w=750&h=563&fit=crop"
             alt
@@ -228,30 +228,63 @@
       <div class="year">2019 travel.</div>
       <div class="rights">all right reserved</div>
     </footer>
-  <div class="cursor">
-    <div class="default_circle"></div>
-    <div class="bg_circle"></div>
-    <div class="arrow"></div>
-  </div>
+    <div class="cursor">
+      <div class="instant_move">
+        <div class="default_circle"></div>
+        <div class="arrow">
+          <img src="@/assets/HomePage/arrow.png" alt />
+        </div>
+        <div class="cursor_country"></div>
+      </div>
+      <div class="bg_circle"></div>
+    </div>
+    <modal-window :value="countryFullScreen.value">
+      <img
+        :src="countryFullScreen.src"
+        alt
+        style="width: 100%; height: 100%"
+        @click="disableCountryModal"
+      />
+    </modal-window>
   </div>
 </template>
 
 <script>
 import HomePageSlider from "../components/HomePage/HomePageSlider";
 import FeedBackForm from "../components/HomePage/FeedBackForm";
-import CursorLogic from '../cursorHelper';
+import CursorLogic from "../cursorHelper";
+import ModalWindow from "../components/ModalWindow";
 
 export default {
   components: {
     HomePageSlider,
-    FeedBackForm
+    FeedBackForm,
+    ModalWindow
   },
   data() {
     return {
       cursorLogic: null,
+      ImagesHelper: null,
+      countryFullScreen: {
+        value: false,
+        src: ""
+      }
+    };
+  },
+  methods: {
+    enableCountryModal(e) {
+      let div = e.target.closest(".country");
+      let src = div.querySelector("img").src;
+      this.countryFullScreen.value = true;
+      this.countryFullScreen.src = src;
+      document
+        .querySelector(".countries_list")
+        .dispatchEvent(new Event("mouseleave"));
+    },
+    disableCountryModal(e) {
+      this.countryFullScreen.value = false;
     }
   },
-  methods: {},
   mounted() {
     this.cursorLogic = new CursorLogic();
     this.cursorLogic.setup();
@@ -620,17 +653,21 @@ footer {
   }
 }
 
-// // // // CURSOR STYLES  // // // // // // 
+// // // // CURSOR STYLES  // // // // // //
+
+.instant_move {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+}
 
 .default_circle {
   width: 7px;
   height: 7px;
-  position: fixed;
-  z-index: 9999;
   border-radius: 50%;
   background-color: black;
   pointer-events: none;
-  transition: .5s;
+  transition: 0.5s;
   transition-property: background-color;
 }
 
@@ -639,21 +676,52 @@ footer {
   height: 30px;
   position: fixed;
   z-index: 9999;
-  border: 3px solid rgba(0, 0, 0, .3);
+  border: 3px solid rgba(0, 0, 0, 0.3);
   border-radius: 50%;
   background-color: transparent;
   pointer-events: none;
-  transition: .5s;
-  transition-property: width, height, border-style, opacity, background-color, border-color;
+  transition: 0.5s;
+  transition-property: width, height, border-style, opacity, background-color,
+    border-color;
 }
 
 .arrow {
-  width: 50px;
-  height: 50px;
   position: fixed;
+  z-index: 100;
+  opacity: 0;
+  transition: 0.5s;
+  img {
+    opacity: 0.5;
+    transform: rotate(180deg);
+  }
+}
+
+.cursor_country {
+  width: 30px;
+  height: 30px;
+  border: 2px solid white;
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-15px, -15px) rotate(45deg);
   z-index: 9999;
-  border: 20px solid;
-  border-color: black transparent transparent black;
+  opacity: 0;
+  transition: 0.5s;
+  &::after {
+    content: "";
+    position: absolute;
+    transform: translate(12px, 3px) rotate(135deg);
+    width: 2px;
+    height: 20px;
+    background-color: white;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    transform: translate(12px, 3px) rotate(45deg);
+    width: 2px;
+    height: 20px;
+    background-color: white;
+  }
 }
 
 .feedback_section_cursor {
@@ -662,6 +730,40 @@ footer {
   }
   .bg_circle {
     border-color: white;
+  }
+}
+
+.display_cursor_country {
+  .instant_move {
+    .arrow {
+      opacity: 0;
+    }
+    .default_circle {
+      opacity: 0;
+    }
+    .cursor_country {
+      opacity: 1;
+    }
+  }
+  .bg_circle {
+    opacity: 0;
+  }
+}
+
+.display_arrow {
+  .instant_move {
+    .arrow {
+      opacity: 1;
+    }
+    .default_circle {
+      opacity: 0;
+    }
+    .cursor_country {
+      opacity: 0;
+    }
+  }
+  .bg_circle {
+    opacity: 0;
   }
 }
 
@@ -677,7 +779,7 @@ footer {
 //   to {transform: rotate(180deg)}
 // }
 
-// // // // // // // // // // // // // // 
+// // // // // // // // // // // // // //
 
 @media (max-width: 1300px) {
   section {
@@ -778,6 +880,22 @@ footer {
       // cursor: pointer;
       height: 400px !important;
     }
+  }
+}
+
+.dispay_arrow {
+  display: none;
+  .instant_move {
+    display: none;
+  }
+  .arrow {
+    opacity: 1;
+  }
+  .default_circle {
+    opacity: 0;
+  }
+  .bg_circle {
+    opacity: 0;
   }
 }
 </style>

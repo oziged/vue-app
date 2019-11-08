@@ -1,9 +1,9 @@
 <template>
   <div class="home_page_slider" ref="slider">
-    <div class="current_slide">
+    <div class="current_slide" @click="changeSlide">
       <slot></slot>
     </div>
-    <div class="navigation_circles">
+    <!-- <div class="navigation_circles">
       <div
         class="circle"
         v-for="(item, index) in $slots.default"
@@ -11,8 +11,8 @@
         :class="{active_circle: index == currentSlide}"
         @click="animating ? '' : currentSlide = index"
       ></div>
-    </div>
-    <div class="navigation_arrows">
+    </div>-->
+    <!-- <div class="navigation_arrows">
       <svg id="left" @click="animating ? '' : changeSlideDown()" viewBox="0 0 476.213 476.213">
         <polygon
           fill="inherit"
@@ -28,7 +28,7 @@
 	238.107,476.213 368.713,345.606 "
         />
       </svg>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -54,18 +54,22 @@ export default {
     this.$slots.default[0].elm.style.opacity = 1;
   },
   methods: {
+    changeSlide(e) {
+      if (e.clientX < this.$refs.slider.offsetHeight) this.changeSlideUp();
+      else this.changeSlideDown();
+    },
     changeSlideUp() {
-        if (this.currentSlide == this.slidesCount) this.currentSlide = 0;
-        else this.currentSlide+=1;
+      if (this.currentSlide == this.slidesCount) this.currentSlide = 0;
+      else this.currentSlide += 1;
     },
     changeSlideDown() {
-        if (this.currentSlide == 0) this.currentSlide = this.slidesCount;
-        else this.currentSlide-=1;
+      if (this.currentSlide == 0) this.currentSlide = this.slidesCount;
+      else this.currentSlide -= 1;
     }
   },
   watch: {
     currentSlide(newValue) {
-      let duration = .5;
+      let duration = 0.5;
       this.animating = true;
       setTimeout(() => {
         this.animating = false;
