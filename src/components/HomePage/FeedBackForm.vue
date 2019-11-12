@@ -80,6 +80,7 @@ form {
   position: relative;
   width: 100%;
   input {
+    cursor: none;
     border-style: none;
     background: transparent;
     border-bottom: 1px solid white;
@@ -99,6 +100,7 @@ form {
 .input-box {
   position: relative;
   textarea {
+    cursor: none;
     border-bottom: 1px solid white;
     resize: none;
     outline: none;
@@ -118,7 +120,7 @@ input[type="submit"] {
   width: 200px;
   color: black;
   border-radius: 30px;
-  cursor: pointer;
+  cursor: none;
 }
 
 .input-box,

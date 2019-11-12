@@ -238,13 +238,15 @@
       </div>
       <div class="bg_circle"></div>
     </div>
-    <modal-window :value="countryFullScreen.value">
+    <modal-window class="country_full_screen" :value="countryFullScreen.value" overflowY="hidden" overflowX="hidden">
       <img
         :src="countryFullScreen.src"
         alt
-        style="width: 100%; height: 100%"
         @click="disableCountryModal"
       />
+      <div class="country_modal_desc">
+        <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+      </div>
     </modal-window>
   </div>
 </template>
@@ -285,10 +287,16 @@ export default {
       this.countryFullScreen.value = false;
     }
   },
+  created() {
+   
+  },
   mounted() {
     this.cursorLogic = new CursorLogic();
     this.cursorLogic.setup();
     this.cursorLogic.startAnimation();
+
+     console.log(document.querySelector('.router_content'));
+    document.querySelector('.router_content').style.cursor = 'none';
   }
 };
 </script>
@@ -478,7 +486,9 @@ footer {
       position: absolute;
       bottom: 10px;
       left: 20px;
-      padding-right: 20px;
+      padding: 10px;
+      margin-right: 20px;
+      background-color: #0000007a;
       z-index: 10;
       color: white;
       position: absolute;
@@ -779,7 +789,32 @@ footer {
 //   to {transform: rotate(180deg)}
 // }
 
+
+// // // // MODAL WINDOW FOR COUNTRIES // // // // 
+
+.country_full_screen {
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .country_modal_desc {
+    padding: 20px;
+    font-family: Montserrat;
+    font-size: 20px;
+    color: white;
+    font-weight: 400;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.479);
+  }
+}
+
 // // // // // // // // // // // // // //
+
 
 @media (max-width: 1300px) {
   section {

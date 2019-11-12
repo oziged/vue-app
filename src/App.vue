@@ -87,6 +87,8 @@ export default {
       "addPlace","setCurrentPlan", "addCheckpoint"
     ])
   },
+  watch:{
+  }, 
   mounted() {
     let path = localStorage.getItem('path');
     if (path) {

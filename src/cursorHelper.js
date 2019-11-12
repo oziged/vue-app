@@ -20,10 +20,11 @@ export default class CursorLogic {
     this.sliderSection = document.querySelector('.home_page_slider');
     this.feedbackSection = document.querySelector('.feedback_section');
     this.countriesSection = document.querySelector('.countries_list');
+    this.formSubmit = document.querySelector('[type=submit]');
   }
 
   setup() {
-    document.body.style.cursor = 'none';
+    // document.body.style.cursor = 'none';
     document.addEventListener('mousemove', e => {
       this.x = e.clientX - 3;
       this.y = e.clientY - 3;
@@ -68,6 +69,14 @@ export default class CursorLogic {
 
     this.header.addEventListener('mouseleave', () => {
     //  this.bgCircle.classList.remove('bgreen')
+    })
+
+    this.formSubmit.addEventListener('mouseenter', () => {
+      this.cursorBlock.classList.remove('feedback_section_cursor');
+    })
+
+    this.formSubmit.addEventListener('mouseleave', () => {
+      this.cursorBlock.classList.add('feedback_section_cursor');
     })
 
     this.feedbackSection.addEventListener('mouseenter', () => {
