@@ -57,7 +57,7 @@ export default {
       }, this.transitionDuration);
 
       let delay = this.$route.path.includes("plans") ? 0.3 : 0;
-      // animation
+
       TweenMax.from(el, 1 - delay, {
         opacity: 0,
         x: "-300px",
@@ -68,7 +68,7 @@ export default {
 
     beforeLeave(el) {
       if (this.isMobile) return;
-      // animation
+
       TweenMax.to(el, 1, {
         opacity: 0,
         x: "300px",
@@ -84,16 +84,17 @@ export default {
       "toggleEditPlanModal",
       "setWindowWidth",
       "toggleMobileMapModal",
-      "addPlace","setCurrentPlan", "addCheckpoint"
+      "addPlace",
+      "setCurrentPlan",
+      "addCheckpoint"
     ])
   },
-  watch:{
-  }, 
+  watch: {},
   mounted() {
-    let path = localStorage.getItem('path');
+    let path = localStorage.getItem("path");
     if (path) {
       this.$router.push(path);
-      localStorage.removeItem('path');
+      localStorage.removeItem("path");
     }
     this.updateCurrentLocation();
     this.setWindowWidth();
@@ -136,8 +137,8 @@ html {
   background-color: white;
   font-family: Arial, Helvetica, sans-serif;
   .router_content {
-    margin-top: 100px;
-    margin: 100px auto 0 auto;
+    padding-top: 100px;
+    margin: 0 auto;
   }
 }
 
@@ -181,12 +182,14 @@ input[type="submit"] {
   }
 }
 
-.v-application a {
-  cursor: none!important;
-}
-
 .v-file-input .v-input__slot {
   margin-left: -32px;
   width: calc(100% + 32px);
+}
+
+//
+
+.hide_cursor {
+  cursor: none !important;
 }
 </style>

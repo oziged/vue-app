@@ -238,12 +238,13 @@
       </div>
       <div class="bg_circle"></div>
     </div>
-    <modal-window class="country_full_screen" :value="countryFullScreen.value" overflowY="hidden" overflowX="hidden">
-      <img
-        :src="countryFullScreen.src"
-        alt
-        @click="disableCountryModal"
-      />
+    <modal-window
+      class="country_full_screen"
+      :value="countryFullScreen.value"
+      overflowY="hidden"
+      overflowX="hidden"
+    >
+      <img :src="countryFullScreen.src" alt @click="disableCountryModal" />
       <div class="country_modal_desc">
         <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
       </div>
@@ -287,16 +288,15 @@ export default {
       this.countryFullScreen.value = false;
     }
   },
-  created() {
-   
-  },
+  created() {},
   mounted() {
     this.cursorLogic = new CursorLogic();
-    this.cursorLogic.setup();
-    this.cursorLogic.startAnimation();
+    this.cursorLogic.disableDefaultCursor();
+    this.cursorLogic.enableListeners();
+  },
 
-     console.log(document.querySelector('.router_content'));
-    document.querySelector('.router_content').style.cursor = 'none';
+  beforeDestroy() {
+    this.cursorLogic.enableDefaultCursor();
   }
 };
 </script>
@@ -308,7 +308,7 @@ footer {
 }
 
 .home_page_slider {
-  margin: 20px auto 0 auto;
+  margin: 0 auto;
   max-width: 1250px;
   height: 520px;
   width: 100%;
@@ -665,6 +665,11 @@ footer {
 
 // // // // CURSOR STYLES  // // // // // //
 
+.cursor {
+  position: fixed;
+  z-index: 9999;
+}
+
 .instant_move {
   position: fixed;
   z-index: 9999;
@@ -679,6 +684,8 @@ footer {
   pointer-events: none;
   transition: 0.5s;
   transition-property: background-color;
+  position: fixed;
+  z-index: 9999;
 }
 
 .bg_circle {
@@ -699,6 +706,7 @@ footer {
   position: fixed;
   z-index: 100;
   opacity: 0;
+  transform: translate(-100px, -100px);
   transition: 0.5s;
   img {
     opacity: 0.5;
@@ -789,8 +797,7 @@ footer {
 //   to {transform: rotate(180deg)}
 // }
 
-
-// // // // MODAL WINDOW FOR COUNTRIES // // // // 
+// // // // MODAL WINDOW FOR COUNTRIES // // // //
 
 .country_full_screen {
   img {
@@ -808,13 +815,11 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 100px;
     background-color: rgba(0, 0, 0, 0.479);
   }
 }
 
 // // // // // // // // // // // // // //
-
 
 @media (max-width: 1300px) {
   section {

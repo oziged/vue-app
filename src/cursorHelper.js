@@ -1,6 +1,6 @@
 export default class CursorLogic {
   constructor() {
-    this.cursorBlock = document.querySelector('.cursor');
+    this.cursor = document.querySelector('.cursor');
     this.defaultCircle = document.querySelector('.default_circle');
     this.instantMove = document.querySelector('.instant_move');
     this.bgCircle = document.querySelector('.bg_circle');
@@ -15,6 +15,8 @@ export default class CursorLogic {
 
     this.screenMiddle = window.innerWidth / 2;
     this.cursorCountriesDEG = 45;
+    this.mousemoveTimeout = 0;
+    this.mouseMoveEnd = 0;
 
     this.header = document.querySelector('header');
     this.sliderSection = document.querySelector('.home_page_slider');
@@ -23,11 +25,13 @@ export default class CursorLogic {
     this.formSubmit = document.querySelector('[type=submit]');
   }
 
-  setup() {
-    // document.body.style.cursor = 'none';
+  enableListeners() {
     document.addEventListener('mousemove', e => {
       this.x = e.clientX - 3;
       this.y = e.clientY - 3;
+      this.mouseMoveEnd = new Date();
+
+      if (!this.interval) this.enableInterval();
     })
 
     window.addEventListener('resize', () => {
@@ -35,23 +39,23 @@ export default class CursorLogic {
     })
 
     this.sliderSection.addEventListener('mouseenter', () => {
-      this.cursorBlock.classList.add('display_arrow')
+      this.cursor.classList.add('display_arrow')
       this.sliderHandlerEnable();
     })
 
     this.sliderSection.addEventListener('mouseleave', () => {
-      this.cursorBlock.classList.remove('display_arrow')
+      this.cursor.classList.remove('display_arrow')
       this.sliderHandlerDisable()
     })
 
     // // // // // // COUNTRIES SECTION // // // // / //
 
     this.countriesSection.addEventListener('mouseenter', () => {
-      this.cursorBlock.classList.add('display_cursor_country');
+      this.cursor.classList.add('display_cursor_country');
     })
 
     this.countriesSection.addEventListener('mouseleave', e => {
-      this.cursorBlock.classList.remove('display_cursor_country');
+      this.cursor.classList.remove('display_cursor_country');
     })
 
     this.countriesSection.querySelectorAll('.country').forEach(item => {
@@ -63,46 +67,21 @@ export default class CursorLogic {
 
     // // // // // // // // // // // // // // // // / //
 
-    this.header.addEventListener('mouseenter', () => {
-    //  this.bgCircle.classList.add('bgreen')
-    })
-
-    this.header.addEventListener('mouseleave', () => {
-    //  this.bgCircle.classList.remove('bgreen')
-    })
-
     this.formSubmit.addEventListener('mouseenter', () => {
-      this.cursorBlock.classList.remove('feedback_section_cursor');
+      this.cursor.classList.remove('feedback_section_cursor');
     })
 
     this.formSubmit.addEventListener('mouseleave', () => {
-      this.cursorBlock.classList.add('feedback_section_cursor');
+      this.cursor.classList.add('feedback_section_cursor');
     })
 
     this.feedbackSection.addEventListener('mouseenter', () => {
-      this.cursorBlock.classList.add('feedback_section_cursor');
+      this.cursor.classList.add('feedback_section_cursor');
     })
 
     this.feedbackSection.addEventListener('mouseleave', () => {
-      this.cursorBlock.classList.remove('feedback_section_cursor');
+      this.cursor.classList.remove('feedback_section_cursor');
     })
-  }
-
-  startAnimation() {
-    this.interval = setInterval(() => {
-      this.instantMove.style.left = this.x + 'px';
-      this.instantMove.style.top = this.y + 'px';
-
-      this.moveX += (this.x - this.moveX) / 10;
-      this.moveY += (this.y - this.moveY) / 10;
-      
-      // this.arrow.style.left = this.moveX  + 'px';
-      // this.arrow.style.top = this.moveY + 'px';
-      
-      this.bgCircle.style.left = this.moveX - this.bgCircleCorrection + 'px';
-      this.bgCircle.style.top = this.moveY - this.bgCircleCorrection + 'px';
-    }, 10);
-
   }
 
   sliderHandlerEnable() {
@@ -116,5 +95,39 @@ export default class CursorLogic {
   sliderHandler(e) {
     if (e.clientX < this.screenMiddle) this.arrow.style.transform = 'translate(-100px, -100px) rotate(-90deg)';
     else this.arrow.style.transform = 'translate(-100px, -100px) rotate(90deg)';
+  }
+
+  enableInterval() {
+    this.interval = setInterval(() => {
+      if (new Date() - this.mouseMoveEnd > 1000) this.disableInterval();
+
+      this.instantMove.style.left = this.x + 'px';
+      this.instantMove.style.top = this.y + 'px';
+
+      this.moveX += (this.x - this.moveX) / 10;
+      this.moveY += (this.y - this.moveY) / 10;
+      
+      this.bgCircle.style.left = this.moveX - this.bgCircleCorrection + 'px';
+      this.bgCircle.style.top = this.moveY - this.bgCircleCorrection + 'px';
+    }, 10);
+  }
+
+  disableInterval() {
+    clearInterval(this.interval);
+    this.interval = null;
+  }
+
+  enableDefaultCursor() {
+    document.body.style.cursor = 'auto';
+    document.querySelectorAll('.v-application a').forEach(item => {
+      item.classList.remove('hide_cursor')
+    })
+  }
+
+  disableDefaultCursor() {
+    document.body.style.cursor = 'none';
+    document.querySelectorAll('.v-application a').forEach(item => {
+      item.classList.add('hide_cursor')
+    })
   }
 }
