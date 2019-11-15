@@ -46,7 +46,7 @@
         <GmapMap
           ref="gmap"
           class="gmap"
-          :center="currentLocation || {lat: 0, lng: 0}"
+          :center="center"
           :zoom="zoom"
           map-type-id="terrain"
         >
@@ -123,7 +123,7 @@ export default {
       displaySlider: true,
       title: "",
       description: "",
-      mapPlace: { lat: 2, lng: 22 },
+      mapPlace: {lat: 0, lng: 0},
       mapPlaceInput: "",
       displaySaveMapButton: false,
       files: [],
@@ -195,7 +195,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["toggleEditCheckpointModal", "updateCheckpoint", "setEditPlanModalId"]),
+    ...mapActions([
+      "toggleEditCheckpointModal",
+      "updateCheckpoint",
+      "setEditPlanModalId"
+    ]),
     openMap() {
       this.$refs.map.style.height = "500px";
       this.$refs.map.style.marginBottom = "20px";
@@ -227,16 +231,17 @@ export default {
     },
     submit() {
       if (this.$refs.form.validate()) {
+        console.log(this.mapPlace.lat)
         this.toggleEditCheckpointModal();
         this.$forceUpdate();
         this.updateCheckpoint({
           title: this.title,
           description: this.description,
           position: {
-            lat: this.mapPlace.lat(),
-            lng: this.mapPlace.lng()
-            },
-        })
+            lat: typeof this.mapPlace.lat == 'function' ? this.mapPlace.lat() : this.mapPlace.lat,
+            lng: typeof this.mapPlace.lng == 'function' ? this.mapPlace.lng() : this.mapPlace.lng,
+          }
+        });
         let temp = this.editPlanModalId;
         this.setEditPlanModalId(0);
         this.setEditPlanModalId(temp);
@@ -281,9 +286,9 @@ export default {
 
       this.title = checkpoint.title;
       this.description = checkpoint.description;
-      // this.mapPlace.lat = () => +place.position.lat;
-      // this.mapPlace.lng = () => +place.position.lng;
       this.mapPlaceInput = `Map position: (${place.position.lat}, ${place.position.lng})`;
+      this.mapPlace = {lat: place.position.lat, lng: place.position.lng};
+      this.center = {lat: place.position.lat, lng: place.position.lng}
     },
     value() {
       if (this.value == true) {
@@ -316,8 +321,7 @@ export default {
       }
     }
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
 

@@ -12,12 +12,12 @@ export default class CursorLogic {
     this.bgCircleCorrection = 12;
 
     this.arrow = document.querySelector('.arrow');
+    this.currentCursor = null;
 
     this.screenMiddle = window.innerWidth / 2;
     this.cursorCountriesDEG = 45;
     this.mouseMoveEnd = 0;
     this.circlesLineDraw = false;
-    this.circlesLineDrawTimeout = false;
 
     this.header = document.querySelector('header');
     this.sliderSection = document.querySelector('.home_page_slider');
@@ -27,6 +27,7 @@ export default class CursorLogic {
     this.formSubmit = document.querySelector('[type=submit]');
   }
 
+
   enableListeners() {
     document.addEventListener('mousemove', e => {
       this.x = e.clientX - 3;
@@ -34,6 +35,7 @@ export default class CursorLogic {
       this.mouseMoveEnd = new Date();
 
       if (!this.interval) this.enableInterval();
+      if (this.sleepCursorInterval) this.sleepCursorHandler();
     })
 
     window.addEventListener('resize', () => {
@@ -54,12 +56,11 @@ export default class CursorLogic {
     
     this.abilitiesSection.addEventListener('mouseenter', () => {
       this.cursor.classList.add('display_small_cursor');
-      this.circlesLineDraw = true;
+      this.currentCursor = this.defaultCircle;
     })
 
     this.abilitiesSection.addEventListener('mouseleave', e => {
       this.cursor.classList.remove('display_small_cursor');
-      this.circlesLineDraw = false;
     })
 
     // // // // // // // // // // // // // // // // / //
@@ -81,7 +82,7 @@ export default class CursorLogic {
       })
     })
 
-    // // // // // // // // // // // // // // // // / //
+    // // // // // // // // // // // // // // // // // //
 
     this.formSubmit.addEventListener('mouseenter', () => {
       this.cursor.classList.remove('feedback_section_cursor');
@@ -125,30 +126,9 @@ export default class CursorLogic {
       
       this.bgCircle.style.left = this.moveX - this.bgCircleCorrection + 'px';
       this.bgCircle.style.top = this.moveY - this.bgCircleCorrection + 'px';
-
-      if (!this.circlesLineDrawTimeout && this.circlesLineDraw) {
-        console.log('created?')
-        this.circlesLineDrawTimeout = true;
-        let div = document.createElement('div');
-        div.classList.add('test');
-        div.style.left = this.x + 'px';
-        div.style.top = this.y + 'px';
-        div.style.borderColor = this.getRandomColor();
-        document.body.append(div);
-        setTimeout(() => {
-          div.style.opacity = 0;
-        }, 0);
-        setTimeout(() => {
-          div.remove()
-        }, 1000);
-        setTimeout(() => {
-          this.circlesLineDrawTimeout = false;
-        }, 50);
-      }
-
-
     }, 10);
   }
+
 
   disableInterval() {
     clearInterval(this.interval);
@@ -178,5 +158,4 @@ export default class CursorLogic {
     }
     return color;
   }
-  
 }

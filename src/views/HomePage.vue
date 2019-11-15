@@ -286,10 +286,9 @@ export default {
     },
     disableCountryModal(e) {
       this.countryFullScreen.value = false;
-    },
+    }
   },
-  created() {
-  },
+  created() {},
   mounted() {
     this.cursorLogic = new CursorLogic();
     this.cursorLogic.disableDefaultCursor();
@@ -787,7 +786,7 @@ footer {
 }
 
 .display_small_cursor {
-   .instant_move {
+  .instant_move {
     .arrow {
       opacity: 0;
     }

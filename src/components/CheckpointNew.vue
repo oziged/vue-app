@@ -52,7 +52,7 @@
         >
           <GmapMarker
             ref="marker"
-            :position="mapPlace"
+            :position="mapPlace == {} ? null : mapPlace"
             :clickable="true"
             :draggable="false"
             @click="toggleInfoWindow(m,index)"
@@ -124,7 +124,7 @@ export default {
       displaySlider: true,
       title: "",
       description: "",
-      mapPlace: { lat: 2, lng: 22 },
+      mapPlace: {},
       mapPlaceInput: "",
       displaySaveMapButton: false,
       files: [],
@@ -228,7 +228,6 @@ export default {
     },
     submit() {
       if (this.$refs.form.validate()) {
-        console.log("checkpoint created");
         this.toggleNewCheckpointModal();
         this.$forceUpdate();
         this.addCheckpoint({
@@ -264,6 +263,12 @@ export default {
           });
         }
       }
+    },
+    clearInputs() {
+      this.title = "";
+      this.description = "";
+      this.mapPlace =  {};
+      this.mapPlaceInput = "";
     }
   },
   computed: {
@@ -272,6 +277,7 @@ export default {
   watch: {
     value() {
       if (this.value == true) {
+        this.clearInputs();
         this.$nextTick(() => {
           this.$gmapApiPromiseLazy().then(() => {
             let input = this.$refs.mapPlace.$el.querySelector("input");
