@@ -286,9 +286,10 @@ export default {
     },
     disableCountryModal(e) {
       this.countryFullScreen.value = false;
-    }
+    },
   },
-  created() {},
+  created() {
+  },
   mounted() {
     this.cursorLogic = new CursorLogic();
     this.cursorLogic.disableDefaultCursor();
@@ -775,6 +776,23 @@ footer {
     }
     .default_circle {
       opacity: 0;
+    }
+    .cursor_country {
+      opacity: 0;
+    }
+  }
+  .bg_circle {
+    opacity: 0;
+  }
+}
+
+.display_small_cursor {
+   .instant_move {
+    .arrow {
+      opacity: 0;
+    }
+    .default_circle {
+      opacity: 1;
     }
     .cursor_country {
       opacity: 0;

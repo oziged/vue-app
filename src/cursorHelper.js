@@ -15,12 +15,14 @@ export default class CursorLogic {
 
     this.screenMiddle = window.innerWidth / 2;
     this.cursorCountriesDEG = 45;
-    this.mousemoveTimeout = 0;
     this.mouseMoveEnd = 0;
+    this.circlesLineDraw = false;
+    this.circlesLineDrawTimeout = false;
 
     this.header = document.querySelector('header');
     this.sliderSection = document.querySelector('.home_page_slider');
     this.feedbackSection = document.querySelector('.feedback_section');
+    this.abilitiesSection = document.querySelector('.abilities_section');
     this.countriesSection = document.querySelector('.countries_list');
     this.formSubmit = document.querySelector('[type=submit]');
   }
@@ -47,6 +49,20 @@ export default class CursorLogic {
       this.cursor.classList.remove('display_arrow')
       this.sliderHandlerDisable()
     })
+
+    // // // // // // ABILITIES SECTION // // // // / //
+    
+    this.abilitiesSection.addEventListener('mouseenter', () => {
+      this.cursor.classList.add('display_small_cursor');
+      this.circlesLineDraw = true;
+    })
+
+    this.abilitiesSection.addEventListener('mouseleave', e => {
+      this.cursor.classList.remove('display_small_cursor');
+      this.circlesLineDraw = false;
+    })
+
+    // // // // // // // // // // // // // // // // / //
 
     // // // // // // COUNTRIES SECTION // // // // / //
 
@@ -109,6 +125,28 @@ export default class CursorLogic {
       
       this.bgCircle.style.left = this.moveX - this.bgCircleCorrection + 'px';
       this.bgCircle.style.top = this.moveY - this.bgCircleCorrection + 'px';
+
+      if (!this.circlesLineDrawTimeout && this.circlesLineDraw) {
+        console.log('created?')
+        this.circlesLineDrawTimeout = true;
+        let div = document.createElement('div');
+        div.classList.add('test');
+        div.style.left = this.x + 'px';
+        div.style.top = this.y + 'px';
+        div.style.borderColor = this.getRandomColor();
+        document.body.append(div);
+        setTimeout(() => {
+          div.style.opacity = 0;
+        }, 0);
+        setTimeout(() => {
+          div.remove()
+        }, 1000);
+        setTimeout(() => {
+          this.circlesLineDrawTimeout = false;
+        }, 50);
+      }
+
+
     }, 10);
   }
 
@@ -117,6 +155,7 @@ export default class CursorLogic {
     this.interval = null;
   }
 
+  
   enableDefaultCursor() {
     document.body.style.cursor = 'auto';
     document.querySelectorAll('.v-application a').forEach(item => {
@@ -130,4 +169,14 @@ export default class CursorLogic {
       item.classList.add('hide_cursor')
     })
   }
+
+  getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+  
 }

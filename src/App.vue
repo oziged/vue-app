@@ -68,7 +68,6 @@ export default {
 
     beforeLeave(el) {
       if (this.isMobile) return;
-
       TweenMax.to(el, 1, {
         opacity: 0,
         x: "300px",
@@ -191,5 +190,16 @@ input[type="submit"] {
 
 .hide_cursor {
   cursor: none !important;
+}
+
+.test {
+  opacity: .4;
+  width: 20px;
+  height: 20px;
+  border: 2px solid;
+  border-radius: 50%;
+  position: fixed;
+  transition: 1s;
+  pointer-events: none;
 }
 </style>
