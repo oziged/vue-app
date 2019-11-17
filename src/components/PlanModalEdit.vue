@@ -51,7 +51,7 @@
                       <v-list-item-title>Add subCheckpoint</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item @mousedown.stop.prevent @click.stop>
+                  <v-list-item @mousedown.stop.prevent @click.stop="removeCheckpoint(item.item.id)">
                     <v-list-item-content>
                       <v-list-item-title>Delete Checkpoint</v-list-item-title>
                     </v-list-item-content>
@@ -88,7 +88,7 @@
                 <v-list-item-title>Add subCheckpoint</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item @mousedown.stop.prevent @click.stop>
+            <v-list-item @mousedown.stop.prevent @click.stop="removeCheckpoint(editedItemId)">
               <v-list-item-content>
                 <v-list-item-title>Delete Checkpoint</v-list-item-title>
               </v-list-item-content>
@@ -125,7 +125,8 @@ export default {
       "getSubCheckpoints",
       "getPlan",
       "windowWidth",
-      "isMobile"
+      "isMobile",
+      "currentPlanCheckpoints"
     ])
   },
   methods: {
@@ -157,6 +158,7 @@ export default {
             let obj = {
               item: item,
               id: item.id,
+              parentId: id,
               nested: getNested(item.id)
             };
             array.push(obj);
@@ -196,7 +198,8 @@ export default {
       "toggleNewCheckpointModal",
       "toggleEditPlanModal",
       "setEditPlanModalId",
-      "setParentCheckpointId"
+      "setParentCheckpointId",
+      "removeCheckpoint"
     ])
   },
   watch: {
@@ -213,9 +216,18 @@ export default {
     editPlanModalId(newValue) {
       this.plan = this.getPlan(newValue);
       this.setCheckpointsData(newValue, "Plan");
+    },
+    currentPlanCheckpoints: {
+      handler() {
+        if (this.editPlanModalId) this.setCheckpointsData(this.editPlanModalId, "Plan");
+      },
+      deep: true
     }
+    
   },
   mounted() {
+    window.get = this.getSubCheckpoints;
+    window.itme = () => this.editedItemId;
     window.data = () => this.data;
   }
 };

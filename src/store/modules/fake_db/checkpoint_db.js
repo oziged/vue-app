@@ -1,23 +1,30 @@
 export default {
   actions: {
-    async newCheckpoint({ commit, dispatch, rootGetters }, payload) {
+    async DBnewCheckpoint({ commit, dispatch, rootGetters }, payload) {
         let place = await dispatch('newPlace', {position: payload.position});
         let checkpoints = rootGetters.allCheckpoints;
         let id = checkpoints[checkpoints.length-1].id+1;
         delete payload.position;
         payload = {id, place_id: place.id, ...payload}
-        commit("newCheckpoint", payload);
+        commit("DBnewCheckpoint", payload);
         return payload;
     },
+
     async DBupdateCheckpoint({ commit, dispatch, getters}, payload) {
       commit("DBupdateCheckpoint", {id: getters.editCheckpointModalId, payload});
       dispatch("DBupdatePlace", {place_id: getters.getCheckpoint(getters.editCheckpointModalId).place_id, position: payload.position})
+    },
+
+    async DBremoveCheckpoint({ commit, dispatch, getters}, id) {
+      commit("DBremoveCheckpoint", id);
     }
   },
+
   mutations: {
-    newCheckpoint(state, payload) {
+    DBnewCheckpoint(state, payload) {
       state.checkpoints.push(payload);
     },
+
     DBupdateCheckpoint(state, {id, payload}) {
       let checkpoints = state.checkpoints.slice();
       let checkpointIndex = checkpoints.findIndex(item => {
@@ -27,8 +34,15 @@ export default {
         ...payload
       }
       state.checkpoints = checkpoints;
+    },
+
+    DBremoveCheckpoint(state, id) {
+      state.checkpoints = state.checkpoints.filter(item => {
+        return item.id != id
+      })
     }
   },
+
   state: {
     checkpoints: [
       {
@@ -133,3 +147,33 @@ export default {
     },
   }
 };
+
+function getData(id, type, getters) {
+  let res = [];
+  function getNested(id) {
+    let array = [];
+    let subChecks = getters.getSubCheckpoints(id, "Checkpoint", true);
+    if (subChecks) {
+      subChecks.forEach(item => {
+        let obj = {
+          item: item,
+          id: item.id,
+          nested: getNested(item.id)
+        };
+        array.push(obj);
+      });
+      return array;
+    } else return [];
+  }
+  getters.getSubCheckpoints(id, type).forEach(item => {
+    let obj = {
+      item: item,
+      id: item.id,
+      parentId: id,
+      parentType: type,
+      nested: getNested(item.id)
+    };
+    res.push(obj);
+  });
+  return res;
+}

@@ -231,7 +231,6 @@ export default {
     },
     submit() {
       if (this.$refs.form.validate()) {
-        console.log(this.mapPlace.lat)
         this.toggleEditCheckpointModal();
         this.$forceUpdate();
         this.updateCheckpoint({

@@ -57,7 +57,6 @@ export default {
     displayedSubMenu: null,
     displayedItemId: null,
     displayedItemType: "Plan",
-    // data: []
   }),
   methods: {
     ...mapActions([
@@ -95,34 +94,35 @@ export default {
     //   }
     //   return returnedObj;
     // },
-    setCheckpointsData(id, type) {
-      let res = [];
-      let self = this;
-      function getNested(id) {
-        let array = [];
-        let subChecks = self.getSubCheckpoints(id, "Checkpoint", true);
-        if (subChecks) {
-          subChecks.forEach(item => {
-            let obj = {
-              item: item,
-              id: item.id,
-              nested: getNested(item.id)
-            };
-            array.push(obj);
-          });
-          return array;
-        } else return [];
-      }
-      this.getSubCheckpoints(id, type).forEach(item => {
-        let obj = {
-          item: item,
-          id: item.id,
-          nested: getNested(item.id)
-        };
-        res.push(obj);
-      });
-      this.data = res;
-    }
+    // setCheckpointsData(id, type) {
+    //   let res = [];
+    //   let self = this;
+    //   function getNested(id) {
+    //     let array = [];
+    //     let subChecks = self.getSubCheckpoints(id, "Checkpoint", true);
+    //     if (subChecks) {
+    //       subChecks.forEach(item => {
+    //         let obj = {
+    //           item: item,
+    //           id: item.id,
+    //           parentId: id,
+    //           nested: getNested(item.id)
+    //         };
+    //         array.push(obj);
+    //       });
+    //       return array;
+    //     } else return [];
+    //   }
+    //   this.getSubCheckpoints(id, type).forEach(item => {
+    //     let obj = {
+    //       item: item,
+    //       id: item.id,
+    //       nested: getNested(item.id)
+    //     };
+    //     res.push(obj);
+    //   });
+    //   this.data = res;
+    // }
   },
   provide() {
     return {

@@ -20,28 +20,17 @@ export default {
       state.places.push(payload);
     },
     DBupdatePlace(state, {id, position}) {
-      // console.log(position);
       let places = state.places.slice();
       let placeIndex = places.findIndex(item => {
         return item.id == id
       })
       let test = places.find(item => item.id == id)
       test = {...test, position}
-      // console.log(test);
       places[placeIndex] = {
         ...places[placeIndex],
         position
       }
-      console.log(places[placeIndex])
-      console.log(places.find(item => item.id == id))
-      console.log(places);
-      // console.log(places.findIndex(item => {
-      //   return item.id == id
-      // }))
-      // console.log(places[placeIndex]);
       state.places = places;
-      // console.log(places);
-      // console.log(state.places);
     }
   },
   state: {
