@@ -10,11 +10,8 @@
         <router-link class="nav_item" to="/plans">
           <span>Plans</span>
         </router-link>
-        <router-link class="nav_item" to="/plan/1">
-          <span>Plan1</span>
-        </router-link>
-        <router-link class="nav_item" to="/plan/2">
-          <span>Plan2</span>
+        <router-link class="nav_item" to="/auth">
+          <span>Join us</span>
         </router-link>
       </div>
       <div
@@ -91,9 +88,8 @@ header {
   z-index: 101;
   box-shadow: 0 0 4px 0px #00000036;
   transition: 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
-  // cursor: pointer;
   &:hover {
-    background-color: #f8fff5;
+    background-color: #F6FBFA;
   }
 
   .nav_list {
@@ -117,6 +113,12 @@ header {
     padding: 10px;
     display: flex;
     align-items: center;
+    // width: 60px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
     &_logo {
       display: flex;
       justify-content: center;
@@ -134,10 +136,12 @@ header {
     }
     &:hover {
       span {
-        border-bottom: 2px solid rgba(11, 99, 61, 0.3);
+        border-bottom: 2px solid rgb(250, 250, 250);
       }
     }
   }
+
+
 
   .mobile_burger {
     display: none;

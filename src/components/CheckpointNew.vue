@@ -89,7 +89,7 @@
           </vue-scroll>
         </div>
         <div class="right_block">
-          <div class="if_no_images">NO IMAGES</div>
+          <!-- <div class="if_no_images">NO IMAGES</div> -->
           <transition name="fade">
             <slider
               v-if="displaySlider && images.length"
@@ -196,7 +196,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["toggleNewCheckpointModal", "addPlan", "addCheckpoint", "setEditPlanModalId"]),
+    ...mapActions(["toggleNewCheckpointModal", "addPlan", "newCheckpoint", "setEditPlanModalId"]),
     openMap() {
       this.$refs.map.style.height = "500px";
       this.$refs.map.style.marginBottom = "20px";
@@ -230,7 +230,7 @@ export default {
       if (this.$refs.form.validate()) {
         this.toggleNewCheckpointModal();
         this.$forceUpdate();
-        this.addCheckpoint({
+        this.newCheckpoint({
           title: this.title,
           description: this.description,
           position: {
@@ -359,9 +359,9 @@ export default {
 
 .right_block {
   width: 70%;
-  .if_no_images {
-    height: 400px;
-  }
+  // .if_no_images {
+  //   height: 400px;
+  // }
   .slider {
     height: 400px;
     padding: 0 0 0 20px;

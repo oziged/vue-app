@@ -15,6 +15,7 @@
     <checkpoint-modal-show :value="mainCheckpointModalDisplay" @input="toggleMainCheckpointModal" />
     <checkpoint-new :value="newCheckpointModalDisplay" @input="toggleNewCheckpointModal" />
     <checkpoint-edit :value="editCheckpointModalDisplay" @input="toggleEditCheckpointModal" />
+    <plan-new/>
     <plan-modal-edit :value="editPlanModalDisplay" @input="toggleEditPlanModal" />
     <mobile-map-modal :value="mobileMapModalDisplay" @input="toggleMobileMapModal" />
     <notifications style="bottom: 30px;" position="center bottom" group="foo" />
@@ -26,6 +27,7 @@ import AppHeader from "./components/AppHeader";
 import CheckpointModalShow from "./components/CheckpointModalShow";
 import CheckpointNew from "./components/CheckpointNew";
 import CheckpointEdit from "./components/CheckpointEdit";
+import PlanNew from './components/PlanNew'
 import PlanModalEdit from "./components/PlanModalEdit";
 import MobileMapModal from "./components/MobileMapModal";
 import { mapGetters, mapActions } from "vuex";
@@ -39,6 +41,7 @@ export default {
     CheckpointModalShow,
     CheckpointNew,
     CheckpointEdit,
+    PlanNew,
     PlanModalEdit,
     MobileMapModal,
     ModalWindow
@@ -85,7 +88,7 @@ export default {
       "toggleMobileMapModal",
       "addPlace",
       "setCurrentPlan",
-      "addCheckpoint"
+      "newCheckpoint"
     ])
   },
   watch: {},

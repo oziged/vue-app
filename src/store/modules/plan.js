@@ -13,13 +13,13 @@ export default {
       commit("updateCheckpoint", checkpoints)
     },
 
-    async addCheckpoint({ commit, getters, dispatch }, payload) {
+    async newCheckpoint({ commit, getters, dispatch }, payload) {
       let newCheckpoint = await dispatch('DBnewCheckpoint', {checkable_type: "Checkpoint", checkable_id: getters.parentCheckpointId, ...payload});
       let checkpoints = getters.currentPlanCheckpoints;
       let parentCheckpoint = getDeepObject(checkpoints, getters.parentCheckpointId);
       newCheckpoint = {id: newCheckpoint.id, item: newCheckpoint, nested: [], parentType: "Checkpoint", parentId: getters.parentCheckpointId}
       parentCheckpoint.nested.push(newCheckpoint);
-      commit("addCheckpoint", checkpoints)
+      commit("newCheckpoint", checkpoints)
     },
 
     async removeCheckpoint({ commit, getters, dispatch }, id) {
@@ -48,7 +48,7 @@ export default {
       window.checkpoints = state.checkpoints;
     },
 
-    addCheckpoint(state, payload) {
+    newCheckpoint(state, payload) {
       state.checkpoints = payload;
     },
 

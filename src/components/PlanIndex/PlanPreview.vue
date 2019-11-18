@@ -1,6 +1,6 @@
 <template>
   <div class="plan_preview">
-    <router-link class="plan_link" :to="`plan/${plan.id}`">
+    <router-link class="plan_link" :to="`plans/${plan.id}`">
       <h3>{{ plan.title }}</h3>
     </router-link>
 

@@ -17,7 +17,7 @@ export default new Router({
       component: HomePage
     },
     { 
-      path: '/plan/:id', 
+      path: '/plans/:id', 
       component: PlanShow
     },
     {
@@ -25,7 +25,7 @@ export default new Router({
       component: PlanIndex
     },
     { 
-      path: '/user/:id', 
+      path: '/users/:id', 
       component: UserShow
     },
     {

@@ -7,7 +7,13 @@
     @input="$emit('input')"
   >
     <div class="move_modal_wrapper">
-      <div class="plan_title">{{ plan.title }}</div>
+      <div class="plan_title">{{ plan.title }}
+        <div class="edit_icon" v-if="!planEditingMode" @click="planEditingMode = true"/>
+        <!-- <div v-if="planEditingMode" class="plan_edit_form">
+          <input type="text" :placeholder="plan.title" v-model="planToUpdate.title">
+          <textarea name="" id="" cols="30" rows="10" :placeholder="plan.description" v-model="planToUpdate.description"></textarea>
+        </div> -->
+      </div>
       <vue-nestable
         @change="openSubMenuModal"
         v-model="data"
@@ -24,7 +30,7 @@
           <div
             v-if="!isMobile"
             @click="displayedSubMenu = item; setSubMenuDirection();"
-            class="edit_checkpoint_icon"
+            class="edit_icon"
           ></div>
           <transition name="fade">
             <div
@@ -113,6 +119,8 @@ export default {
     return {
       data: [],
       plan: null,
+      planToUpdate: this.plan,
+      planEditingMode: false,
       editedItemId: null,
       displayEditedItemModal: false,
       nestableInputTime: 0,
@@ -215,6 +223,7 @@ export default {
     },
     editPlanModalId(newValue) {
       this.plan = this.getPlan(newValue);
+      this.planToUpdate = Object.assign({}, this.plan);
       this.setCheckpointsData(newValue, "Plan");
     },
     currentPlanCheckpoints: {
@@ -239,9 +248,31 @@ export default {
   .plan_title {
     display: block;
     cursor: pointer;
+    position: relative;
     padding: 3px 10px;
     margin-bottom: 20px;
     border: 2px solid rgba(0, 0, 0, 0.1);
+    &:hover {
+      .edit_icon {
+        opacity: .4;
+      }
+    }
+  }
+  .plan_edit_form {
+    display: flex;
+    flex-direction: column;
+    input, textarea {
+      background-color: #F4F8F7;
+      height: 50px;
+      margin-bottom: 10px;
+      padding: 10px;
+      &:focus {
+        outline: none
+      }
+    }
+    textarea {
+      height: 200px;
+    }
   }
   .nested {
     padding-bottom: 20px;
@@ -250,12 +281,12 @@ export default {
   .nested_item {
     position: relative;
     &:hover {
-      .edit_checkpoint_icon {
+      .edit_icon {
         opacity: 0.5;
       }
     }
   }
-  .edit_checkpoint_icon {
+  .edit_icon {
     cursor: pointer;
     width: 20px;
     opacity: 0;

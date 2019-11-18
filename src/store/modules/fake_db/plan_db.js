@@ -1,9 +1,28 @@
 export default {
   actions: {
-    
+    newPlan({commit, getters}, payload) {
+      return new Promise(resolve => {
+        commit("newPlan", payload)
+        console.log(getters.allPlans)
+        resolve(getters.allPlans[getters.allPlans.length-1])
+      })
+     
+    }
   },
   mutations: {
-
+    newPlan(state, payload) {
+      state.plans.push(
+        {
+          ...payload,
+          id: state.plans.length + 1,
+          user_id: 1,
+          type: 'public',
+          price: "",
+          rating: Math.floor(Math.random() * 5),
+          length: 1234
+        }
+      )
+    }
   },
   state: {
     plans: [
@@ -29,50 +48,6 @@ export default {
         rating: 2,
         length: 997
       },
-      {
-        id: 3,
-        user_id: 1,
-        title: "Test Tour",
-        description:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. A dignissimos ipsa harum blanditiis iure in aut ut, quam quas atque?",
-        type: "public",
-        price: "",
-        rating: 4,
-        length: 5214
-      },
-      {
-        id: 3,
-        user_id: 1,
-        title: "Test Tour",
-        description:
-          "Lorem ipsumm dolor sit amet consectetur adipisicing elit. A dignissimos ipsa harum blanditiis iure in aut ut, quam quas atque?m dolor sit amet consectetur adipisicing elit. A dignissimos ipsa harum blanditiis iure in aut ut, quam quas atque?m dolor sit amet consectetur adipisicing elit. A dignissimos ipsa harum blanditiis iure in aut ut, quam quas atque? dolor sit amet consectetur adipisicing elit. A dignissimos ipsa harum blanditiis iure in aut ut, quam quas atque?",
-        type: "public",
-        price: "",
-        rating: 4,
-        length: 410
-      },
-      {
-        id: 3,
-        user_id: 1,
-        title: "Test Tour",
-        description:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. A dignissimos ipsa harum blanditiis iure in aut ut, quam quas atque?",
-        type: "public",
-        price: "",
-        rating: 4,
-        length: 1020
-      },
-      {
-        id: 3,
-        user_id: 1,
-        title: "Test Tour",
-        description:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. A dignissimos ipsa harum blanditiis iure in aut ut, quam quas atque?",
-        type: "public",
-        price: "",
-        rating: 4,
-        length: 420
-      }
     ],
   },
   getters: {
