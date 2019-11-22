@@ -18,7 +18,10 @@
     <plan-new/>
     <plan-modal-edit :value="editPlanModalDisplay" @input="toggleEditPlanModal" />
     <mobile-map-modal :value="mobileMapModalDisplay" @input="toggleMobileMapModal" />
-    <notifications style="bottom: 30px;" position="center bottom" group="foo" />
+
+    <transition name="fade">
+      <performance-check v-if="!performanceLvl"/>
+    </transition>
   </v-app>
 </template>
 
@@ -33,6 +36,7 @@ import MobileMapModal from "./components/MobileMapModal";
 import { mapGetters, mapActions } from "vuex";
 import ModalWindow from "./components/ModalWindow";
 import TweenMax from "gsap";
+import PerformanceCheck from './components/PerfomanceCheck'
 
 export default {
   name: "App",
@@ -44,7 +48,8 @@ export default {
     PlanNew,
     PlanModalEdit,
     MobileMapModal,
-    ModalWindow
+    ModalWindow,
+    PerformanceCheck
   },
   data() {
     return {
@@ -88,7 +93,7 @@ export default {
       "toggleMobileMapModal",
       "addPlace",
       "setCurrentPlan",
-      "newCheckpoint"
+      "newCheckpoint",
     ])
   },
   watch: {},
@@ -103,7 +108,6 @@ export default {
     window.addEventListener("resize", () => {
       this.setWindowWidth();
     });
-    window.t = this;
   },
   computed: {
     ...mapGetters([
@@ -114,7 +118,8 @@ export default {
       "windowWidth",
       "mobileMapModalDisplay",
       "isMobile",
-      "allPlaces"
+      "allPlaces",
+      "performanceLvl"
     ])
   }
 };

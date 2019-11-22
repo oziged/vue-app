@@ -20,11 +20,13 @@ export default new Vuex.Store({
 
   },
   mutations: {
-
+    setPerformanceLvl(state, payload) {
+     state.perfomanceLvl = payload 
+    }
   },
   state: {
     nested_colors: ['reserv', '#00572b', '#009e4e', '#00d96b', 'red'],
-    // isMobile: isMobile,
+    perfomanceLvl: null
   },
   getters: {
     nestedColors(state) {
@@ -32,6 +34,9 @@ export default new Vuex.Store({
     },
     isMobile() {
       return isMobile;
+    },
+    performanceLvl(state) {
+      return state.perfomanceLvl
     }
   },
   modules: {

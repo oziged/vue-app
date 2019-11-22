@@ -1,5 +1,6 @@
 <template>
   <div class="slider">
+    <slot/>
     <slick class="main_slider" ref="slickMain" :options="slickOptionsMain">
       <div v-if="!disableMap" class="main_slide">
         <app-map

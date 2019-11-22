@@ -43,8 +43,8 @@ export default {
     ...mapActions(["newPlan"]),
     async submit() {
       let newPlan = await this.newPlan({
-        title: "Title",
-        description: "Description"
+        title: this.title,
+        description: this.description
       })
       this.$router.push(`/plans/${newPlan.id}`)
     }

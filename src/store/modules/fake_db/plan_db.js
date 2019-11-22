@@ -22,6 +22,7 @@ export default {
           length: 1234
         }
       )
+      console.log(state)
     }
   },
   state: {

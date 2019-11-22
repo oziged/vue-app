@@ -257,8 +257,11 @@ import HomePageSlider from "../components/HomePage/HomePageSlider";
 import FeedBackForm from "../components/HomePage/FeedBackForm";
 import CursorLogic from "../cursorHelper";
 import ModalWindow from "../components/ModalWindow";
+import conditionHandler from '../mixins/conditionHandler'
+import { mapGetters, mapActions } from "vuex";
 
 export default {
+  mixins: [conditionHandler],
   components: {
     HomePageSlider,
     FeedBackForm,
@@ -288,11 +291,17 @@ export default {
       this.countryFullScreen.value = false;
     }
   },
+  computed: {
+    ...mapGetters(["performanceLvl", "isMobile"])
+  },
   created() {},
-  mounted() {
-    this.cursorLogic = new CursorLogic();
-    this.cursorLogic.disableDefaultCursor();
-    this.cursorLogic.enableListeners();
+  async mounted() {
+    await this.conditionHandler('Performance check', () => this.performanceLvl)
+    if (this.performanceLvl > 70 && !this.isMobile) {
+      this.cursorLogic = new CursorLogic();
+      this.cursorLogic.disableDefaultCursor();
+      this.cursorLogic.enableListeners();
+    }
   },
 
   beforeDestroy() {

@@ -1,6 +1,6 @@
 <template>
   <modal-window :value="value" @input="input">
-    <div class="checkpoint_new_modal">
+    <div class="checkpoint_edit_modal">
       <v-form ref="form">
         <v-text-field
           label="Title"
@@ -80,10 +80,12 @@
       <div class="preview">
         <div class="left_block">
           <div class="checkpoint_title">{{ title || 'Title' }}</div>
+          <vue-scroll  v-if="windowWidth > 800"
+            class="checkpoint_description" style="max-height: 600px; ">
           <div
-            v-if="windowWidth > 800"
-            class="checkpoint_description"
+           
           >{{ description || 'Description' }}</div>
+          </vue-scroll>
           <vue-scroll v-else class="checkpoint_description_wrapper" style="height: 200px; ">
             <div class="checkpoint_description">{{ description || 'Description' }}</div>
           </vue-scroll>
@@ -131,7 +133,7 @@ export default {
         size: 5,
         types: ["image/png", "image/jpg", "image/jpeg"]
       },
-      images: [],
+      images: ['https://cdn.pixabay.com/photo/2016/01/13/01/36/bagan-1137015__340.jpg'],
       center: {
         lat: 12,
         lng: 12
@@ -325,7 +327,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.checkpoint_new_modal {
+.checkpoint_edit_modal {
   padding: 50px;
 }
 
@@ -371,9 +373,29 @@ export default {
 
 .right_block {
   width: 70%;
+  padding-left: 30px;
+  position: relative;
   .slider {
     height: 400px;
-    padding: 0 0 0 20px;
+    &:hover::before {
+      opacity: 1;
+    }
+    &::before {
+      opacity: 0;
+      content: 'Here u can se uploaded images (currently, they just displaying and when checkpoint is created - images drop';
+      position: absolute;
+      z-index: 5;
+      left: calc(50% + 15px);
+      transform: translateX(-50%);
+      top: 40px;
+      width: 80%;
+      font-size: 14px;
+      background-color: rgba(255, 255, 255, 0.267);
+      background-color: rgba(29, 21, 21, 0.51);
+      color: aliceblue;
+      font-family: monospace;
+      transition: .5s;
+    }
   }
 }
 
@@ -383,7 +405,7 @@ export default {
 }
 
 @media (max-width: 800px) {
-  .checkpoint_new_modal {
+  .checkpoint_edit_modal {
     padding: 20px;
     .preview {
       flex-direction: column;
@@ -393,9 +415,13 @@ export default {
       }
       .right_block {
         width: 100%;
+        padding: 0;
       }
       .slider {
         padding: 0;
+        &::before {
+          left: 50%;
+        }
       }
     }
     .checkpoint_description_wrapper {

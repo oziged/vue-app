@@ -8,11 +8,12 @@
   >
     <div class="move_modal_wrapper">
       <div class="plan_title">{{ plan.title }}
-        <div class="edit_icon" v-if="!planEditingMode" @click="planEditingMode = true"/>
-        <!-- <div v-if="planEditingMode" class="plan_edit_form">
+        <div class="edit_icon"/>
+      </div>
+       <div class="plan_edit_form">
           <input type="text" :placeholder="plan.title" v-model="planToUpdate.title">
           <textarea name="" id="" cols="30" rows="10" :placeholder="plan.description" v-model="planToUpdate.description"></textarea>
-        </div> -->
+          <v-btn class="update_plan" color="success" dark>update plan info</v-btn>
       </div>
       <vue-nestable
         @change="openSubMenuModal"
@@ -68,7 +69,7 @@
           </transition>
         </vue-nestable-handle>
       </vue-nestable>
-      <v-btn class="save_checkpoint" color="success" dark>update checkpoints</v-btn>
+      <!-- <v-btn class="save_checkpoint" color="success" dark>update checkpoints</v-btn> -->
       <modal-window
         :value="displayEditedItemModal"
         @input="displayEditedItemModal = false"
@@ -120,7 +121,6 @@ export default {
       data: [],
       plan: null,
       planToUpdate: this.plan,
-      planEditingMode: false,
       editedItemId: null,
       displayEditedItemModal: false,
       nestableInputTime: 0,
@@ -261,10 +261,15 @@ export default {
   .plan_edit_form {
     display: flex;
     flex-direction: column;
+    .update_plan {
+      margin: 20px 0;
+    }
+    input {
+      margin-bottom: 5px;
+    }
     input, textarea {
       background-color: #F4F8F7;
       height: 50px;
-      margin-bottom: 10px;
       padding: 10px;
       &:focus {
         outline: none

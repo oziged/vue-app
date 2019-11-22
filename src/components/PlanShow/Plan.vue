@@ -145,8 +145,11 @@ export default {
     }
   },
   mounted() {
+    console.log(this.id);
+    console.log('here')
     this.setCurrentPlan(this.id);
     this.plan = this.getPlan(this.id);
+    console.log(this.getPlan(this.id))
     this.$gmapApiPromiseLazy().then(() => {
       this.displayedItemId = this.id;
     });

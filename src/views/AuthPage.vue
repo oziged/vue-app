@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="auth_form">
+    <div :class="{auth_form: true, mobile: windowWidth <= 1000}">
       <img class="geometry_white_bg" src="@/assets/AuthPage/geometry_white_bg.jpg" alt="">
       <div class="small_block">
         <img class="geometry_bg" src="@/assets/AuthPage/geometry_bg.jpg" alt="">
-        <div class="button" @click="toggleAuth"><span>{{ `${mode.slice(0,4)} ${mode.slice(-2)}` }}</span></div>
+        <div class="button" @click="toggleAuth"><span>{{ `${mode == 'signup' ? 'sign in' : 'sign up'}` }}</span></div>
       </div>
       <div class="big_block">
         <div class="signup" v-if="mode == 'signup'">
@@ -41,12 +41,13 @@
 
 <script>
 import {TweenMax, TimelineMax} from "gsap"
-
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
     return {
-      mode: "signup"
+      mode: "signup",
+      mobile: this.windowWidth > 1000 ? false : true
     }
   },
   methods: {
@@ -55,6 +56,8 @@ export default {
         setTimeout(() => {
           this.mode = 'signin'
         }, 550);
+
+        if (this.windowWidth > 1000) {
 
         TweenMax.to('.static_elements_left', .3, {
           x: -100,
@@ -96,7 +99,6 @@ export default {
           delay: .7
         })
    
-
         ///
 
         TweenMax.to('.big_block', 1.5, {
@@ -111,6 +113,23 @@ export default {
           delay: 1,
           zIndex: 1
         })
+      } else {
+        TweenMax.to('.auth_form', .5, {
+          opacity: 0,
+        })
+        TweenMax.to('.auth_form', .5, {
+          opacity: 1,
+          delay: .55
+        })
+        TweenMax.to('.static_elements_left', 0, {
+          opacity: 0,
+          delay: .55
+        })
+        TweenMax.to('.static_elements_right', 0, {
+          opacity: 1,
+          delay: .55
+        })
+      }
       }
 
       if (this.mode == 'signin') {
@@ -118,6 +137,7 @@ export default {
           this.mode = 'signup'
         }, 550);
 
+        if (this.windowWidth > 1000) {
         TweenMax.to('.static_elements_right', .5, {
           x: 100,
           opacity: 0,
@@ -171,22 +191,56 @@ export default {
           delay: 1,
           zIndex: 1
         })
-      }
-      
+
+        } else {
+        TweenMax.to('.auth_form', .5, {
+          opacity: 0,
+        })
+        TweenMax.to('.auth_form', .5, {
+          opacity: 1,
+          delay: .55
+        })
+        TweenMax.to('.static_elements_right', 0, {
+          opacity: 0,
+          delay: .55
+        })
+        TweenMax.to('.static_elements_left', 0, {
+          opacity: 1,
+          delay: .55
+        })
+        }
+        }
     }
   },
+  computed: {
+    ...mapGetters(["windowWidth"]),
+  },
+  watch: {
+    windowWidth(newValue) {
+      if (this.mobile && newValue > 1000) this.mobile = false;
+      else if (!this.mobile && newValue < 1000) this.mobile = true;
+    },
+    mobile() {
+      document.querySelectorAll('.small_block, .big_block, .static_elements_left, .static_elements_right').forEach(item => item.removeAttribute('style'))
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
   .auth_form {
-    width: 1000px;
-    height: 700px;
+    width: 100%;
+    height: 100%;
+    max-width: 1250px;
+    max-height: 1000px;
+    min-height: 880px;
+    height: calc(100vh - 120px);
     border-radius: 30px;
     box-shadow: 0 0 7px 0px #00000017;
     position: relative;
     overflow: hidden;
     margin: 0 auto;
+    margin-bottom: 20px;
     font-family: Montserrat;
     .geometry_white_bg {
       position: absolute;
@@ -359,4 +413,37 @@ export default {
       }
     }
   }
+
+  @media (max-width: 1300px) {
+  .router_content {
+    padding: 0 30px;
+  }
+
+  @media (max-width: 1000px) {
+    .mobile {
+      .small_block {
+        width: 100%;
+        height: 50%;
+        left: 0;
+        top: 0;
+        .button {
+          top: 60%;
+          width: 250px;
+        }
+      }
+      .static_elements_left, .static_elements_right {
+        width: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        top: 22%;
+      }
+      .big_block {
+        width: 100%;
+        height: 50%;
+        left: 0;
+        top: 50%;
+      }
+    }
+  }
+}
 </style>

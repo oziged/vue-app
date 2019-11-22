@@ -2,6 +2,9 @@ export default {
   actions: {
     // update current plan (set subcheckpoints of plan in vuex)
     setCurrentPlan({ commit, getters }, id) {
+      // let checkpoints = getData(id, "Plan", getters);
+      // console.log('che')
+      // console.log(checkpoints);
       commit("setCurrentPlan", {plan: getters.getPlan(id), checkpoints: getData(id, "Plan", getters)})
     },
 
@@ -109,7 +112,9 @@ function getData(id, type, getters) {
       return array;
     } else return [];
   }
-  getters.getSubCheckpoints(id, type).forEach(item => {
+  let subChecks = getters.getSubCheckpoints(id, type);
+  if (!subChecks) return [];
+  subChecks.forEach(item => {
     let obj = {
       item: item,
       id: item.id,
