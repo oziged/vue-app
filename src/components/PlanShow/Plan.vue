@@ -2,10 +2,10 @@
   <div class="plan">
     <div class="plan_info">
       <div class="plan_title">
-        <h1 @click="showPlanSubCheckpoints">{{ plan.title }}</h1>
+        <h1 @click="showPlanSubCheckpoints">{{ currentPlan.title }}</h1>
         <div class="moveModalIcon" @click="toggleEditPlanModal(); setEditPlanModalId(id)"></div>
       </div>
-      <p class="plan_description">{{ plan.description | truncate(20)}}</p>
+      <p class="plan_description">{{ currentPlan.description | truncate(20)}}</p>
       <div class="checkpoint_list_wrapper">
         <div class="checkpoints_list">
           <v-expansion-panels accordion>
@@ -76,53 +76,6 @@ export default {
       this.displayedItemId = id;
       this.displayedItemType = "Checkpoint";
     },
-    // getDeepObject(data, searchId) {
-    //   data == null ? (data = this.data) : "";
-    //   let returnedObj = null;
-    //   search(data, searchId);
-    //   function search(start, searchId) {
-    //     start.some((item, index) => {
-    //       if (item.id != searchId && item.nested.length > 0) {
-    //         search(item.nested, searchId);
-    //       } else {
-    //         if (item.id == searchId) {
-    //           returnedObj = { item, parent: data };
-    //         }
-    //         return false;
-    //       }
-    //     });
-    //   }
-    //   return returnedObj;
-    // },
-    // setCheckpointsData(id, type) {
-    //   let res = [];
-    //   let self = this;
-    //   function getNested(id) {
-    //     let array = [];
-    //     let subChecks = self.getSubCheckpoints(id, "Checkpoint", true);
-    //     if (subChecks) {
-    //       subChecks.forEach(item => {
-    //         let obj = {
-    //           item: item,
-    //           id: item.id,
-    //           parentId: id,
-    //           nested: getNested(item.id)
-    //         };
-    //         array.push(obj);
-    //       });
-    //       return array;
-    //     } else return [];
-    //   }
-    //   this.getSubCheckpoints(id, type).forEach(item => {
-    //     let obj = {
-    //       item: item,
-    //       id: item.id,
-    //       nested: getNested(item.id)
-    //     };
-    //     res.push(obj);
-    //   });
-    //   this.data = res;
-    // }
   },
   provide() {
     return {
@@ -145,18 +98,14 @@ export default {
     }
   },
   mounted() {
-    console.log(this.id);
-    console.log('here')
     this.setCurrentPlan(this.id);
-    this.plan = this.getPlan(this.id);
-    console.log(this.getPlan(this.id))
+    this.plan = this.currentPlan;
     this.$gmapApiPromiseLazy().then(() => {
       this.displayedItemId = this.id;
     });
   },
   computed: {
     data() {
-      // return {}
       return this.currentPlanCheckpoints;
     },
     ...mapGetters([
@@ -169,7 +118,8 @@ export default {
       "getSubCheckpoints",
       "getPlan",
       "getPlanMainCheckpointId",
-      "currentPlanCheckpoints"
+      "currentPlanCheckpoints",
+      "currentPlan"
     ])
   }
 };

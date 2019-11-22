@@ -25,10 +25,13 @@ export default class CursorLogic {
     this.abilitiesSection = document.querySelector('.abilities_section');
     this.countriesSection = document.querySelector('.countries_list');
     this.formSubmit = document.querySelector('[type=submit]');
+    this.getElementFromPoint = this.getElementFromPoint.bind(this);
   }
 
 
   enableListeners() {
+    document.addEventListener('mousemove', this.getElementFromPoint);
+
     document.addEventListener('mousemove', e => {
       this.x = e.clientX - 3;
       this.y = e.clientY - 3;
@@ -157,5 +160,13 @@ export default class CursorLogic {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+  }
+
+  getElementFromPoint(e) {
+    let div = document.elementFromPoint(e.clientX, e.clientY);
+    if (div.closest('.home_page_slider')) {
+      this.sliderSection.dispatchEvent(new Event('mouseenter', {bubbles: true}))
+    }
+    document.removeEventListener('mousemove', this.getElementFromPoint)
   }
 }

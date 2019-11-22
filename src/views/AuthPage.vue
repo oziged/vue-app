@@ -217,8 +217,8 @@ export default {
   },
   watch: {
     windowWidth(newValue) {
-      if (this.mobile && newValue > 1000) this.mobile = false;
-      else if (!this.mobile && newValue < 1000) this.mobile = true;
+      if (this.mobile && newValue > 1000) {this.mobile = false; this.mode = 'signup'}
+      else if (!this.mobile && newValue < 1000) {this.mobile = true; this.mode = 'signup'}
     },
     mobile() {
       document.querySelectorAll('.small_block, .big_block, .static_elements_left, .static_elements_right').forEach(item => item.removeAttribute('style'))
@@ -233,7 +233,7 @@ export default {
     height: 100%;
     max-width: 1250px;
     max-height: 1000px;
-    min-height: 880px;
+    min-height: 680px;
     height: calc(100vh - 120px);
     border-radius: 30px;
     box-shadow: 0 0 7px 0px #00000017;

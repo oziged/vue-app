@@ -15,7 +15,7 @@
     <checkpoint-modal-show :value="mainCheckpointModalDisplay" @input="toggleMainCheckpointModal" />
     <checkpoint-new :value="newCheckpointModalDisplay" @input="toggleNewCheckpointModal" />
     <checkpoint-edit :value="editCheckpointModalDisplay" @input="toggleEditCheckpointModal" />
-    <plan-new/>
+    <!-- <plan-new/> -->
     <plan-modal-edit :value="editPlanModalDisplay" @input="toggleEditPlanModal" />
     <mobile-map-modal :value="mobileMapModalDisplay" @input="toggleMobileMapModal" />
 

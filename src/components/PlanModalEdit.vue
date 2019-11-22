@@ -7,13 +7,68 @@
     @input="$emit('input')"
   >
     <div class="move_modal_wrapper">
-      <div class="plan_title">{{ plan.title }}
-        <div class="edit_icon"/>
+      <div class="plan_title">
+        {{ plan.title }}
+        <div class="edit_icon" @click="displayPlanSubMenu = true" />
+        <div v-if="displayPlanSubMenu" v-click-outside="closePlanSubMenu" class="plan_sub_menu">
+          <v-card max-width="400">
+            <v-list>
+              <v-list-item
+                @click.stop="
+                  planEditMode = true; 
+                  displayPlanSubMenu = false
+                "
+                @touchend.stop
+                @touchstart.stop
+                @touchmove.stop
+              >
+                <v-list-item-content>
+                  <v-list-item-title>Edit plan</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item
+                @click="
+                closePlanSubMenu(); 
+                toggleEditPlanModal(); 
+                setParentCheckpointId(currentPlan.id); 
+                setParentCheckpointType('Plan'); 
+                toggleNewCheckpointModal()"
+              >
+                <v-list-item-content>
+                  <v-list-item-title>Add subCheckpoint</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item
+                @click="
+                closePlanSubMenu(); 
+                DBremovePlan(currentPlan.id); 
+                $router.push(`/`); 
+                toggleEditPlanModal(); "
+              >
+                <v-list-item-content>
+                  <v-list-item-title>Delete Plan</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </div>
       </div>
-       <div class="plan_edit_form">
-          <input type="text" :placeholder="plan.title" v-model="planToUpdate.title">
-          <textarea name="" id="" cols="30" rows="10" :placeholder="plan.description" v-model="planToUpdate.description"></textarea>
-          <v-btn class="update_plan" color="success" dark>update plan info</v-btn>
+      <div class="plan_edit_form" v-if="planEditMode">
+        <input type="text" :placeholder="plan.title" v-model="planToUpdate.title" />
+        <textarea
+          name
+          id
+          cols="30"
+          rows="10"
+          :placeholder="plan.description"
+          v-model="planToUpdate.description"
+        ></textarea>
+        <v-btn
+          class="update_plan"
+          @click="updatePlan(planToUpdate)"
+          color="success"
+          dark
+        >update plan info</v-btn>
       </div>
       <vue-nestable
         @change="openSubMenuModal"
@@ -52,7 +107,7 @@
                     </v-list-item-content>
                   </v-list-item>
                   <v-list-item
-                    @click.stop="closeDisplayedSubMenu(); toggleEditPlanModal(); setParentCheckpointId(item.item.id); toggleNewCheckpointModal()"
+                    @click.stop="closeDisplayedSubMenu(); toggleEditPlanModal(); setParentCheckpointId(item.item.id); setParentCheckpointType('Checkpoint'); toggleNewCheckpointModal()"
                   >
                     <v-list-item-content>
                       <v-list-item-title>Add subCheckpoint</v-list-item-title>
@@ -121,10 +176,12 @@ export default {
       data: [],
       plan: null,
       planToUpdate: this.plan,
+      planEditMode: false,
       editedItemId: null,
       displayEditedItemModal: false,
       nestableInputTime: 0,
-      displayedSubMenu: null
+      displayedSubMenu: null,
+      displayPlanSubMenu: false
     };
   },
   computed: {
@@ -134,10 +191,16 @@ export default {
       "getPlan",
       "windowWidth",
       "isMobile",
-      "currentPlanCheckpoints"
+      "currentPlanCheckpoints",
+      "currentPlan"
     ])
   },
   methods: {
+    console() {
+      console.log("console");
+      this.displayPlanSubMenu = true;
+      console.log(this.displayPlanSubMenu);
+    },
     onTouchStart(e) {
       let coord = e.target.getBoundingClientRect();
       let layer = document.querySelector(".nestable-drag-layer");
@@ -200,6 +263,9 @@ export default {
     closeDisplayedSubMenu() {
       this.displayedSubMenu = null;
     },
+    closePlanSubMenu(e) {
+      this.displayPlanSubMenu = false;
+    },
     ...mapActions([
       "setEditCheckpointModalId",
       "toggleEditCheckpointModal",
@@ -207,7 +273,10 @@ export default {
       "toggleEditPlanModal",
       "setEditPlanModalId",
       "setParentCheckpointId",
-      "removeCheckpoint"
+      "setParentCheckpointType",
+      "removeCheckpoint",
+      "DBremovePlan",
+      "updatePlan"
     ])
   },
   watch: {
@@ -219,7 +288,7 @@ export default {
           if (wrapper.clientHeight < modal.clientHeight)
             wrapper.style.overflowY = "scroll";
         }, 0);
-      }
+      } else this.planEditMode = false;
     },
     editPlanModalId(newValue) {
       this.plan = this.getPlan(newValue);
@@ -228,11 +297,16 @@ export default {
     },
     currentPlanCheckpoints: {
       handler() {
-        if (this.editPlanModalId) this.setCheckpointsData(this.editPlanModalId, "Plan");
+        if (this.editPlanModalId)
+          this.setCheckpointsData(this.editPlanModalId, "Plan");
       },
       deep: true
+    },
+    currentPlan(newValue) {
+      console.log("plan was updated");
+      this.plan = newValue;
+      this.planToUpdate = Object.assign({}, this.plan);
     }
-    
   },
   mounted() {
     window.get = this.getSubCheckpoints;
@@ -254,8 +328,14 @@ export default {
     border: 2px solid rgba(0, 0, 0, 0.1);
     &:hover {
       .edit_icon {
-        opacity: .4;
+        opacity: 0.4;
       }
+    }
+    .plan_sub_menu {
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 100;
     }
   }
   .plan_edit_form {
@@ -267,12 +347,13 @@ export default {
     input {
       margin-bottom: 5px;
     }
-    input, textarea {
-      background-color: #F4F8F7;
+    input,
+    textarea {
+      background-color: #f4f8f7;
       height: 50px;
       padding: 10px;
       &:focus {
-        outline: none
+        outline: none;
       }
     }
     textarea {

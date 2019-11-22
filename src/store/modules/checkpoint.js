@@ -3,6 +3,9 @@ export default {
     setParentCheckpointId({ commit }, id) {
       commit("setParentCheckpointId", id);
     },
+    setParentCheckpointType( {commit }, str) {
+      commit("setParentCheckpointType", str)
+    },
     setMainCheckpointModalId({ commit }, id) {
       commit("setMainCheckpointModalId", id);
     },
@@ -38,6 +41,9 @@ export default {
     setParentCheckpointId(state, id) {
       state.parent_checkpoint_id = id;
     },
+    setParentCheckpointType(state, str) {
+      state.parent_checkpoint_type = str
+    },
     setMainCheckpointModalId(state, id) {
       state.main_checkpoint_modal_id = id;
     },
@@ -71,6 +77,7 @@ export default {
   },
   state: {
     parent_checkpoint_id: null,
+    parent_checkpoint_type: null,
     main_checkpoint_modal_id: null,
     main_checkpoint_modal_display: false,
     edit_checkpoint_modal_id: null,
@@ -85,6 +92,9 @@ export default {
   getters: {
     parentCheckpointId(state) {
       return state.parent_checkpoint_id
+    },
+    parentCheckpointType(state) {
+      return state.parent_checkpoint_type
     },
     mainCheckpointModalId(state) {
       return state.main_checkpoint_modal_id;

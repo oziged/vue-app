@@ -1,11 +1,11 @@
 export default {
   actions: {
-    // update current plan (set subcheckpoints of plan in vuex)
     setCurrentPlan({ commit, getters }, id) {
-      // let checkpoints = getData(id, "Plan", getters);
-      // console.log('che')
-      // console.log(checkpoints);
       commit("setCurrentPlan", {plan: getters.getPlan(id), checkpoints: getData(id, "Plan", getters)})
+    },
+
+    updatePlan({ commit }, payload) {
+      commit("updatePlan", payload)
     },
 
     async updateCheckpoint({ commit, getters, dispatch }, payload) {
@@ -17,10 +17,16 @@ export default {
     },
 
     async newCheckpoint({ commit, getters, dispatch }, payload) {
-      let newCheckpoint = await dispatch('DBnewCheckpoint', {checkable_type: "Checkpoint", checkable_id: getters.parentCheckpointId, ...payload});
+      let newCheckpoint = await dispatch('DBnewCheckpoint', {checkable_type: getters.parentCheckpointType, checkable_id: getters.parentCheckpointId, ...payload});
       let checkpoints = getters.currentPlanCheckpoints;
+      if (getters.parentCheckpointType == 'Plan') {
+        newCheckpoint = {id: newCheckpoint.id, item: newCheckpoint, nested: [], parentType: 'Plan', parentId: 1}
+        checkpoints.push(newCheckpoint);
+        commit("newCheckpoint", checkpoints);
+        return;
+      }
       let parentCheckpoint = getDeepObject(checkpoints, getters.parentCheckpointId);
-      newCheckpoint = {id: newCheckpoint.id, item: newCheckpoint, nested: [], parentType: "Checkpoint", parentId: getters.parentCheckpointId}
+      newCheckpoint = {id: newCheckpoint.id, item: newCheckpoint, nested: [], parentType: getters.parentCheckpointType, parentId: getters.parentCheckpointId}
       parentCheckpoint.nested.push(newCheckpoint);
       commit("newCheckpoint", checkpoints)
     },
@@ -42,13 +48,17 @@ export default {
         checkpoints.splice(indexToRemove, 1);
       }
       commit('removeCheckpoint', checkpoints)
-    }
+    },
   },
   mutations: {
     setCurrentPlan(state, payload) {
       state.plan = payload.plan;
       state.checkpoints = payload.checkpoints;
       window.checkpoints = state.checkpoints;
+    },
+
+    updatePlan(state, payload) {
+      state.plan = {...state.plan, ...payload};
     },
 
     newCheckpoint(state, payload) {
@@ -68,6 +78,9 @@ export default {
     checkpoints: {}
   },
   getters: {
+    currentPlan(state) {
+      return state.plan
+    },
     currentPlanCheckpoints(state) {
       return state.checkpoints
     }

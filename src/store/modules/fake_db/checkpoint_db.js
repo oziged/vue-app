@@ -17,7 +17,7 @@ export default {
 
     async DBremoveCheckpoint({ commit, dispatch, getters}, id) {
       commit("DBremoveCheckpoint", id);
-    }
+    },
   },
 
   mutations: {
@@ -40,7 +40,7 @@ export default {
       state.checkpoints = state.checkpoints.filter(item => {
         return item.id != id
       })
-    }
+    },
   },
 
   state: {

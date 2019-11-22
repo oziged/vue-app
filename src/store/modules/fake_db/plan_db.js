@@ -6,7 +6,9 @@ export default {
         console.log(getters.allPlans)
         resolve(getters.allPlans[getters.allPlans.length-1])
       })
-     
+    },
+    DBremovePlan( { commit }, id) {
+      commit("DBremovePlan", id)
     }
   },
   mutations: {
@@ -22,7 +24,14 @@ export default {
           length: 1234
         }
       )
-      console.log(state)
+    },
+
+    DBremovePlan(state, id) {
+      console.log('plan deleted' + id)
+      state.plans = state.plans.filter(item => {
+        return item.id != id
+      })
+      console.log(state);
     }
   },
   state: {
