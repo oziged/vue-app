@@ -36,6 +36,9 @@ export default {
     setMobileMapModalItemType({ commit }, type) {
       commit("setMobileMapModalItemType", type);
     },
+    toggleNewPlanModal({ commit }) {
+      commit("toggleNewPlanModal");
+    }
   },
   mutations: {
     setParentCheckpointId(state, id) {
@@ -73,6 +76,9 @@ export default {
     },
     setMobileMapModalItemType(state, type) {
       state.mobile_map_modal_item_type = type;
+    },
+    toggleNewPlanModal(state) {
+      state.new_plan_modal_display = !state.new_plan_modal_display;
     }
   },
   state: {
@@ -87,7 +93,8 @@ export default {
     edit_plan_modal_display: false,
     mobile_map_modal_display: false,
     mobile_map_modal_item_id: null,
-    mobile_map_modal_item_type: null
+    mobile_map_modal_item_type: null,
+    new_plan_modal_display: false
   },
   getters: {
     parentCheckpointId(state) {
@@ -125,6 +132,9 @@ export default {
     },
     mobileMapModalItemType(state) {
       return state.mobile_map_modal_item_type
+    },
+    newPlanModalDisplay(state) {
+      return state.new_plan_modal_display;
     }
   }
 };

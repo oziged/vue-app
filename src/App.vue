@@ -15,7 +15,7 @@
     <checkpoint-modal-show :value="mainCheckpointModalDisplay" @input="toggleMainCheckpointModal" />
     <checkpoint-new :value="newCheckpointModalDisplay" @input="toggleNewCheckpointModal" />
     <checkpoint-edit :value="editCheckpointModalDisplay" @input="toggleEditCheckpointModal" />
-    <!-- <plan-new/> -->
+    <plan-new :value="newPlanModalDisplay" @input="toggleNewPlanModal" />
     <plan-modal-edit :value="editPlanModalDisplay" @input="toggleEditPlanModal" />
     <mobile-map-modal :value="mobileMapModalDisplay" @input="toggleMobileMapModal" />
 
@@ -94,10 +94,12 @@ export default {
       "addPlace",
       "setCurrentPlan",
       "newCheckpoint",
+      "toggleNewPlanModal"
     ])
   },
   watch: {},
   mounted() {
+    console.log(this.newPlanModalDisplay);
     let path = localStorage.getItem("path");
     if (path) {
       this.$router.push(path);
@@ -119,7 +121,8 @@ export default {
       "mobileMapModalDisplay",
       "isMobile",
       "allPlaces",
-      "performanceLvl"
+      "performanceLvl",
+      "newPlanModalDisplay"
     ])
   }
 };
@@ -128,6 +131,10 @@ export default {
 <style lang="scss">
 html {
   scroll-behavior: smooth;
+}
+
+button {
+  outline: none;
 }
 
 .fade-enter-active,
@@ -162,6 +169,11 @@ input[type="submit"] {
   overflow: hidden;
 }
 /* VUETIFY STYLES FIX */
+
+#app.v-application a {
+  color: black;
+  text-decoration: none;
+}
 
 .checkpoints_list {
   .v-expansion-panel {
@@ -209,5 +221,11 @@ input[type="submit"] {
   position: fixed;
   transition: 1s;
   pointer-events: none;
+}
+
+.disable_cursor {
+  #app, #app a, button {
+    cursor: none!important;
+  }
 }
 </style>

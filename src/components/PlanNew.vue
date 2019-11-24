@@ -1,5 +1,5 @@
 <template>
-  <modal-window :value="true" @input="input" height='auto'>
+  <modal-window :value="value" @input="input" height='auto'>
     <div class="plan_new_modal">
       <v-form ref="form">
         <v-text-field
@@ -8,6 +8,7 @@
           color="green"
           outlined
           required
+          :rules="titleRules"
         ></v-text-field>
         <v-textarea
           label="Description"
@@ -17,6 +18,7 @@
           color="green"
           outlined
           required
+          :rules="descriptionRules"
         ></v-textarea>
       </v-form>
       <v-btn class="save_plan" @click="submit" color="success" dark>save checkpoint</v-btn>
@@ -37,16 +39,31 @@ export default {
     return {
       title: "",
       description: "",
+      titleRules: [
+        v => !!v || "Title is required",
+        v => v.length <= 20 || "Name must be less than 30 characters"
+      ],
+      descriptionRules: [
+        v => !!v || "Description is required",
+        v => v.length <= 5000 || "Description must be less than 5000 characters"
+      ],
     }
   },
   methods: {
-    ...mapActions(["newPlan"]),
+    ...mapActions(["newPlan", "toggleNewPlanModal"]),
     async submit() {
+      if (!this.$refs.form.validate()) return;
       let newPlan = await this.newPlan({
         title: this.title,
         description: this.description
       })
+      this.toggleNewPlanModal();
       this.$router.push(`/plans/${newPlan.id}`)
+    },
+    input() {
+      this.$emit('input');
+      this.title = "";
+      this.description = "";
     }
   },
 }

@@ -140,17 +140,11 @@ export default class CursorLogic {
 
   
   enableDefaultCursor() {
-    document.body.style.cursor = 'auto';
-    document.querySelectorAll('.v-application a').forEach(item => {
-      item.classList.remove('hide_cursor')
-    })
+   document.body.classList.remove('disable_cursor');
   }
 
   disableDefaultCursor() {
-    document.body.style.cursor = 'none';
-    document.querySelectorAll('.v-application a').forEach(item => {
-      item.classList.add('hide_cursor')
-    })
+    document.body.classList.add('disable_cursor')
   }
 
   getRandomColor() {

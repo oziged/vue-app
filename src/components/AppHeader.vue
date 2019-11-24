@@ -7,22 +7,44 @@
         </router-link>
       </div>
       <div class="right_block">
-        <router-link class="nav_item" to="/plans">
-          <span>Plans</span>
-        </router-link>
-        <router-link class="nav_item" to="/auth">
-          <span>Join us</span>
-        </router-link>
+      </div>
+        <div class="menu" v-click-outside="closeMenu">
+          <div class="menu_icon" @click="toggleMenu" :style="`width: ${offsetY * .6}px`">
+          <img src="@/assets/avatar.jpg" alt="">
+          </div>
+           <div class="menu_arrow" :class="{active: menuIsOpened}" @click="toggleMenu"></div>
+           <div class="menu_dropdown">
+             <div class="dropdown_item user_info">
+                <span class="user_name">Eugene Derevyanko</span>
+                <button class="user_logout" @click="closeMenu">Logout</button>
+             </div>
+              <div class="dropdown_item default" @click="toggleNewPlanModal">
+               <span>Create plan</span>
+             </div>
+            <router-link to="/plans">
+              <div class="dropdown_item default" @click="closeMenu">
+                <span>All plans</span>
+              </div>
+            </router-link>
+              <div class="dropdown_item default" @click="closeMenu">
+               <span>Profile settings</span>
+             </div>
+            <router-link to="/auth">
+              <div class="dropdown_item default" @click="closeMenu">
+                <span>Demo auth page</span>
+              </div>
+            </router-link>
+             <div class="dropdown_item bottom" @click="closeMenu">
+               <span>Check for updates</span>
+             </div>
+           </div>
+        </div>
       </div>
       <div
         class="mobile_burger"
         :class="{burger_is_opened: burgerIsOpened}"
         @click="burgerIsOpened = !burgerIsOpened"
       >
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
       <transition name="fade">
         <div
           class="mobile_menu_list"
@@ -47,14 +69,19 @@
 </template>
 
 <script>
+import TweenMax from 'gsap';
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   data() {
     return {
       burgerIsOpened: false,
-      offsetY: 80
+      offsetY: 80,
+      menuIsOpened: false,
     };
   },
   methods: {
+    ...mapActions(['toggleNewPlanModal']),
     setHeaderAnimation() {
       document.addEventListener("scroll", e => {
         if (window.pageYOffset > 100) {
@@ -69,15 +96,36 @@ export default {
     closeBurger(e) {
       if (e.target.closest('.mobile_burger')) return;
       this.burgerIsOpened = false;
+    },
+    toggleMenu() {
+      this.menuIsOpened = !this.menuIsOpened;
+    },
+    closeMenu() {
+      if (!this.menuIsOpened) return;
+      this.menuIsOpened = false;
     }
   },
   mounted() {
     this.setHeaderAnimation();
+  },
+  watch: {
+    menuIsOpened(bool) {
+      let dropdown = document.querySelector('.menu_dropdown');
+      if (bool) {
+        TweenMax.set(dropdown, { height: 'auto', autoAlpha: 0 });
+        TweenMax.from(dropdown, .6, { height: 0 });
+        TweenMax.to(dropdown, .6, { autoAlpha: 1 });
+      } else {
+        TweenMax.to(dropdown, .6, { height: 0, autoAlpha: 0 });
+      }
+    }
   }
+  
 };
 </script>
 
 <style lang="scss" scoped>
+
 header {
   width: 100%;
   height: 80px;
@@ -99,6 +147,129 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+
+
+    .menu {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Montserrat;
+      .menu_icon {
+        height: 60%;
+        background-color: black;
+        transition: .5s;
+        position: relative;
+        &::before{
+          content: '';
+          position: absolute;
+          bottom: -3px;
+          right: -2px;
+          width: 20%;
+          height: 20%;
+          box-sizing: content-box;
+          border: 3px solid white;
+          border-radius: 50%;
+          background-color: #62E898;
+        }
+        img {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+      }
+      }
+      .menu_arrow {
+        width: 30px;
+        height: 100%;
+        position: relative;
+        &::after, &::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 10px;
+          height: 1.5px;
+          background-color: rgba(0, 0, 0, 0.521);
+          transition: .3s;
+        }
+        &::after {
+          transform: translate(-20%, -50%) rotate(45deg);
+        }
+        &::before {
+          transform: translate(-80%, -50%) rotate(-45deg);
+        }
+      }
+      .active {
+        &::after {
+          transform: translate(-20%, -50%) rotate(-45deg);
+        }
+        &::before {
+          transform: translate(-80%, -50%) rotate(45deg);
+        }
+      }
+      .menu_dropdown {
+        margin-top: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 5px #00000038;
+        display: block;
+        height: 0;
+        overflow: hidden;
+        position: absolute;
+        right: 0;
+        width: 300px;
+        top: 100%;
+        .dropdown_item {
+          box-shadow: -2px 1px 4px 0px #00000011;
+          padding: 10px;
+          width: 100%;
+          background-color: #fffffff5;
+          background-color: #FAFBFD;
+        }
+         .user_info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .user_name {
+              font-weight: 500;
+              letter-spacing: -.5px;
+              font-size: 14px;
+              display: flex;
+              align-items: center;
+              &::before {
+                content: "";
+                width: 8px;
+                height: 8px;
+                margin-right: 8px;
+                border-radius: 50%;
+                background-color: #62E898;
+              }
+            }
+            .user_logout {
+              padding: 5px 15px;
+              font-size: 10px;
+              border-radius: 20px;
+              color: white;
+              background-color: black;
+            }
+          }
+          .default {
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .bottom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            // border-radius: 0 0 20px 20px;
+            background-color: #CCE4E6;
+          }
+      }
+    }
   }
 
   .left_block,
