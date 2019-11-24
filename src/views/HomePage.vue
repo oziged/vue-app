@@ -935,10 +935,6 @@ footer {
     padding: 0 15px;
   }
 
-  .home_page_slider {
-    margin: 15px auto 0 auto;
-  }
-
   .countries_list {
     .country {
       width: 100%;
@@ -964,4 +960,14 @@ footer {
     opacity: 0;
   }
 }
+
+@media (max-width: 500px) {
+  #app .router_content {
+    padding-top: 80px;
+    .home_page_slider {
+      padding: 0;
+    }
+  }
+}
+
 </style>

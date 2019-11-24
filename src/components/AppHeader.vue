@@ -6,35 +6,33 @@
           <span>travel.</span>
         </router-link>
       </div>
-      <div class="right_block">
-      </div>
         <div class="menu" @click.stop="toggleMenu" v-click-outside="closeMenu">
           <div class="menu_icon" @click.stop="toggleMenu" :style="`width: ${offsetY * .6}px`">
           <img src="@/assets/avatar.jpg" alt="">
           </div>
            <div class="menu_arrow" :class="{active: menuIsOpened}" @click.stop="toggleMenu"></div>
-           <div class="menu_dropdown">
+           <div class="menu_dropdown" :style="`top: ${offsetY}px`">
              <div class="dropdown_item user_info">
                 <span class="user_name">Eugene Derevyanko</span>
-                <button class="user_logout" @click="closeMenu">Logout</button>
+                <button class="user_logout" @click.stop="closeMenu">Logout</button>
              </div>
-              <div class="dropdown_item default" @click="toggleNewPlanModal">
+              <div class="dropdown_item default" @click.stop="toggleNewPlanModal">
                <span>Create plan</span>
              </div>
             <router-link to="/plans">
-              <div class="dropdown_item default" @click="closeMenu">
+              <div class="dropdown_item default" @click.native="closeMenu">
                 <span>All plans</span>
               </div>
             </router-link>
-              <div class="dropdown_item default" @click="closeMenu">
+              <!-- <div class="dropdown_item default" @click.stop="closeMenu">
                <span>Profile settings</span>
-             </div>
+             </div> -->
             <router-link to="/auth">
-              <div class="dropdown_item default" @click="closeMenu">
+              <div class="dropdown_item default" @click.native="closeMenu">
                 <span>Demo auth page</span>
               </div>
             </router-link>
-             <div class="dropdown_item bottom" @click="closeMenu">
+             <div class="dropdown_item bottom" @click.stop="closeMenu">
                <span>Check for updates</span>
              </div>
            </div>
@@ -102,6 +100,7 @@ export default {
       this.menuIsOpened = !this.menuIsOpened;
     },
     closeMenu() {
+      console.log('closed')
       if (!this.menuIsOpened) return;
       this.menuIsOpened = false;
     }
@@ -388,6 +387,20 @@ header {
 
   .nav_list .mobile_burger {
     display: flex;
+  }
+
+  header .nav_list .menu .menu_dropdown {
+    position: fixed;
+    width: 95%;
+    left: 2.5%;
+    transition: top .3s;
+    .dropdown_item {
+      height: 70px;
+    }
+  }
+
+  header .nav_list .menu .user_info {
+    flex-direction: column;
   }
 }
 </style>

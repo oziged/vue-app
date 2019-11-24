@@ -29,7 +29,7 @@
 
       <div class="static_elements_left">
         <h1>Welcome Back!</h1>
-        <p>To keep connected with us please login with your personal info</p>
+        <p>To keep connected with us please login with your info</p>
       </div>
       <div class="static_elements_right">
         <h1>Hello, Friend!</h1>
@@ -228,14 +228,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  $dark-color: #080808;
+
   .auth_form {
     width: 100%;
     height: 100%;
     max-width: 1250px;
     max-height: 1000px;
-    min-height: 680px;
+    min-height: 880px;
     height: calc(100vh - 120px);
-    border-radius: 30px;
     box-shadow: 0 0 7px 0px #00000017;
     position: relative;
     overflow: hidden;
@@ -256,7 +258,7 @@ export default {
       z-index: 1;
       width: 40%;
       height: 100%;
-      background-color: #3BB397;
+      background-color: $dark-color;
       .geometry_bg {
         position: absolute;
         z-index: -1;
@@ -303,7 +305,7 @@ export default {
         align-items: center;
         width: 100%;
         h1 {
-          color: #5AB0A3;
+          color: $dark-color;
         }
         .inputs {
           display: flex;
@@ -326,7 +328,7 @@ export default {
           color: white;
           text-transform: uppercase;
           letter-spacing: 4px;
-          background-color: #5AB0A3;
+          background-color: $dark-color;
           border-radius: 70px;
           display: flex;
           justify-content: center;
@@ -342,7 +344,7 @@ export default {
         align-items: center;
         width: 100%;
         h1 {
-          color: #5AB0A3;
+          color: $dark-color;
         }
         .inputs {
           display: flex;
@@ -361,7 +363,7 @@ export default {
           color: white;
           text-transform: uppercase;
           letter-spacing: 4px;
-          background-color: #5AB0A3;
+          background-color: $dark-color;
           border-radius: 70px;
           display: flex;
           justify-content: center;
@@ -382,6 +384,7 @@ export default {
       top: 35%;
       h1 {
         color: white;
+        text-align: center;
       }
       p {
         width: 300px;
@@ -404,6 +407,7 @@ export default {
       opacity: 0;
       h1 {
         color: white;
+        text-align: center;
       }
       p {
         width: 300px;
@@ -418,8 +422,17 @@ export default {
   .router_content {
     padding: 0 30px;
   }
+  }
 
   @media (max-width: 1000px) {
+    .router_content {
+      padding: 80px 0 0 0;
+    }
+    .auth_form {
+      height: calc(100vh - 80px);
+      margin-bottom: 0;
+      margin-top: -20px;
+    }
     .mobile {
       .small_block {
         width: 100%;
@@ -442,6 +455,18 @@ export default {
         height: 50%;
         left: 0;
         top: 50%;
+      }
+    }
+  }
+
+@media (max-width: 600px) {
+  .auth_form {
+    .static_elements_right, .static_elements_left {
+      h1 {
+        font-size: 20px;
+      }
+      p {
+        font-size: 18px;
       }
     }
   }
