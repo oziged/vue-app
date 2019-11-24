@@ -206,25 +206,8 @@ input[type="submit"] {
   width: calc(100% + 32px);
 }
 
-//
-
-.hide_cursor {
-  cursor: none !important;
-}
-
-.test {
-  opacity: .4;
-  width: 20px;
-  height: 20px;
-  border: 2px solid;
-  border-radius: 50%;
-  position: fixed;
-  transition: 1s;
-  pointer-events: none;
-}
-
 .disable_cursor {
-  #app, #app a, button {
+  #app, #app a, button, div {
     cursor: none!important;
   }
 }

@@ -8,11 +8,11 @@
       </div>
       <div class="right_block">
       </div>
-        <div class="menu" v-click-outside="closeMenu">
-          <div class="menu_icon" @click="toggleMenu" :style="`width: ${offsetY * .6}px`">
+        <div class="menu" @click.stop="toggleMenu" v-click-outside="closeMenu">
+          <div class="menu_icon" @click.stop="toggleMenu" :style="`width: ${offsetY * .6}px`">
           <img src="@/assets/avatar.jpg" alt="">
           </div>
-           <div class="menu_arrow" :class="{active: menuIsOpened}" @click="toggleMenu"></div>
+           <div class="menu_arrow" :class="{active: menuIsOpened}" @click.stop="toggleMenu"></div>
            <div class="menu_dropdown">
              <div class="dropdown_item user_info">
                 <span class="user_name">Eugene Derevyanko</span>
@@ -98,6 +98,7 @@ export default {
       this.burgerIsOpened = false;
     },
     toggleMenu() {
+      console.log('toggling')
       this.menuIsOpened = !this.menuIsOpened;
     },
     closeMenu() {
@@ -151,6 +152,7 @@ header {
 
 
     .menu {
+      cursor: pointer;
       height: 100%;
       display: flex;
       justify-content: center;
@@ -158,7 +160,6 @@ header {
       font-family: Montserrat;
       .menu_icon {
         height: 60%;
-        background-color: black;
         transition: .5s;
         position: relative;
         &::before{
@@ -259,6 +260,10 @@ header {
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: .2s;
+            &:hover {
+              background-color: #f4fbfa;
+          }
           }
           .bottom {
             display: flex;
