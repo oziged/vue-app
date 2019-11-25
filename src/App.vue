@@ -133,7 +133,7 @@ html {
   scroll-behavior: smooth;
 }
 
-button {
+button, input, textarea {
   outline: none;
 }
 

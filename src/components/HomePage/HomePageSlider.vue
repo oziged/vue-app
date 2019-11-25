@@ -1,9 +1,9 @@
 <template>
   <div class="home_page_slider" ref="slider">
-    <div class="current_slide" @click="changeSlide">
+    <div class="current_slide" @click="performanceLvl < 70 || isMobile ? '' : changeSlide($event)">
       <slot></slot>
     </div>
-    <!-- <div class="navigation_circles">
+    <div class="navigation_circles" v-if="performanceLvl < 70 || isMobile">
       <div
         class="circle"
         v-for="(item, index) in $slots.default"
@@ -11,8 +11,8 @@
         :class="{active_circle: index == currentSlide}"
         @click="animating ? '' : currentSlide = index"
       ></div>
-    </div>-->
-    <!-- <div class="navigation_arrows">
+    </div>
+    <div class="navigation_arrows" v-if="performanceLvl < 70 || isMobile">
       <svg id="left" @click="animating ? '' : changeSlideDown()" viewBox="0 0 476.213 476.213">
         <polygon
           fill="inherit"
@@ -28,11 +28,12 @@
 	238.107,476.213 368.713,345.606 "
         />
       </svg>
-    </div>-->
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import TweenMax from "gsap";
 
 export default {
@@ -66,6 +67,9 @@ export default {
       if (this.currentSlide == 0) this.currentSlide = this.slidesCount;
       else this.currentSlide -= 1;
     }
+  },
+    computed: {
+    ...mapGetters(["performanceLvl", "isMobile"])
   },
   watch: {
     currentSlide(newValue) {
@@ -125,7 +129,7 @@ export default {
     margin: 15px 0;
     border: 1px solid black;
     transition: 0.3s;
-    // cursor: pointer;
+    cursor: pointer;
   }
   .active_circle {
     background-color: black;
@@ -140,7 +144,7 @@ export default {
   bottom: 30px;
   z-index: 10;
   svg {
-    // cursor: pointer;
+    cursor: pointer;
     width: 20px;
     height: 20px;
     opacity: 0.5;

@@ -124,7 +124,7 @@
           </transition>
         </vue-nestable-handle>
       </vue-nestable>
-      <!-- <v-btn class="save_checkpoint" color="success" dark>update checkpoints</v-btn> -->
+      
       <modal-window
         :value="displayEditedItemModal"
         @input="displayEditedItemModal = false"

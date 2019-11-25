@@ -138,7 +138,7 @@ export default {
     width: 40%;
     position: relative;
     .filter_sort_modal {
-      width: 300px;
+      width: 280px;
       height: 500px;
       position: absolute;
       top: 80px;
