@@ -56,8 +56,8 @@ export default {
   },
   methods: {
     changeSlide(e) {
-      if (e.clientX < this.$refs.slider.offsetHeight) this.changeSlideUp();
-      else this.changeSlideDown();
+      if (e.clientX < window.innerWidth / 2) this.changeSlideDown();
+      else this.changeSlideUp();
     },
     changeSlideUp() {
       if (this.currentSlide == this.slidesCount) this.currentSlide = 0;

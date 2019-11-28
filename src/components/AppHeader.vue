@@ -6,43 +6,43 @@
           <span>travel.</span>
         </router-link>
       </div>
-        <div class="menu" @click.stop="toggleMenu" v-click-outside="closeMenu">
-          <div class="menu_icon" @click.stop="toggleMenu" :style="`width: ${offsetY * .6}px`">
-          <img src="@/assets/avatar.jpg" alt="">
+      <div class="menu" @click.stop="toggleMenu" v-click-outside="closeMenu">
+        <div class="menu_icon" @click.stop="toggleMenu" :style="`width: ${offsetY * .6}px`">
+          <img src="@/assets/avatar.jpg" alt />
+        </div>
+        <div class="menu_arrow" :class="{active: menuIsOpened}" @click.stop="toggleMenu"></div>
+        <div class="menu_dropdown" :style="`top: ${offsetY}px`">
+          <div class="dropdown_item user_info">
+            <span class="user_name">Homer Simpson</span>
+            <button class="user_logout" @click.stop="closeMenu">Logout</button>
           </div>
-           <div class="menu_arrow" :class="{active: menuIsOpened}" @click.stop="toggleMenu"></div>
-           <div class="menu_dropdown" :style="`top: ${offsetY}px`">
-             <div class="dropdown_item user_info">
-                <span class="user_name">Eugene Derevyanko</span>
-                <button class="user_logout" @click.stop="closeMenu">Logout</button>
-             </div>
-              <div class="dropdown_item default" @click.stop="toggleNewPlanModal">
-               <span>Create plan</span>
-             </div>
-            <router-link to="/plans">
-              <div class="dropdown_item default" @click.native="closeMenu">
-                <span>All plans</span>
-              </div>
-            </router-link>
-              <!-- <div class="dropdown_item default" @click.stop="closeMenu">
+          <div class="dropdown_item default" @click.stop="toggleNewPlanModal">
+            <span>Create plan</span>
+          </div>
+          <router-link to="/plans">
+            <div class="dropdown_item default" @click.native="closeMenu">
+              <span>All plans</span>
+            </div>
+          </router-link>
+          <!-- <div class="dropdown_item default" @click.stop="closeMenu">
                <span>Profile settings</span>
-             </div> -->
-            <router-link to="/auth">
-              <div class="dropdown_item default" @click.native="closeMenu">
-                <span>Demo auth page</span>
-              </div>
-            </router-link>
-             <div class="dropdown_item bottom" @click.stop="closeMenu">
-               <span>Check for updates</span>
-             </div>
-           </div>
+          </div>-->
+          <router-link to="/auth">
+            <div class="dropdown_item default" @click.native="closeMenu">
+              <span>Demo auth page</span>
+            </div>
+          </router-link>
+          <div class="dropdown_item bottom" @click.stop="closeMenu">
+            <span>Check for updates</span>
+          </div>
         </div>
       </div>
-      <div
-        class="mobile_burger"
-        :class="{burger_is_opened: burgerIsOpened}"
-        @click="burgerIsOpened = !burgerIsOpened"
-      >
+    </div>
+    <div
+      class="mobile_burger"
+      :class="{burger_is_opened: burgerIsOpened}"
+      @click="burgerIsOpened = !burgerIsOpened"
+    >
       <transition name="fade">
         <div
           class="mobile_menu_list"
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import TweenMax from 'gsap';
+import TweenMax from "gsap";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -75,11 +75,11 @@ export default {
     return {
       burgerIsOpened: false,
       offsetY: 80,
-      menuIsOpened: false,
+      menuIsOpened: false
     };
   },
   methods: {
-    ...mapActions(['toggleNewPlanModal']),
+    ...mapActions(["toggleNewPlanModal"]),
     setHeaderAnimation() {
       document.addEventListener("scroll", e => {
         if (window.pageYOffset > 100) {
@@ -92,15 +92,15 @@ export default {
       });
     },
     closeBurger(e) {
-      if (e.target.closest('.mobile_burger')) return;
+      if (e.target.closest(".mobile_burger")) return;
       this.burgerIsOpened = false;
     },
     toggleMenu() {
-      console.log('toggling')
+      console.log("toggling");
       this.menuIsOpened = !this.menuIsOpened;
     },
     closeMenu() {
-      console.log('closed')
+      console.log("closed");
       if (!this.menuIsOpened) return;
       this.menuIsOpened = false;
     }
@@ -110,22 +110,20 @@ export default {
   },
   watch: {
     menuIsOpened(bool) {
-      let dropdown = document.querySelector('.menu_dropdown');
+      let dropdown = document.querySelector(".menu_dropdown");
       if (bool) {
-        TweenMax.set(dropdown, { height: 'auto', autoAlpha: 0 });
-        TweenMax.from(dropdown, .6, { height: 0 });
-        TweenMax.to(dropdown, .6, { autoAlpha: 1 });
+        TweenMax.set(dropdown, { height: "auto", autoAlpha: 0 });
+        TweenMax.from(dropdown, 0.6, { height: 0 });
+        TweenMax.to(dropdown, 0.6, { autoAlpha: 1 });
       } else {
-        TweenMax.to(dropdown, .6, { height: 0, autoAlpha: 0 });
+        TweenMax.to(dropdown, 0.6, { height: 0, autoAlpha: 0 });
       }
     }
   }
-  
 };
 </script>
 
 <style lang="scss" scoped>
-
 header {
   width: 100%;
   height: 80px;
@@ -137,7 +135,7 @@ header {
   box-shadow: 0 0 4px 0px #00000036;
   transition: 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
   &:hover {
-    background-color: #F6FBFA;
+    background-color: #f6fbfa;
   }
 
   .nav_list {
@@ -149,7 +147,6 @@ header {
     align-items: center;
     position: relative;
 
-
     .menu {
       cursor: pointer;
       height: 100%;
@@ -159,10 +156,10 @@ header {
       font-family: Montserrat;
       .menu_icon {
         height: 60%;
-        transition: .5s;
+        transition: 0.5s;
         position: relative;
-        &::before{
-          content: '';
+        &::before {
+          content: "";
           position: absolute;
           bottom: -3px;
           right: -2px;
@@ -171,28 +168,29 @@ header {
           box-sizing: content-box;
           border: 3px solid white;
           border-radius: 50%;
-          background-color: #62E898;
+          background-color: #62e898;
         }
         img {
           object-fit: cover;
           width: 100%;
           height: 100%;
           border-radius: 50%;
-      }
+        }
       }
       .menu_arrow {
         width: 30px;
         height: 100%;
         position: relative;
-        &::after, &::before {
-          content: '';
+        &::after,
+        &::before {
+          content: "";
           position: absolute;
           top: 50%;
           left: 50%;
           width: 10px;
           height: 1.5px;
           background-color: rgba(0, 0, 0, 0.521);
-          transition: .3s;
+          transition: 0.3s;
         }
         &::after {
           transform: translate(-20%, -50%) rotate(45deg);
@@ -218,6 +216,7 @@ header {
         overflow: hidden;
         position: absolute;
         right: 0;
+        transition: top 0.3s;
         width: 300px;
         top: 100%;
         .dropdown_item {
@@ -225,53 +224,53 @@ header {
           padding: 10px;
           width: 100%;
           background-color: #fffffff5;
-          background-color: #FAFBFD;
+          background-color: #fafbfd;
         }
-         .user_info {
+        .user_info {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .user_name {
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            font-size: 14px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            .user_name {
-              font-weight: 500;
-              letter-spacing: -.5px;
-              font-size: 14px;
-              display: flex;
-              align-items: center;
-              &::before {
-                content: "";
-                width: 8px;
-                height: 8px;
-                margin-right: 8px;
-                border-radius: 50%;
-                background-color: #62E898;
-              }
-            }
-            .user_logout {
-              padding: 5px 15px;
-              font-size: 10px;
-              border-radius: 20px;
-              color: white;
-              background-color: black;
+            &::before {
+              content: "";
+              width: 8px;
+              height: 8px;
+              margin-right: 8px;
+              border-radius: 50%;
+              background-color: #62e898;
             }
           }
-          .default {
-            font-size: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: .2s;
-            &:hover {
-              background-color: #f4fbfa;
+          .user_logout {
+            padding: 5px 15px;
+            font-size: 10px;
+            border-radius: 20px;
+            color: white;
+            background-color: black;
           }
+        }
+        .default {
+          font-size: 12px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: 0.2s;
+          &:hover {
+            background-color: #f4fbfa;
           }
-          .bottom {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            // border-radius: 0 0 20px 20px;
-            background-color: #CCE4E6;
-          }
+        }
+        .bottom {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          // border-radius: 0 0 20px 20px;
+          background-color: #cce4e6;
+        }
       }
     }
   }
@@ -315,8 +314,6 @@ header {
       }
     }
   }
-
-
 
   .mobile_burger {
     display: none;
@@ -393,7 +390,6 @@ header {
     position: fixed;
     width: 95%;
     left: 2.5%;
-    transition: top .3s;
     .dropdown_item {
       height: 70px;
     }

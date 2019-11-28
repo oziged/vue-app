@@ -26,7 +26,7 @@
           :displayedItemType="displayedItemType"
           :slickOptionsMain="slickOptionsMain"
           :slickOptionsSub="slickOptionsSub"
-          :images="['https://dmgupcwbwy0wl.cloudfront.net/system/images/000/246/682/ed874e40d99b69d1290e99871730b861/original/Astro-Photography-Mumbai.jpeg?1549938752', 'http://tico.ca/blog/wp-content/uploads/2016/10/pexels-photo-24860.jpg']"
+          :images="['https://img.traveltriangle.com/blog/wp-content/uploads/2018/11/Cover-for-best-places-to-visit-in-July-in-the-world.jpg', 'https://cdn.cnn.com/cnnnext/dam/assets/190517174512-15-summer-travel-tahiti-super-169.jpg']"
         />
       </div>
       <div class="checkpoint_nav_wrapper">

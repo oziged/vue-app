@@ -12,8 +12,8 @@
             <h2>we are travel.</h2>
             <div class="separator"></div>
             <h4>
-              proffesionals
-              <br />in create industries
+              travels
+              <br />it's a lifestyle
             </h4>
             <!-- <button>get in touch</button> -->
           </div>
@@ -25,11 +25,11 @@
             alt
           />
           <div class="content">
-            <h2>we are travel.</h2>
+            <h2>you are travel.</h2>
             <div class="separator"></div>
             <h4>
-              proffesionals
-              <br />in create industries
+              create
+              <br />what you want
             </h4>
             <!-- <button>get in touch</button> -->
           </div>
@@ -41,11 +41,11 @@
             alt
           />
           <div class="content">
-            <h2>we are travel.</h2>
+            <h2>all is travel.</h2>
             <div class="separator"></div>
             <h4>
-              proffesionals
-              <br />in create industries
+              find
+              <br />what you need
             </h4>
             <!-- <button>get in touch</button> -->
           </div>
@@ -61,14 +61,14 @@
           </div>
           <div class="desc_block">
             <div class="desc_block_title">
-              <h5>creative</h5>
-              <h5>kitchen</h5>
+              <h5>travel</h5>
+              <h5>planning</h5>
             </div>
             <div class="separator"></div>
             <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+             Our main goal is to make your travel comfortable, convenient, and most importantly - planned. During your travels, we will be your only guide with all the necessary information.
               <br />
-              <br />Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+              <br />All the necessary information is collected in one place, in the most detailed and convenient view. Google maps, google places, related images-all this you can find literally in one click, in an instant.
             </p>
           </div>
         </div>
@@ -78,14 +78,14 @@
           </div>
           <div class="desc_block">
             <div class="desc_block_title">
-              <h5>creative</h5>
-              <h5>kitchen</h5>
+              <h5>create</h5>
+              <h5>your own</h5>
             </div>
             <div class="separator"></div>
             <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+              Here you can create your own travel plans. no need to pay for anything, everything is absolutely free. just create, add a couple of checkpoints and that's it. You already have a ready travel plan.
               <br />
-              <br />Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+              <br />In the plan, you can add an endless number of checkpoints with deep nesting, so with respect to each point in the route, you can build an in-depth route and plan your trip in as much detail as possible.
             </p>
           </div>
         </div>
@@ -95,14 +95,14 @@
           </div>
           <div class="desc_block">
             <div class="desc_block_title">
-              <h5>creative</h5>
-              <h5>kitchen</h5>
+              <h5>travel</h5>
+              <h5>companies</h5>
             </div>
             <div class="separator"></div>
             <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+              If you are a travel company and want to promote your own travel plans, you can also use our app. The procedure is the same. Just create a plan, set up all the necessary points, add information and you're done.
               <br />
-              <br />Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+              <br />As a result, you can promote your plans, develop them, find a new audience, new customers and all this on absolutely free terms.
             </p>
           </div>
         </div>
@@ -112,11 +112,11 @@
       <h2 class="home_page_title">trending countries</h2>
       <magic-grid class="countries_list" :gap="10" :maxColWidth="9999">
         <div class="country" @click="enableCountryModal">
-          <img src="https://cdn.tourradar.com/s3/content-pages/16/1024x768/gxvKGa.jpg" alt />
+          <img src="https://nezavisen.mk/wp-content/uploads/2019/08/p0674nnc.jpg" alt />
           <div class="country_desc">
-            <h3>USA</h3>
-            <country-flag country="usa" size="big" />
-            <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+            <h3>Israel</h3>
+            <country-flag country="il" size="big" />
+            <span>Few places on earth stir up passion the way that Israel does: the breathtaking beauty of its hills and valleys, the eerie stillness of the Dead Sea, the multi-coloured canyon of Makhtesh Ramon, and the ancient walls and pathways of Nazareth and Jerusalem.</span>
           </div>
           <div class="hover_bg"></div>
         </div>
@@ -135,9 +135,9 @@
             alt
           />
           <div class="country_desc">
-            <h3>USA</h3>
-            <country-flag country="usa" size="big" />
-            <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+            <h3>Italy</h3>
+            <country-flag country="it" size="big" />
+            <span>Italy charms visitors with irresistible food, awesome architecture, diverse scenery and unparalleled art.</span>
           </div>
           <div class="hover_bg"></div>
         </div>
@@ -147,9 +147,9 @@
             alt
           />
           <div class="country_desc">
-            <h3>USA</h3>
-            <country-flag country="usa" size="big" />
-            <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+            <h3>Mexico</h3>
+            <country-flag country="mx" size="big" />
+            <span>Palm-fringed beaches, chili-spiced cuisine, steamy jungles, teeming cities, fiesta fireworks, Frida’s angst: Mexico conjures up diverse, vivid dreams. And the reality lives up to them.</span>
           </div>
           <div class="hover_bg"></div>
         </div>
@@ -159,9 +159,9 @@
             alt
           />
           <div class="country_desc">
-            <h3>USA</h3>
-            <country-flag country="usa" size="big" />
-            <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+            <h3>Thailand</h3>
+            <country-flag country="th" size="big" />
+            <span>Friendly and food-obsessed, hedonistic and historic, cultured and curious, Thailand tempts visitors with a smile as golden as the country's glittering temples and tropical beaches.</span>
           </div>
           <div class="hover_bg"></div>
         </div>
@@ -171,9 +171,9 @@
             alt
           />
           <div class="country_desc">
-            <h3>USA</h3>
-            <country-flag country="usa" size="big" />
-            <span>The great American experience is about so many things: bluegrass and beaches, snow-covered peaks and redwood forests, restaurant-loving cities and big open skies.</span>
+            <h3>Germany</h3>
+            <country-flag country="de" size="big" />
+            <span>Prepare for a roller-coaster ride of feasts, treats and temptations experiencing Germany's soul-stirring scenery, spirit-lifting culture, big-city beauties, romantic palaces and half-timbered towns.</span>
           </div>
           <div class="hover_bg"></div>
         </div>

@@ -57,14 +57,14 @@ export default class CursorLogic {
 
     // // // // // // ABILITIES SECTION // // // // / //
     
-    this.abilitiesSection.addEventListener('mouseenter', () => {
-      this.cursor.classList.add('display_small_cursor');
-      this.currentCursor = this.defaultCircle;
-    })
+    // this.abilitiesSection.addEventListener('mouseenter', () => {
+    //   this.cursor.classList.add('display_small_cursor');
+    //   this.currentCursor = this.defaultCircle;
+    // })
 
-    this.abilitiesSection.addEventListener('mouseleave', e => {
-      this.cursor.classList.remove('display_small_cursor');
-    })
+    // this.abilitiesSection.addEventListener('mouseleave', e => {
+    //   this.cursor.classList.remove('display_small_cursor');
+    // })
 
     // // // // // // // // // // // // // // // // / //
 
