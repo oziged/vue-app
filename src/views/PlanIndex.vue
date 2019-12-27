@@ -11,6 +11,7 @@
 import { mapGetters, mapActions } from "vuex";
 import FilterSortHeader from "../components/PlanIndex/FilterSortHeader";
 import PlanPreview from "../components/PlanIndex/PlanPreview";
+import axios from 'axios'
 
 export default {
   components: {
@@ -22,6 +23,10 @@ export default {
   },
   computed: {
     ...mapGetters(["allPlans"])
+  },
+  mounted() {
+    axios.get('http://localhost:3000/api/plans?limit=20')
+    .then(response => {console.log(response)})
   }
 };
 </script>

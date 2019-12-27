@@ -21,7 +21,7 @@
           :rules="descriptionRules"
         ></v-textarea>
       </v-form>
-      <v-btn class="save_plan" @click="submit" color="success" dark>save checkpoint</v-btn>
+      <v-btn class="save_plan" @click="submit" color="success" dark>save plan</v-btn>
     </div>
   </modal-window>
 </template>

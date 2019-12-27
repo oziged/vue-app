@@ -8,6 +8,10 @@ export default {
       commit("updatePlan", payload)
     },
 
+    loadPlans({ commit }, payload) {
+      
+    },
+
     async updateCheckpoint({ commit, getters, dispatch }, payload) {
       await dispatch('DBupdateCheckpoint', payload); // update checkpoint in DB
       let checkpoints = getters.currentPlanCheckpoints;
@@ -71,6 +75,10 @@ export default {
 
     removeCheckpoint(state, checkpoints) {
       state.checkpoints = checkpoints
+    },
+
+    updateCurrentPlans(state) {
+
     }
   },
   state: {

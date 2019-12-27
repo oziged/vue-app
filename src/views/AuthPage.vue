@@ -236,7 +236,7 @@ export default {
     height: 100%;
     max-width: 1250px;
     max-height: 1000px;
-    min-height: 880px;
+    min-height: 700px;
     height: calc(100vh - 120px);
     box-shadow: 0 0 7px 0px #00000017;
     position: relative;
