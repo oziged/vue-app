@@ -1,5 +1,5 @@
 <template>
-  <div class="filter_div">
+  <div class="filter_div" @click="value.disabled = value.disabled ? false : ''">
     <span>{{ value.title }}</span>
     <div class="range_selectors">
       <v-text-field

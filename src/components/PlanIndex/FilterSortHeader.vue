@@ -15,7 +15,7 @@
         >
           <h4 class="modal_header">Sort/Filter Settings</h4>
           <v-select
-            v-model="selectedFilter"
+            v-model="selectedSort"
             :items="items"
             :hide-details="true"
             filled
@@ -54,71 +54,119 @@
 import vClickOutside from "v-click-outside";
 import { mapGetters, mapActions } from "vuex";
 import FilterDiv from "./FilterDiv";
+import debounceMixin from '../../debounceMixin'
+import axios from 'axios';
 
 export default {
   components: {
     FilterDiv
   },
+
+
+  mixins: [
+    debounceMixin
+  ],
+
+
   data() {
     return {
+      offset: 0,
+      limit: 10,
       items: [
-        "From min rating",
-        "From max rating",
-        "From min price",
-        "From max price",
-        "From min distance",
-        "From max distance"
+        "rating-min",
+        "rating-max",
+        "price-min",
+        "price-max",
       ],
       filters: [
         {
-          title: "Distance",
+          title: "distance",
           min: 0,
           max: 4000,
-          range: [0, 4000]
+          range: [0, 4000],
+          disabled: true,
         },
         {
-          title: "Price",
+          title: "price",
           min: 0,
           max: 100,
-          range: [0, 100]
+          range: [0, 100],
+          disabled: true
         },
         {
-          title: "Rating",
-          min: 50,
-          max: 2000,
-          range: [50, 2000]
+          title: "rating",
+          min: 0,
+          max: 5,
+          range: [0, 5],
+          disabled: true
         }
       ],
-      distanceMin: 0,
-      distanceMax: 5000,
-      distanceRange: [0, 5000],
       displaySearchInput: false,
       displayFilterSortModal: false,
-      selectedFilter: null
+      selectedSort: '',
+      fetchLink: '',
     };
   },
+
+
   watch: {
     filters: {
-      handler: function (val, oldVal) {
-      	console.log('changed');
-      },
+      handler() {this.filterSortPlans()},
       deep: true
+    },
+  },
+
+
+  computed: {
+    ...mapGetters(["domain"]),
+    sortDisabled() {
+      return !(!!this.selectedSort);
     }
   },
-  computed: {},
+
+
   methods: {
     hideFilterSortModal(event) {
       this.displayFilterSortModal = false;
     },
+
     hideSearchInput(event) {
       this.displaySearchInput = false;
+    },
+
+    filterSortPlans() {
+      this.fetchLink = '?';
+      this.filters.forEach((item, index) => {
+        if (item.disabled) return;
+        if (index) this.fetchLink += '&';
+        this.fetchLink += `${item.title}=${item.range[0]}-${item.range[1]}`
+      })
+
+      if (!this.sortDisabled) this.fetchLink += `&sort=${this.selectedSort}`
+      axios.get(`${this.domain}/api/plans/${this.fetchLink}&offset=${this.offset}&limit=${this.limit}`).then(response => this.$store.commit('setAllPlans', response.data))
+    },
+
+    lazyLoad() {
+      this.offset += 10;
+      axios.get(`${this.domain}/api/plans/${this.fetchLink}&offset=${this.offset}&limit=${this.limit}`).then(response => console.log(response))
     }
   },
+
+
+  created() {
+    this.$watch(vm => [vm.selectedSort].join(), () => {
+      this.filterSortPlans()
+    })
+  },
+
+
   mounted() {
-    window.test = () => {
-      return this.filters[0].range
-    }
+    console.log(this);
+    window.vue = this;
+    this.filterSortPlans = this.debounce(this.filterSortPlans, 1000);
   },
+
+
   directives: {
     clickOutside: vClickOutside.directive
   }

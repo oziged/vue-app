@@ -26,7 +26,8 @@ export default new Vuex.Store({
   },
   state: {
     nested_colors: ['reserv', '#00572b', '#009e4e', '#00d96b', 'red'],
-    perfomanceLvl: null
+    perfomanceLvl: null,
+    domain: 'http://localhost:3000'
   },
   getters: {
     nestedColors(state) {
@@ -37,9 +38,12 @@ export default new Vuex.Store({
     },
     performanceLvl(state) {
       return state.perfomanceLvl
+    },
+    domain(state) {
+      return state.domain
     }
   },
   modules: {
-    user, plan, checkpoint, place, map, geolocation, window_variables, checkpoint_db, place_db, plan_db
+    user, plan, checkpoint, place, map, geolocation, window_variables, checkpoint_db, place_db, plan_db, sort_filter
   }
 })
