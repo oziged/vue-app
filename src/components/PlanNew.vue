@@ -35,6 +35,8 @@ export default {
   components: {
     ModalWindow
   },
+
+
   data() {
     return {
       title: "",
@@ -49,8 +51,11 @@ export default {
       ],
     }
   },
+
+
   methods: {
     ...mapActions(["newPlan", "toggleNewPlanModal"]),
+    
     async submit() {
       if (!this.$refs.form.validate()) return;
       let newPlan = await this.newPlan({
@@ -60,6 +65,7 @@ export default {
       this.toggleNewPlanModal();
       this.$router.push(`/plans/${newPlan.id}`)
     },
+
     input() {
       this.$emit('input');
       this.title = "";

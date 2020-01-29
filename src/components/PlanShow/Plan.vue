@@ -49,6 +49,8 @@ export default {
     nestedDraggable,
     ModalWindow
   },
+
+  
   data: () => ({
     plan: {
       title: "",
@@ -58,6 +60,8 @@ export default {
     displayedItemId: null,
     displayedItemType: "Plan",
   }),
+
+
   methods: {
     ...mapActions([
       "updateMapPlaces",
@@ -68,21 +72,27 @@ export default {
       "setEditPlanModalId",
       "setCurrentPlan"
     ]),
+
     showPlanSubCheckpoints() {
       this.displayedItemId = this.id;
       this.displayedItemType = "Plan";
     },
+
     setCheckpointId(id) {
       this.displayedItemId = id;
       this.displayedItemType = "Checkpoint";
     },
   },
+
+
   provide() {
     return {
       setCheckpointId: this.setCheckpointId,
       toggleMobileMap: this.toggleMobileMap
     };
   },
+
+
   watch: {
     displayMoveModal(newValue) {
       if (newValue) {
@@ -97,6 +107,8 @@ export default {
       }
     }
   },
+
+
   mounted() {
     this.setCurrentPlan(this.id);
     this.plan = this.currentPlan;
@@ -104,10 +116,13 @@ export default {
       this.displayedItemId = this.id;
     });
   },
+
+
   computed: {
     data() {
       return this.currentPlanCheckpoints;
     },
+
     ...mapGetters([
       "allUsers",
       "allPlans",

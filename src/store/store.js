@@ -44,6 +44,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    user, plan, checkpoint, place, map, geolocation, window_variables, checkpoint_db, place_db, plan_db, sort_filter
+    user, plan, checkpoint, place, map, geolocation, window_variables, checkpoint_db, place_db, plan_db
   }
 })
