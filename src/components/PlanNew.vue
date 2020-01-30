@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import { mapGetters, mapActions } from "vuex";
 import ModalWindow from "./ModalWindow";
 
@@ -58,12 +60,25 @@ export default {
     
     async submit() {
       if (!this.$refs.form.validate()) return;
-      let newPlan = await this.newPlan({
+
+      axios.post('http://localhost:3000/api/plans', {
         title: this.title,
         description: this.description
       })
-      this.toggleNewPlanModal();
-      this.$router.push(`/plans/${newPlan.id}`)
+      .then(response => {
+        let data = response.data;
+        this.toggleNewPlanModal();
+        this.$router.push(`/plans/${data.id}`)
+      })
+      
+
+      // let newPlan = await this.newPlan({
+      //   title: this.title,
+      //   description: this.description
+      // })
+
+      // this.toggleNewPlanModal();
+      // this.$router.push(`/plans/${newPlan.id}`)
     },
 
     input() {

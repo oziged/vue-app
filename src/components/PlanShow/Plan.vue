@@ -74,7 +74,7 @@ export default {
     ]),
 
     showPlanSubCheckpoints() {
-      this.displayedItemId = this.id;
+      this.displayedItemId = this.params.id;
       this.displayedItemType = "Plan";
     },
 
@@ -110,10 +110,10 @@ export default {
 
 
   mounted() {
-    this.setCurrentPlan(this.id);
-    this.plan = this.currentPlan;
+    // this.setCurrentPlan(this.params.id);
+    // this.plan = this.currentPlan;
     this.$gmapApiPromiseLazy().then(() => {
-      this.displayedItemId = this.id;
+      this.displayedItemId = this.params.id;
     });
   },
 
@@ -121,6 +121,10 @@ export default {
   computed: {
     data() {
       return this.currentPlanCheckpoints;
+    },
+
+    params() {
+      return this.$route.params
     },
 
     ...mapGetters([

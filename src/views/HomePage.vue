@@ -253,6 +253,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import HomePageSlider from "../components/HomePage/HomePageSlider";
 import FeedBackForm from "../components/HomePage/FeedBackForm";
 import CursorLogic from "../cursorHelper";

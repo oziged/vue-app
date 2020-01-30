@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <plan :id="$route.params.id" />
+    <plan />
   </div>
 </template>
 
@@ -10,7 +10,12 @@ import Plan from "../components/PlanShow/Plan";
 export default {
   components: {
     Plan
-  }
+  },
+
+
+  created() {
+    
+  },
 };
 </script>
 
