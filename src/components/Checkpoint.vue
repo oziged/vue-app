@@ -52,7 +52,7 @@
           :key="i"
           :nested="item.nested"
           :nestedLvl="nestedLvl+1"
-          :checkpoint="item.item"
+          :checkpoint="item"
         />
       </v-expansion-panels>
     </v-expansion-panel-content>

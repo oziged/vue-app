@@ -70,6 +70,10 @@ export default {
         this.toggleNewPlanModal();
         this.$router.push(`/plans/${data.id}`)
       })
+      .catch(response => {
+        console.log("ALERT HERE IS GOING RESPONSE")
+        console.log(response)
+      })
       
 
       // let newPlan = await this.newPlan({

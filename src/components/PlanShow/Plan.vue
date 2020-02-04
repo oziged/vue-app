@@ -2,19 +2,21 @@
   <div class="plan">
     <div class="plan_info">
       <div class="plan_title">
-        <h1 @click="showPlanSubCheckpoints">{{ currentPlan.title }}</h1>
+        <!-- <h1 @click="showPlanSubCheckpoints">{{ currentPlan.title }}</h1> -->
+        <h1 @click="showPlanSubCheckpoints">{{ test.title }}</h1>
         <div class="moveModalIcon" @click="toggleEditPlanModal(); setEditPlanModalId(id)"></div>
       </div>
-      <p class="plan_description">{{ currentPlan.description | truncate(20)}}</p>
+      <p class="plan_description">{{ test.description | truncate(20)}}</p>
+      <!-- <p class="plan_description">{{ currentPlan.description | truncate(20)}}</p> -->
       <div class="checkpoint_list_wrapper">
         <div class="checkpoints_list">
           <v-expansion-panels accordion>
             <checkpoint
-              v-for="(checkpoint,i) in data"
+              v-for="(checkpoint,i) in test.nested"
               class="checkpoint"
               :key="i"
               :nestedLvl="1"
-              :checkpoint="checkpoint.item"
+              :checkpoint="checkpoint"
               :nested="checkpoint.nested"
             ></checkpoint>
           </v-expansion-panels>
@@ -30,6 +32,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import { BadgerAccordion, BadgerAccordionItem } from "vue-badger-accordion";
 import { mapGetters, mapActions } from "vuex";
 import AppMap from "../AppMap";
@@ -56,6 +60,7 @@ export default {
       title: "",
       description: ""
     },
+    test: {},
     displayedSubMenu: null,
     displayedItemId: null,
     displayedItemType: "Plan",
@@ -110,6 +115,13 @@ export default {
 
 
   mounted() {
+    console.log("HERE?")
+    axios.get('http://localhost:3000/api/plans/' + this.params.id)
+    .then(response => {
+      console.log(response.data)
+      this.test = response.data
+    })
+
     // this.setCurrentPlan(this.params.id);
     // this.plan = this.currentPlan;
     this.$gmapApiPromiseLazy().then(() => {
@@ -119,9 +131,9 @@ export default {
 
 
   computed: {
-    data() {
-      return this.currentPlanCheckpoints;
-    },
+    // data() {
+    //   return this.currentPlanCheckpoints;
+    // },
 
     params() {
       return this.$route.params
