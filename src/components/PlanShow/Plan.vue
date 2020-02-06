@@ -3,16 +3,16 @@
     <div class="plan_info">
       <div class="plan_title">
         <!-- <h1 @click="showPlanSubCheckpoints">{{ currentPlan.title }}</h1> -->
-        <h1 @click="showPlanSubCheckpoints">{{ test.title }}</h1>
+        <h1 @click="showPlanSubCheckpoints">{{ plan.title }}</h1>
         <div class="moveModalIcon" @click="toggleEditPlanModal(); setEditPlanModalId(id)"></div>
       </div>
-      <p class="plan_description">{{ test.description | truncate(20)}}</p>
+      <p class="plan_description">{{ plan.description | truncate(20)}}</p>
       <!-- <p class="plan_description">{{ currentPlan.description | truncate(20)}}</p> -->
       <div class="checkpoint_list_wrapper">
         <div class="checkpoints_list">
           <v-expansion-panels accordion>
             <checkpoint
-              v-for="(checkpoint,i) in test.nested"
+              v-for="(checkpoint,i) in plan.nested"
               class="checkpoint"
               :key="i"
               :nestedLvl="1"
@@ -25,6 +25,7 @@
     </div>
     <app-map
       class="plan_map"
+      :places="plan.places"
       :displayedItemId="displayedItemId"
       :displayedItemType="displayedItemType"
     />
@@ -56,11 +57,7 @@ export default {
 
   
   data: () => ({
-    plan: {
-      title: "",
-      description: ""
-    },
-    test: {},
+    plan: {},
     displayedSubMenu: null,
     displayedItemId: null,
     displayedItemType: "Plan",
@@ -84,14 +81,26 @@ export default {
     },
 
     setCheckpointId(id) {
+      console.log('...');
+      console.log(id)
+      this.test.places = id;
       this.displayedItemId = id;
       this.displayedItemType = "Checkpoint";
     },
+
+    updatePlaces(checkpoint) {
+      if (checkpoint.places.length) {
+        this.plan.places = checkpoint.places;
+      } else {
+        this.plan.places = [checkpoint.place]
+      }
+    }
   },
 
 
   provide() {
     return {
+      updatePlaces: this.updatePlaces,
       setCheckpointId: this.setCheckpointId,
       toggleMobileMap: this.toggleMobileMap
     };
@@ -119,7 +128,7 @@ export default {
     axios.get('http://localhost:3000/api/plans/' + this.params.id)
     .then(response => {
       console.log(response.data)
-      this.test = response.data
+      this.plan = response.data
     })
 
     // this.setCurrentPlan(this.params.id);

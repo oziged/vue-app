@@ -6,7 +6,7 @@
     class="checkpoint_full"
     :data-id="checkpoint.id"
   >
-    <v-expansion-panel-header style="position: relative" @click="setCheckpointId(checkpoint.id)">
+    <v-expansion-panel-header style="position: relative" @click="updatePlaces(checkpoint)">
       <template v-slot:actions>
         <v-icon color="no-icon"></v-icon>
       </template>
@@ -69,7 +69,7 @@ import draggable from "vuedraggable";
 export default {
   name: "Checkpoint",
   props: ["checkpoint", "nestedLvl", "nested"],
-  inject: ["setCheckpointId"],
+  inject: ["updatePlaces"],
   data() {
     return {
       displayMoreButton: false

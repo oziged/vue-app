@@ -100,7 +100,6 @@ export default {
       this.menuIsOpened = !this.menuIsOpened;
     },
     closeMenu() {
-      console.log("closed");
       if (!this.menuIsOpened) return;
       this.menuIsOpened = false;
     }

@@ -1,10 +1,10 @@
 <template>
   <div class="map_wrapper" ref="map_wrapper">
-    <GmapMap ref="gmap" class="map" :center="center" :zoom="zoom" map-type-id="terrain">
+    <GmapMap ref="gmap" class="map" :center="center" :zoom="15" map-type-id="terrain">
       <GmapMarker
         :key="index"
         v-for="(m, index) in markersList"
-        :position="m.position"
+        :position="m"
         :clickable="true"
         :draggable="false"
         @click="toggleInfoWindow(m,index)"
@@ -26,7 +26,7 @@ import { mapGetters, mapActions } from "vuex";
 import { gmapApi } from "vue2-google-maps";
 
 export default {
-  props: ["displayedItemId", "displayedItemType"],
+  props: ["displayedItemId", "displayedItemType", 'places'],
   data() {
     return {
       renderer: null,
@@ -55,7 +55,8 @@ export default {
 
   methods: {
     toggleInfoWindow: function(marker, idx) {
-      this.infoWindowPos = marker.position;
+      console.log('toggling window')
+      this.infoWindowPos = marker;
       this.infoContent = this.getInfoWindowContent(marker);
 
       if (this.currentMidx == idx) {
@@ -65,6 +66,7 @@ export default {
         this.currentMidx = idx;
       }
     },
+
     getInfoWindowContent: function(marker) {
       return `<div class="card">
         <div class="card-image">
@@ -75,40 +77,32 @@ export default {
         <div class="card-content">
           <div class="media">
             <div class="media-content">
-              <p class="title is-4">${marker.title}</p>
+              <p class="title is-4">${marker.title || 'title'}</p>
             </div>
           </div>
           <div class="content">
-            ${marker.description}
+            ${marker.description || 'description'}
           </div>
         </div>
       </div>`;
     },
+
     displayMapPlaces() {
       setTimeout(() => {
         this.$nextTick(() => {
           this.$refs.gmap.$mapObject.panTo({ lat: 0, lng: 0 });
-          let checkpoints = this.getSubCheckpoints(
-            this.displayedItemId,
-            this.displayedItemType
-          );
-          let places = checkpoints.map(item => this.getPlace(item.place_id));
-          places.forEach(item => {
-            item.position.lat = +item.position.lat;
-            item.position.lng = +item.position.lng;
-          })
-          if (places.length == 1) {
+          if (this.places.length == 1) {
             // display 1 marker on the map for checkpoint
-            this.markersList = places;
+            this.markersList = this.places;
             this.zoom = 0;
             if (this.renderer != null) {
               this.renderer.setMap(null);
             }
             this.$nextTick(() => {
-              this.$refs.gmap.$mapObject.panTo(places[0].position);
+              this.$refs.gmap.$mapObject.panTo(this.places[0]);
               this.zoom = 15;
             });
-          } else if (places.length > 1) {
+          } else if (this.places.length > 1) {
             // display route for few subcheckpoints
             this.markersList = [];
             let _self = this;
@@ -121,13 +115,13 @@ export default {
             this.service.route(
               {
                 origin: new google.maps.LatLng(
-                  places[0].position.lat,
-                  places[0].position.lng
+                  this.places[0].lat,
+                  this.places[0].lng
                 ),
-                waypoints: this.generateWaypoints(places),
+                waypoints: this.generateWaypoints(this.places),
                 destination: new google.maps.LatLng(
-                  places.slice(-1)[0].position.lat,
-                  places.slice(-1)[0].position.lng
+                  this.places.slice(-1)[0].lat,
+                  this.places.slice(-1)[0].lng
                 ),
                 travelMode: "DRIVING"
               },
@@ -143,16 +137,18 @@ export default {
         });
       }, 1000);
     },
+
     generateWaypoints(places) {
       return places.slice(1, -1).map(place => {
         return {
           location: new google.maps.LatLng(
-            place.position.lat,
-            place.position.lng
+            place.lat,
+            place.lng
           )
         };
       });
     },
+
     updateMapDivSize(timeout) {
       let map = this.$refs.map_wrapper;
       let height = map.style.height;
@@ -162,15 +158,21 @@ export default {
       }, timeout);
     }
   },
+
+
   watch: {
-    displayedItemId() {
+    places() {
       this.displayMapPlaces();
     }
   },
+
+
   mounted() {
     this.updateMapDivSize(500);
     this.displayMapPlaces();
   },
+
+
   computed: {
     ...mapGetters(["allPlaces", "getPlace", "getSubCheckpoints"])
   }
